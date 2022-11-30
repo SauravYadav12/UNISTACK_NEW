@@ -1,0 +1,182 @@
+<%- include('../partials/header.ejs') %>
+
+
+  <form class="form-inline my-2 my-lg-0">
+    <input id="search_table" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <!-- <button class="btn btn-outline-light my-2 my-sm-0" type="submit" onkeyup="searchRows()">Search</button> -->
+  </form>
+  </div>
+  </nav>
+
+  </section>
+  <!-- Navigation Section - Ends here -->
+
+
+  <!-- Side Navigation Section Starts Here -->
+
+  <%- include('../partials/sidebar.ejs') %>
+
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+
+
+
+    <section class="page-content table-view bg-main">
+      <div class="d-flex flex-row justify-content-center">
+        <div class="mb-1" style="margin-left: 3%; margin-top: 2%;">
+          <a href="/interviews/get-interview-details" class="btn shadow rounded custom-button-3 on-hover ">
+            <i class="far fa-plus-square"></i> New interview
+          </a>
+        </div>
+      </div>
+      
+      <div class="d-flex flex-row justify-content-center">
+              <!-- Seperate tab buttons -->
+      <div class="mb-1" style=" margin-top: 2%; margin-right: 2%;">
+        <a href="/interviews/confirmed-interviews/1" class="btn shadow rounded custom-interview-button-1 on-hover">
+          <i class="far fa-calendar"></i> Confirmed interviews
+        </a>
+      </div>
+
+      <div class=" mb-4" style=" margin-top: 2%; margin-right: 1%;">
+        <a href="/interviews/tentative-interviews/1" class="btn shadow rounded custom-interview-button-2 on-hover">
+          <i class="far fa-pause-circle"></i> Tentative interviews
+        </a>
+      </div>
+
+      <div class="mb-4" style=" margin-top: 2%; margin-right: 1%;">
+        <a href="/interviews/completed-interviews/1" class="btn shadow rounded custom-interview-button-4 on-hover">
+          <i class="fas fa-list-ol"></i> Completed interviews
+        </a>
+      </div>
+
+      <div class=" mb-4" style=" margin-top: 2%; margin-right: 1%;">
+        <a href="/interviews/cancelled-interviews/1" class="btn shadow rounded custom-interview-button-3 on-hover">
+          <i class="far fa-window-close"></i> Cancelled interviews
+        </a>
+      </div>
+
+      <div class="mb-4" style=" margin-top: 2%; margin-right: 1%;">
+        <a href="/interviews/all-interviews" class="btn shadow rounded custom-interview-button-5 on-hover">
+          <i class="fas fa-globe-americas"></i> All interviews
+        </a>
+      </div>
+      <!-- Seperate Tab Buttons -->
+      </div>
+
+   
+
+      <div id="page-content-wrapper mr-auto">
+        <div>
+          <table id="interviewTable" class="content-table shadow rounded" style="margin-top: 2%;">
+            <thead>
+              <tr>
+                <th>View</th>
+                <th>Int ID</th>
+                <th>Int Status</th>
+                <th>Consultant</th>
+                <th>Int date</th>
+                <th>Int Time (EST)</th>
+                <th>Int Result </th>
+                <th>Subject Line</th>
+                <th>Client Name</th>
+                <th>Job Title</th>
+                <% if(username ==="Anmol" || username === "Sam" || username === "Rahul RR"){ %>
+                  <th>Interviewee</th>
+                <%}%>
+                <th>Created by</th>
+                <th>Created At</th>
+              </tr>
+            </thead>
+
+            
+            <tbody class="table-body">
+              
+              <%if(interviews.length==0 ){%>
+                <tr>
+                  <td>No Interviews</td>
+                </tr>
+                <% } else{%>
+                  <% interviews.reverse().slice().forEach(interview=>{ %>
+                    <tr onclick="window.location='/interviews/view-interviews/<%= interview.intId %>'"
+                      class="row-style">
+                      <td scope="row"> <a class="btn shadow rounded custom-button-1 rowview-button"
+                          href="/interviews/view-interviews/<%= interview.intId %>">View</a></td>
+                      <td>
+                        <%= interview.intId %>
+                      </td>
+                      <td class="changeColor"><strong>
+                          <%= interview.interviewStatus %>
+                        </strong></td>
+                      <td> <strong>
+                          <%= interview.consultant %>
+                        </strong> </td>
+                      <td>
+                        <%= interview.interviewDate %>
+                      </td>
+                      <td> <strong>
+                          <%= interview.interviewTime.slice(0,10) %>
+                        </strong></td>
+                        <td> <strong>
+                          <%= interview.result %>
+                        </strong> </td>
+                      <td>
+                        <div style="width: 300px; white-space:normal;">
+                          <%= interview.subjectLine.slice(0,20) %>
+                        </div>
+                      </td>
+                      <td>
+                        <%= interview.clientName.slice(0,20) %>
+                      </td>
+
+                      <% if(interview.jobTitle == undefined) {%>
+                        <td> <strong>
+                            <%= interview.jobTitle %>
+                          </strong> </td>
+                        <%} else {%>
+                            <td> <strong>
+                                <%= interview.jobTitle.slice(0,20) %>
+                              </strong> </td>
+                        <%}%>
+                        
+                      <% if(username === "Anmol" || username === "Sam" || username === "Rahul RR" || username=="Pramod" ){ %>
+                        <td style="color:#fc6c85;">
+                          <strong>
+                          <%= interview.candidateName %>
+                          </strong>
+                        </td>
+                      <%}%>
+                      <td>
+                        <%= interview.recordOwner %>
+                      </td>
+                      <td id="date-field">
+                        <%= interview.createdAt.toLocaleString(); %>
+                      </td>
+                    </tr>
+                    <%});%>
+                      <%}%>
+
+            </tbody>
+
+
+          </table>
+
+         
+        </div>
+      </div>
+    </section>
+
+    <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    </section>
+
+
+    <script src="/js/interview-search.js"></script>
+    <script src="http://cdn.date-fns.org/v1.9.0/date_fns.min.js"></script>
+    <script src="/js/clock.js"></script>
+
+    <%- include('../partials/footer.ejs')%>

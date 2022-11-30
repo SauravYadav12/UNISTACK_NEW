@@ -1,0 +1,41 @@
+<%- include('../partials/header.ejs') %>
+
+
+  <form class="form-inline my-2 my-lg-0">
+    <input id ="myInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onkeyup="searchRows()" onkeyup="searchInterviews()">
+    <!-- <button class="btn btn-outline-light my-2 my-sm-0" type="submit" onkeyup="searchRows()">Search</button> -->
+  </form>
+</div>
+</nav>
+
+</section> 
+<!-- Navigation Section - Ends here -->
+
+
+
+<form action="/tests/create-test" method="POST">
+    <section id="interview-details">
+        
+        <div class="container">
+            <div class="row mt-5">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="recordID">1. Select the Record ID for creating a Test</label>
+                        <select style="overflow:scroll;" name="recordID" id="" class="form-control">
+                            <option value="" selected></option>
+                            <% records.slice().reverse().forEach(record =>{%>
+                                <option value="<%= record.reqID%>"><%= record.reqID %> - <%= record.vendorCompany%> - <%= record.primeVendorCompany%> - <%= record.clientCompany%> </option>
+                            <%})%>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <button type="submit" class="btn shadow rounded custom-button-4">Submit</button>
+        </div>
+
+    </section>
+</form>
+
+<%- include('../partials/footer.ejs')%>

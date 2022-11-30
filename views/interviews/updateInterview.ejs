@@ -1,0 +1,381 @@
+
+<%- include('../partials/header1.ejs') %>
+        
+
+<!-- Form Section Starts here -->
+<form action="/interviews/update-interview" method="POST">
+
+
+     <!-- Requirement ID Section -->
+    <section class="heading mt-4">
+
+        <div class="container mx-auto form-inline" style="width: 500px; text-align: center; padding-left:5%;">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="form-group mb-2 mt-3 pt-1">Interview ID # </h3>
+                </div>
+                <div class="col-md-6">
+                     <input type="text" class="form-group form-control-plaintext" name="intId" value="<%= intId %>" style="font-size:24px ;" readonly> 
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Form Button Section  -->
+            <section class="func-buttons mb-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group float-end">
+                                <button class="btn btn-primary text-white mb-0 me-0" style="width: 100px">Save</button>
+                                <a href="/interviews/confirmed-interviews/1" class="btn btn-danger text-white mb-0 me-0">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border: 1px solid #007BFF">
+                </div>
+            </section>
+    <!-- Form Button Section Ends Here  -->
+
+
+
+    </section>
+   <!-- Requirement ID Section Ends Here -->
+
+ <!-- Section 1 - contains information about Communication & rates -->
+<section class="interview-details mt-4 mb-4"> 
+    <div class="container">
+        <div  class="section-heading">
+            <h3><i class="far fa-hand-point-down"></i> 1. Interview Details </h3>
+        </div>
+        <hr class="style-two">
+    </div>
+    
+    <div class="container section-content">
+        
+        <!-- Row 1 - Contains status and next Step -->
+        <div class="row">
+            <!-- column 1 -->
+            <div class="col-md-3">
+                <div class="form-group">
+                   <label for="InterviewDate">1.1 Interview Date</label>
+                    <input type="date" class="form-control" name="interviewDate" value="<%= interviewDate %>">
+                </div>
+            </div>
+            <!-- column 2 -->
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="interview Time">1.2 Interview Time</label>
+                    <input type="text" class="form-control" value="<%= interviewTime %>" name="interviewTime">
+                </div>    
+            </div>
+    
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="rate">1.3 Interview Type </label>
+                    <select name="interviewType" class="form-control">
+                        <option value=""></option>
+                        <option value="<%=interviewType%>" selected><%= interviewType %></option>
+                        <option value="Technical"> Technical </option>
+                        <option value="Techno Managerial">Techno Managerial</option>
+                        <option value="Non Technical">Non Technical</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                  <label for="interviewStatus">1.4 Interview Status</label>
+                  <select class="form-control" name="interviewStatus">
+                     <option value=""></option>
+                     <option value="<%= interviewStatus %>" selected> <%= interviewStatus %></option>
+                     <option value="Interview Confirm">Interview Confirm</option>
+                     <option value="Interview Tentative">Interview Tentative</option>
+                     <option value="Interview Cancelled">Interview Cancelled</option>
+                     <option value="Interview Completed">Interview Completed</option>
+                     <option value="Interview Re-Scheduled">Interview Re-Scheduled</option>
+                  </select>  
+                </div>
+            </div>
+
+        </div>
+          <!-- Row 1 Ends Here -->
+
+        <!-- Row 3 Marketing persons comments -->
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="consultant">1.5 Consultant</label>
+                    <input type="text" name="consultant" class="form-control" value="<%= consultant %>" readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="marketing-person">1.6 Maketing Person</label>
+                    <input type="text" name="marketingPerson" class="form-control" value="<%= marketingPerson %>">
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="vendor-company">1.7 Vendor Company</label>
+                    <input type="text" name="vendorCompany" class="form-control" value="<%= vendorCompany %>" readonly>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="prime-vendor-company">1.8 Prime Vendor Company</label>
+                    <input type="text" name="primeVendorCompany" class="form-control" value="<%= primeVendorCompany %>" readonly>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="github">1.9 Submitted Github(if Yes Enter the Link)</label>
+                    <input type="text" class="form-control" name="gitHubLink" value="<%= gitHubLink %>">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="code">1.10 Submitted Any Code(if Yes Enter the Link)</label>
+                    <input type="text" class="form-control" name="codeLink" value="<%= codeLink %>">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="code">1.11 Result </label>
+                    <select name="result" class="form-control">
+                        <option value=""></option>
+                        <option value="<%=result%>" selected><%= result %></option>
+                        <option value="Offer">Offer</option>
+                        <option value="Negative">Negative</option>
+                        <option value="Positive">Positive</option>
+                        <option value="No Feedback Yet">No Feedback Yet</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label for="tentativeReason">1.12 Tentative Reason (if Any) || <% if(updatedBy){%> updated At - <%=updatedAt.toLocaleTimeString()%> || updated By - <%= updatedBy%> <%}%> </label>
+                <input type="text" class="form-control" name="tentativeReason" placeholder="Enter Tentative Reason" value="<%= tentativeReason %>">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Section 1 Ends Here -->
+
+
+<!-- Section 2 -- Contain information about Clients -->
+
+<section class="interview-info mt-4 mb-4">
+
+    <div class="container">
+        <div class="section-heading">
+            <h3><i class="far fa-hand-point-down"></i> 2. Details of Interview</h3>
+        </div>
+        <hr class="style-two">
+    </div>
+
+
+    <div class="container section-content">
+        <!-- Row-1 information about client -->
+        <div class="row">
+            
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="subjectLine">2.1 Subject line (Enter Duration + Mode Of Interview + Interview With only)</label>
+                    <input type="text" name="subjectLine" class="form-control" value="<%= subjectLine %>">
+                </div>
+            </div>
+
+        </div>
+        <!-- Row-1 Ends Here -->
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="interviewMode">2.2 Interview / interviewer / Interview Mode Details</label>
+                    <textarea name="interviewMode" class="form-control view-text"><%= interviewMode %></textarea>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="interviewLink">2.9 Interview Link</label>
+                    <input type="url" name="interviewLink" class="form-control" value="<%= interviewLink %>">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="interview Focus">2.3 Interview Focus</label>
+                    <input type="text" name="interviewFocus" class="form-control" value="<%= interviewFocus %>">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="jobDescription">2.4 Job Description</label>
+                    <textarea name="jobDescription" class="form-control text-area-view" readonly><%= jobDescription %></textarea>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Section 2 Ends Here -->
+
+<!-- Section 3 -- Contain information about Prime Vendors -->
+
+ <section class="Feedback mt-4 mb-4">
+    <div class="container">
+        <div class="section-heading">
+            <h3><i class="far fa-hand-point-down"></i> 3. Interview Feedback</h3>
+        </div>
+        <hr class="style-two">
+    </div>
+
+        <div class="container section-content">
+            
+            <!-- Row-1 information about Feedbacks -->
+            <div class="row">
+                
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="primeVendor-name">3.1 Feedback</label>
+                        <textarea name="interviewFeedback" class="form-control text-area-comment"><%= interviewFeedback %></textarea>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="jobTitle">3.2 Job Title</label>
+                        <input class="form-control" type="text" name="jobTitle" value="<%= jobTitle %>" readonly >
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- Row-1 Ends Here -->
+            
+            <!-- Row-2 Prime Vendor Contact information -->
+            <div class="row">
+                
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="reqID">3.2 Req ID</label>
+                        <input type="text" class="form-control" name="reqID" value="<%= reqID %>" readonly>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="clientName">3.3 Client Name</label>
+                        <input type="text" class="form-control" name="clientName" value="<%= clientName %>" readonly>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="taxType">3.4 Tax type</label>
+                        <input type="text" name="taxType" class="form-control" value="<%= taxType %>" readonly>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="duration">3.5 Duration</label>
+                        <input type="text" name="duration" class="form-control" value="<%= duration %>" readonly>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row-2 Ends Here -->
+        </div>
+    
+    </section>
+
+    <% if(username == 'Sam' || username == 'Anmol' || username == 'Rahul RR'){ %>
+    <section class="candiate-details mt-4 mb-4">
+
+        <div class="container">
+            <div class="section-heading">
+                <h3><i class="far fa-hand-point-down"></i> 4. Interviewee Candidate details</h3>
+            </div>
+            <hr class="style-two">
+        </div>
+
+        <div class="container section-content">
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="candidateName">4.1 Candidate name </label>
+                        <input type="text" name="candidateName" class="form-control" value="<%= candidateName %>">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="rateForInterview">4.2 Rates for Interview</label>
+                        <input type="text" name="rateForInterview" class="form-control" value="<%= rateForInterview %>">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="paymentStatus">4.3 Payment Status</label>
+                        <select name="paymentStatus" class="form-control" >
+                            <option value=""></option>
+                            <option value="<%= paymentStatus %>" selected> <%= paymentStatus %></option>
+                            <option value="Paid">Paid</option>
+                            <option value="Not Paid">Not Paid</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <hr style="border: 1px solid #007BFF">
+        </div>
+
+    </section>
+    <%}%>
+    <!-- Section 3 Ends Here  -->
+
+</form>
+
+<!-- Form Ends here -->
+
+
+<%- include('../partials/footer1.ejs')%>

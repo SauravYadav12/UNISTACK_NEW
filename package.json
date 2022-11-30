@@ -1,0 +1,29 @@
+{
+  "name": "unibase",
+  "version": "1.0.0",
+  "description": "Unicoder Database",
+  "main": "App.js",
+  "scripts": {
+    "start": "nodemon App.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Sam",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "ejs": "^2.7.1",
+    "ejs-lint": "^0.3.0",
+    "exceljs": "^4.3.0",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "md5": "^2.2.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.7.0",
+    "nodemailer": "^6.4.6",
+    "nodemon": "^2.0.20",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  }
+}

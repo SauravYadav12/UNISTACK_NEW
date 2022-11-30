@@ -1,0 +1,62 @@
+<section class="side-nav">
+
+    <div class="d-flex" id="wrapper">
+
+      
+            <!-- Sidebar -->
+            
+            <div class="shadow  bg-custom rounded" id="sidebar-wrapper" style="z-index: 1;">
+              
+              <div class="day" style="color:#00BBF9; font-weight: bold; "></div>
+               <div class="date" style="color:black ; font-weight: bold; "></div>
+               <div class='clock' style="color:#ff34ac; font-weight: bold; font-size:large;"></div>
+
+              <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action bg-primary-custom shadow rounded">
+                  <div class="row siderbar-content">
+                    <div class="col-md-3 user-icon">
+                        <i class="fas fa-user-circle fa-3x "></i>
+                    </div>
+                    <div class="col-md-9 pt-3 ml-auto ">
+                       <p class="sidebar-heading"> Welcome <strong><%= username %></strong></p>
+                    </div>
+                  </div>  
+                </a>
+                
+              <% if (path === '/home'){%>
+              <div class="mt-4 shadow rounded">
+                  <a href="#" class="filter-menu sidebar-heading list-group-item list-group-item-action bg-primary-custom-1">Filter 
+                    <i class="fas fa-caret-right float-right icon"></i>
+                  </a>
+                  <ul class="filter" style="display: none;">
+                    <input type="checkbox" id="submitted" name="submitted" value="Submitted"> <span>Submitted</span> <br> 
+                    <input type="checkbox" id="new-working" name="new-working" value="New Working"> <span>New Working</span> <br>
+                    <input type="checkbox" id="interviewed" name="interviewed" value="Interviewed"> <span>Interviewed</span> <br>
+                    <input type="checkbox" id="cancelled" name="cancelled" value="Cancelled"> <span>Cancelled</span> <br>
+                    <input type="checkbox" id="rejected" name="rejected" value="Rejected by vendor"> <span>Rejected by vendor</span> <br>
+                  </ul>
+              </div>
+              <%}%>
+
+              <% if (path === '/interviews/dashboard'){%>
+                <div class="mt-4 shadow rounded">
+                    <a href="#" class="filter-menu sidebar-heading list-group-item list-group-item-action bg-primary-custom-1">Filter 
+                      <i class="fas fa-caret-right float-right icon"></i>
+                    </a>
+                    <ul class="filter" style="display: none;">
+                      <input type="checkbox" id="Confirm" name="Confirm" value="Interview Confirm"> <span>Interview confirm</span> <br> 
+                      <input type="checkbox" id="Completed" name="Completed" value="Interview Completed"> <span>Interview Completed</span> <br>
+                      <input type="checkbox" id="Tentative" name="Tentative" value="Interview Tentative"> <span>Interview Tentative</span> <br>
+                      <input type="checkbox" id="cancelled" name="Cancelled" value="Interview Cancelled"> <span>Interview Cancelled</span> <br>
+                    </ul>
+                </div>
+                <%}%>
+
+                <a href="/logout" class="sidebar-heading list-group-item list-group-item-action bg-primary-custom-2 mt-4 shadow rounded">Logout</a>
+              </div>
+
+              <!-- <div class="day"></div>
+              <div class="date"></div>
+              <div class='clock'></div> -->
+
+            </div>

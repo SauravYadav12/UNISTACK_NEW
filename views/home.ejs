@@ -1,0 +1,335 @@
+<%- include('./partials/header1.ejs') %>
+
+<div class="container-scroller">
+  <!-- partial -->
+  <%- include('./partials/nav.ejs') %>
+
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial -->
+    <%- include('./partials/sidebar1.ejs') %>
+
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="home-tab">
+              <div class="tab-content tab-content-basic">
+                <div
+                  class="tab-pane fade show active"
+                  id="overview"
+                  role="tabpanel"
+                  aria-labelledby="overview"
+                >
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div
+                        class="statistics-details d-flex align-items-center justify-content-between"
+                      >
+                        <div>
+                          <p class="statistics-title">Total Records</p>
+                          <h3 class="rate-percentage"><%= totalRecords %></h3>
+                          <p class="text-danger d-flex">
+                            <i class="mdi mdi-menu-down"></i><span>-0.5%</span>
+                          </p>
+                        </div>
+                        <div>
+                          <p class="statistics-title">Total Interviews</p>
+                          <h3 class="rate-percentage"><%= totalInterviews %></h3>
+                          <p class="text-success d-flex">
+                            <i class="mdi mdi-menu-up"></i><span>+0.1%</span>
+                          </p>
+                        </div>
+                        <div>
+                          <p class="statistics-title">Completed Interviews</p>
+                          <h3 class="rate-percentage"><%= completedInterviews %></h3>
+                          <p class="text-danger d-flex">
+                            <i class="mdi mdi-menu-down"></i><span>68.8</span>
+                          </p>
+                        </div>
+                        <div class="d-none d-md-block">
+                          <p class="statistics-title">Total Projects</p>
+                          <h3 class="rate-percentage"><%= totalProjects %></h3>
+                          <p class="text-success d-flex">
+                            <i class="mdi mdi-menu-down"></i><span>+0.8%</span>
+                          </p>
+                        </div>
+                        <div class="d-none d-md-block">
+                          <p class="statistics-title">New Sessions</p>
+                          <h3 class="rate-percentage">68.8</h3>
+                          <p class="text-danger d-flex">
+                            <i class="mdi mdi-menu-down"></i><span>68.8</span>
+                          </p>
+                        </div>
+                        <div class="d-none d-md-block">
+                          <p class="statistics-title">Avg. Time on Site</p>
+                          <h3 class="rate-percentage">2m:35s</h3>
+                          <p class="text-success d-flex">
+                            <i class="mdi mdi-menu-down"></i><span>+0.8%</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-8 d-flex flex-column">
+                      <div class="row flex-grow">
+                        <div
+                          class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card"
+                        >
+                          <div class="card card-rounded">
+                            <div class="card-body">
+                              <div
+                                class="d-sm-flex justify-content-between align-items-start"
+                              >
+                                <div>
+                                  <h4 class="card-title card-title-dash">
+                                    Performance Line Chart
+                                  </h4>
+                                  <h5 class="card-subtitle card-subtitle-dash">
+                                    Lorem Ipsum is simply dummy text of the
+                                    printing
+                                  </h5>
+                                </div>
+                                <div id="performance-line-legend"></div>
+                              </div>
+                              <div class="chartjs-wrapper mt-5">
+                                <canvas id="performaneLine"></canvas>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 d-flex flex-column">
+                      <div class="row flex-grow">
+                        <div
+                          class="col-md-6 col-lg-12 grid-margin stretch-card"
+                        >
+                          <div class="card bg-primary card-rounded">
+                            <div class="card-body pb-0">
+                              <h4
+                                class="card-title card-title-dash text-white mb-4"
+                              >
+                                Status Summary
+                              </h4>
+                              <div class="row">
+                                <div class="col-sm-4">
+                                  <p class="status-summary-ight-white mb-1">
+                                    Closed Value
+                                  </p>
+                                  <h2 class="text-info">357</h2>
+                                </div>
+                                <div class="col-sm-8">
+                                  <div
+                                    class="status-summary-chart-wrapper pb-4"
+                                  >
+                                    <canvas id="status-summary"></canvas>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="col-md-6 col-lg-12 grid-margin stretch-card"
+                        >
+                          <div class="card card-rounded">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <div
+                                    class="d-flex justify-content-between align-items-center mb-2 mb-sm-0"
+                                  >
+                                    <div class="circle-progress-width">
+                                      <div
+                                        id="totalVisitors"
+                                        class="progressbar-js-circle pr-2"
+                                      ></div>
+                                    </div>
+                                    <div>
+                                      <p class="text-small mb-2">
+                                        Total Visitors
+                                      </p>
+                                      <h4 class="mb-0 fw-bold">26.80%</h4>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div
+                                    class="d-flex justify-content-between align-items-center"
+                                  >
+                                    <div class="circle-progress-width">
+                                      <div
+                                        id="visitperday"
+                                        class="progressbar-js-circle pr-2"
+                                      ></div>
+                                    </div>
+                                    <div>
+                                      <p class="text-small mb-2">
+                                        Visits per day
+                                      </p>
+                                      <h4 class="mb-0 fw-bold">9065</h4>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-12 d-flex flex-column">
+                      <div class="row flex-grow">
+                        <div class="col-12 grid-margin stretch-card">
+                          <div class="card card-rounded">
+                            <div class="card-body">
+                              <div
+                                class="d-sm-flex justify-content-between align-items-start"
+                              >
+                                <div>
+                                  <h4 class="card-title card-title-dash">
+                                    Today's Interviews - <%= today.length %>
+                                  </h4>
+                                  <p class="card-subtitle card-subtitle-dash">
+                                    <%= dateNow.toLocaleString('in') %>
+                                  </p>
+                                </div>
+                                
+                              </div>
+                              <div class="table-responsive mt-1">
+                                <table class="table select-table table-hover" id="order-listing">
+                                  <thead>
+                                    <tr></tr>
+                                    <tr>
+                                      <th>View</th>
+                                      <th>Int ID</th>
+                                      <th>Int Status</th>
+                                      <th>Tentative Reason</th>
+                                      <th>Consultant</th>
+                                      <th>Int date</th>
+                                      <th>Int Time (EST)</th>
+                                      <th>Subject Line</th>
+                                      <th>Client Name</th>
+                                      <th>Job Title</th>
+                                      <% if(username==="Anmol" ||
+                                      username==="Sam" || username==="Rahul RR"
+                                      ){ %>
+                                      <th>Interviewee</th>
+                                      <%}%>
+                                      <th>Created by</th>
+                                      <th>Created At</th>
+                                    </tr>
+                                  </thead>
+                                  <%if(today.length==0 ){%>
+                                  <tbody>
+                                    <tr>
+                                      <td>No Interviews Today</td>
+                                    </tr>
+                                  </tbody>
+                                  <% } else{%>
+                                  <tbody>
+                                    <% today.forEach(interview=>{ %>
+
+                                    <tr
+                                      onclick="window.location='/interviews/view-interviews/<%= interview.intId %>'"
+                                      class="row-style"
+                                    >
+                                      <td scope="row">
+                                        <a
+                                          class="btn btn-primary text-white"
+                                          href="/interviews/view-interviews/<%= interview.intId %>"
+                                          >View</a
+                                        >
+                                      </td>
+                                      <td><%= interview.intId %></td>
+                                      <td>
+                                        <label
+                                          class="<%= interview.interviewStatus === 'Interview Confirm' ? 'badge badge-success' : 'badge badge-warning' %>"
+                                        >
+                                          <%= interview.interviewStatus %>
+                                        </label>
+                                      </td>
+                                      <td>
+                                        <strong>
+                                          <%= interview.tentativeReason %>
+                                        </strong>
+                                      </td>
+                                      <td>
+                                        <strong>
+                                          <%= interview.consultant %>
+                                        </strong>
+                                      </td>
+                                      <td><%= interview.interviewDate %></td>
+                                      <td>
+                                        <strong>
+                                          <%=
+                                          interview.interviewTime.slice(0,10) %>
+                                        </strong>
+                                      </td>
+                                      
+                                      <td>
+                                        <div>
+                                          <%=
+                                          interview.subjectLine.slice(0,20)%>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <%= interview.clientName.slice(0,20) %>
+                                      </td>
+                                      <% if(interview.jobTitle==undefined) {%>
+                                      <td>
+                                        <strong>
+                                          <%= interview.jobTitle %>
+                                        </strong>
+                                      </td>
+                                      <%} else {%>
+                                      <td>
+                                        <strong>
+                                          <%= interview.jobTitle.slice(0,20) %>
+                                        </strong>
+                                      </td>
+                                      <%}%> <% if(username==="Anmol" ||
+                                      username==="Sam" || username==="Rahul RR"
+                                      || username=="Pramod" ){ %>
+                                      <td>
+                                        <% if(interview.candidateName){%>
+                                          <label class="badge badge-danger">
+                                            <strong>
+                                              <%= interview.candidateName %>
+                                            </strong>
+                                          </label>
+                                       <%}%>
+                                      </td>
+                                      <%}%>
+                                      <td><%= interview.recordOwner %></td>
+                                      <td id="date-field">
+                                        <%=
+                                        interview.createdAt.toLocaleString(); %>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                  <%});%> <%}%>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+<%- include('./partials/footer1.ejs')%>

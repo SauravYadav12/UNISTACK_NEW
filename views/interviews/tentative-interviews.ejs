@@ -1,0 +1,181 @@
+<%- include('../partials/header1.ejs') %>
+
+  <div class="container-scroller">
+
+    <%- include('../partials/nav.ejs') %>
+
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <%- include('../partials/sidebar1.ejs') %>
+
+         <%- include('../partials/main-panel-start.ejs') %>
+          
+                                  
+                                  <div class="card-body">
+                                    <div class="d-sm-flex justify-content-between align-items-start">
+                                      <div>
+                                        <h4 class="card-title card-title-dash">Tentative Interviews</h4>
+                                        <p class="card-subtitle card-subtitle-dash">All Tentative</p>
+                                      </div>
+                                      <div>
+                                        <a href="/interviews/get-interview-details" class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new</a>
+                                      </div>
+                                    </div>
+                                    <div class="table-responsive  mt-1">
+                                      <table id="order-listing"
+                                        class="table dataTable no-footer table-striped table-hover">
+                                        <thead>
+                                          <tr>
+                                            <th>View</th>
+                                            <th>Edit</th>
+                                            <th>Int ID</th>
+                                            <th>Int Status</th>
+                                            <th>Consultant</th>
+                                            <th>Int date</th>
+                                            <th>Int Time (EST)</th>
+                                            <th>Int Result </th>
+                                            <th>Subject Line</th>
+                                            <th>Client Name</th>
+                                            <th>Job Title</th>
+                                            <% if(username==="Anmol" || username==="Sam" || username==="Rahul RR" ){ %>
+                                              <th>Interviewee</th>
+                                              <%}%>
+                                                <th>Created by</th>
+                                                <th>Created At</th>
+                                          </tr>
+                                        </thead>
+
+
+                                        <tbody class="table-body">
+
+                                          <%if(tentative.length==0 ){%>
+                                            <tr>
+                                              <td>No Tentative Interviews</td>
+                                            </tr>
+                                            <% } else{%>
+                                              <% tentative.forEach(interview=>{ %>
+                                                <tr
+                                                  onclick="window.location='/interviews/view-interviews/<%= interview.intId %>'"
+                                                  class="row-style">
+                                                  <td> 
+                                                    <a class="btn btn-primary text-white"
+                                                      href="/interviews/view-interviews/<%= interview.intId %>">View</a>
+                                                  </td>
+                                                  <td> 
+                                                    <a class="btn btn-danger text-white"
+                                                      href="/interviews/update-interview/<%= interview.intId %>">Edit</a>
+                                                  </td>
+                                                  <td>
+                                                    <%= interview.intId %>
+                                                  </td>
+                                                  <td class="changeColor">
+                                                    <label class="badge badge-warning">
+                                                    <strong>
+                                                      <%= interview.interviewStatus %>
+                                                    </strong>
+                                                    </label>
+                                                  </td>
+                                                  <td style="color: red;"> <strong>
+                                                      <%= interview.consultant %>
+                                                    </strong> </td>
+                                                  <td>
+                                                    <%= interview.interviewDate %>
+                                                  </td>
+                                                  <td> <strong>
+                                                      <%= interview.interviewTime.slice(0,12) %>
+                                                    </strong></td>
+                                                  <td> <strong>
+                                                      <%= interview.result %>
+                                                    </strong> </td>
+                                                  <td>
+                                                    <div style="width: 300px; white-space:normal;">
+                                                      <%= interview.subjectLine.slice(0,20) %>
+                                                    </div>
+                                                  </td>
+                                                  <td>
+                                                    <%= interview.clientName.slice(0,20) %>
+                                                  </td>
+                                                  <% if(interview.jobTitle==undefined) {%>
+                                                    <td> <strong>
+                                                        <%= interview.jobTitle %>
+                                                      </strong> </td>
+                                                    <%} else {%>
+                                                      <td> <strong>
+                                                          <%= interview.jobTitle.slice(0,20) %>
+                                                        </strong> </td>
+                                                      <%}%>
+                                                        <% if(username==="Anmol" || username==="Sam" ||
+                                                          username==="Rahul RR" || username=="Pramod" ){ %>
+                                                          <td style="color:#fc6c85;">
+                                                            <strong>
+                                                              <%= interview.candidateName %>
+                                                            </strong>
+                                                          </td>
+                                                          <%}%>
+                                                            <td>
+                                                              <%= interview.recordOwner %>
+                                                            </td>
+                                                            <td id="date-field">
+                                                              <%= interview.createdAt.toLocaleString(); %>
+                                                            </td>
+                                                </tr>
+                                                <%});%>
+                                                  <%}%>
+
+                                        </tbody>
+
+
+                                      </table>
+                                    </div>
+                                  </div>
+
+         <%- include('../partials/main-panel-end.ejs') %>
+
+
+              <nav aria-label="...">
+                <% if (pages> 0) { %>
+                  <ul class="pagination pagination-lg text-center justify-content-center mb-4">
+                    <% if (current==1) { %>
+                      <li class="page-item disabled"><a class="page-link">First</a></li>
+                      <% } else { %>
+                        <li class="page-item"><a class="page-link" href="/interviews/tentative-interviews/1">First</a>
+                        </li>
+                        <% } %>
+                          <% var i=(Number(current)> 5 ? Number(current) - 4 : 1) %>
+                            <% if (i !==1) { %>
+                              <li class="page-item disabled"><a class="page-link">...</a></li>
+                              <% } %>
+                                <% for (; i <=(Number(current) + 4) && i <=pages; i++) { %>
+                                  <% if (i==current) { %>
+                                    <li class="page-item active"><a class="page-link">
+                                        <%= i %>
+                                      </a></li>
+                                    <% } else { %>
+                                      <li class="page-item"><a class="page-link"
+                                          href="/interviews/tentative-interviews/<%= i %>">
+                                          <%= i %>
+                                        </a></li>
+                                      <% } %>
+                                        <% if (i==Number(current) + 4 && i < pages) { %>
+                                          <li class="page-item disabled"><a class="page-link">...</a></li>
+                                          <% } %>
+                                            <% } %>
+                                              <% if (current==pages) { %>
+                                                <li class="page-item disabled"><a class="page-link">Last</a></li>
+                                                <% } else { %>
+                                                  <li class="page-item"><a class="page-link"
+                                                      href="/interviews/tentative-interviews/<%= pages %>">Last</a></li>
+                                                  <% } %>
+                  </ul>
+                  <% } %>
+              </nav>
+
+            </div>
+
+          </div>
+
+      </div>
+
+  </div>
+
+  <%- include('../partials/footer1.ejs') %>

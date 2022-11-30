@@ -1,0 +1,125 @@
+
+<%- include('../partials/header.ejs') %>
+
+
+
+<form class="form-inline my-2 my-lg-0">
+  <input id ="myInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onkeyup="searchRows()">
+  <!-- <button class="btn btn-outline-light my-2 my-sm-0" type="submit" onkeyup="searchRows()">Search</button> -->
+</form>
+</div>
+</nav>
+
+</section> 
+<!-- Navigation Section - Ends here -->
+
+
+
+<!-- Side Navigation Section Starts Here -->
+
+<%- include('../partials/sidebar.ejs') %>
+
+<!-- /#sidebar-wrapper -->
+
+
+      <section class="container card-button page-content">
+        
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div style="text-align: center">
+                        <h3 style="color: #007bff;"> Consultant Details </h3>
+                        <hr class="style-two">
+                    </div>
+                </div>
+              </div>
+
+      <div id="consultant-content-wrapper" > 
+         
+              <div class="mt-4 blacklist-table">
+                          <table id="interviewTable" class="table" >
+                              <thead class="thead-dark">
+                                <tr>
+                                  <th scope="col">Descriptions</th>
+                                  <th scope="col">Details</th>
+                                  <!-- <th></th> -->
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="table-primary">
+                                    <td> Full Name </td>
+                                    <td> <strong>Kevin A Singh</strong>  </td>
+                                </tr>
+
+                                <tr class="table-primary">
+                                    <td>Visa Status</td>
+                                    <td> <strong>US Citizen</strong></td>
+                                </tr>
+
+                                <tr class="table-primary">
+                                    <td>DOB</td>
+                                    <td> <strong>11  November 1992</strong></td>
+                                </tr>
+
+                                <tr class="table-secondary">
+                                    <td>Address</td>
+                                    <td> <strong>369 grant AV, Brooklyn NY - 11208</strong> </td>
+                                </tr>
+
+                                <tr class="table-secondary">
+                                    <td>City</td>
+                                    <td> <strong>Brooklyn</strong> </td>
+                                </tr>
+
+                                <tr class="table-secondary">
+                                    <td>State</td>
+                                    <td> <strong>New York</strong> </td>
+                                </tr>
+
+                                <tr class="table-secondary">
+                                    <td>ZipCode</td>
+                                    <td> <strong>11208</strong> </td>
+                                </tr>
+
+                                <tr class="table-danger">
+                                    <td>SSN</td>
+                                    <td> <strong>108-80-8243</strong> </td>
+                                </tr>
+
+                                <tr class="table-danger">
+                                    <td>Driving License</td>
+                                    <td> <strong>DL NO:- 449-843-575 ||  Issued State: NY || Exp date: 11/11/2022</strong> </td>
+                                </tr>
+
+                                <tr class="table-success">
+                                    <td>Bachelors Degree</td>
+                                    <td> <strong>Bachelors in Computer Science</strong> </td>
+                                </tr>
+
+                                <tr class="table-success">
+                                    <td>College / University</td>
+                                    <td> <strong>APS University India</strong> </td>
+                                </tr>
+
+                                <tr class="table-success">
+                                    <td>Year of passing</td>
+                                    <td> <strong>2010</strong> </td>
+                                </tr>
+
+
+                              </tbody>
+                          </table>
+                      </div>
+                        </div>
+                    </section>
+
+                </section>            
+                    
+                           
+                    
+
+
+    <script src="http://cdn.date-fns.org/v1.9.0/date_fns.min.js"></script>
+    <script src="/js/clock.js"></script>
+
+<%- include('../partials/footer.ejs')%>
+                

@@ -1,0 +1,81 @@
+
+<%- include('../partials/header.ejs') %>
+
+
+      <form class="form-inline my-2 my-lg-0">
+        <input id ="myInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onkeyup="searchRows()">
+        <!-- <button class="btn btn-outline-light my-2 my-sm-0" type="submit" onkeyup="searchRows()">Search</button> -->
+      </form>
+    </div>
+  </nav>
+
+</section> 
+<!-- Navigation Section - Ends here -->
+
+
+
+       <!-- Side Navigation Section Starts Here -->
+      
+       <%- include('../partials/sidebar.ejs') %>
+
+                    <!-- Card Style Blaclist Details section-->
+                    <section class="container card-buttons">
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div style="text-align: center">
+                                    <h3 style="color: #007bff;"> Blacklist Details </h3>
+                                    <hr class="style-two">
+                                </div>
+                            </div>
+                          </div>
+                      
+                      <div class="row client-blacklist">
+                        
+                        <div class="col-md-4">
+                            <a href="/blacklist-details/client-blacklist-details" class="blacklist-links">
+                            <div class="card client-card">
+                                <img src="/img/client1.png" alt="Client" style="width:100%; border-radius: 100%;">
+                                <div class="container">
+                                  <h4 ><b class="blacklist-links">Clients</b></h4> 
+                                </div>
+                            </div>
+                          </a>
+                        </div>
+                       
+
+                        <div class="col-md-4">
+                            <a href="/blacklist-details/prime-vendor-blacklist-details" class="blacklist-links">
+                            <div class="card card-image pv-card">
+                                <img src="/img/primeV1.png" alt="Client" style="width:100%;">
+                                <div class="container">
+                                  <h5 class="blacklist-links"><b>Prime Vendor/IMP</b></h5> 
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4">
+                            <a href="/blacklist-details/vendor-blacklist-details" class="blacklist-links">
+                            <div class="card vendor-card">
+                                <img src="/img/vendor.png" alt="Client" style="width:100%">
+                                <div class="container">
+                                  <h4 class="blacklist-links"><b>Vendor</b></h4> 
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                      </div>
+                      
+                    </section>
+                    <!-- Card Style Blaclist Details section Ends-->
+                    
+        </section>  
+        <!-- /#sidebar-wrapper Ends-->                  
+                    
+
+
+    <script src="http://cdn.date-fns.org/v1.9.0/date_fns.min.js"></script>
+    <script src="/js/clock.js"></script>
+
+<%- include('../partials/footer.ejs')%>
+                

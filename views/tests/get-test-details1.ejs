@@ -1,0 +1,76 @@
+<%- include('../partials/header1.ejs') %>
+
+<div class="container-scroller">
+
+<%- include('../partials/nav.ejs') %>
+  
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+<%- include('../partials/sidebar1.ejs') %>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="home-tab">
+           
+            <div class="tab-content tab-content-basic">
+              <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
+
+                <div class="row">
+                  <div class="col-lg-12 d-flex flex-column">
+           
+                    <div class="row flex-grow">
+                      <div class="col-12 grid-margin stretch-card">
+                        <div class="card card-rounded">
+                          <div class="card-body">
+
+                            <div class="d-sm-flex justify-content-between align-items-start">
+                              <div>
+                                <h4 class="card-title card-title-dash">Get Test Details</h4>
+                               <p class="card-subtitle card-subtitle-dash">Select Record</p>
+                              </div>
+                            </div>
+                            <form action="/tests/create-test" method="POST">
+                                <section id="interview-details">
+                                    
+                                    <div class="container">
+                                        <div class="row mt-5">
+                            
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="recordID">1. Select the Record ID for creating a Test</label>
+                                                    <select style="overflow:scroll;" name="recordID" id="" class="form-select">
+                                                        <option value="" selected></option>
+                                                        <% records.slice().reverse().forEach(record =>{%>
+                                                            <option value="<%= record.reqID%>"><%= record.reqID %> - <%= record.vendorCompany%> - <%= record.primeVendorCompany%> - <%= record.clientCompany%> </option>
+                                                        <%})%>
+                                                    </select>
+                                                </div>
+                                            </div>
+                            
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-lg text-white mb-0 me-0">Submit</button>
+                                    </div>
+                            
+                                </section>
+                            </form>
+                           </div>
+                        </div>
+                      </div>
+                   </div>    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+          </div>
+    </div>
+
+
+</div>
+</div>
+
+
+<%- include('../partials/footer1.ejs')%>

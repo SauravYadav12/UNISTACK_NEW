@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <script src="https://kit.fontawesome.com/0d93d068b4.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/simple-sidebar.css" />
+
+    <title><%= docTitle%></title>
+  </head>
+  <body>
+    <!-- Navigation Bar Section Starts Here -->
+    <section class="navigation">
+      <nav class="navbar navbar-expand-lg  shadow  bg-nav-custom rounded">
+        <a class="navbar-brand" href="/home/1">
+          <img
+            src="/img/unistack.png"
+            width="30"
+            height="30"
+            class="d-inline-block align-top"
+            alt=""
+          />
+          <span style="font-weight: bold;color: #00BBF9; font-size: larger;"> UNI</span><span style="font-weight: bold;color: #ff34ac;font-size: larger;">STA</span><span style="font-weight: bold;color: #FEE440;font-size: larger;">CK</span> 
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mr-2">
+            <li
+              class="<%= path === '/home' ? 'nav-item active' : 'nav-item' %>"
+            >
+              <a class="btn shadow rounded custom-button-1" href="/home/1"
+                >Requirements</a
+              >
+            </li>
+            <li
+              class="<%= path === '/interviews/dashboard' ? 'nav-item active' : 'nav-item' %>"
+            >
+              <a
+                class="btn shadow rounded custom-button-2 "
+                href="/interviews/dashboard/1"
+                >Interviews</a
+              >
+            </li>
+            <li
+              class="<%= path === '/tests/test-dashboard' ? 'nav-item active' : 'nav-item' %>"
+            >
+              <a
+                class="btn shadow rounded custom-button-3"
+                href="/tests/test-dashboard/1"
+                >Tests</a
+              >
+            </li>
+            <li
+              class=
+              "<%= path === '/interviews/dashboard' ? 'nav-item dropdown active' : 'nav-item dropdown' %> ||
+               <%= path === '/tests/test-dashboard' ? 'nav-item dropdown active' : 'nav-item dropdown' %> ||
+               <%= path === '/home' ? 'nav-item dropdown active' : 'nav-item dropdown' %>"
+            >
+              <a
+                class="btn btn shadow rounded custom-button-4 dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+               More Info
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a
+                  class="dropdown-item btn btn-outline-light text-color"
+                  href="/all-records"
+                  >All Records</a
+                >
+
+                <a
+                  class="dropdown-item btn btn-outline-light text-color"
+                  href="/blacklist-details/blacklist-home"
+                  >BlackList</a
+                >
+                <div class="dropdown-divider"></div>
+                <a
+                  class="dropdown-item btn btn-outline-light text-color"
+                  href="#"
+                  >Candidate Details</a
+                >
+
+                <a
+                  class="dropdown-item btn btn-outline-light text-color"
+                  href="/login/logs"
+                  >Login Logs</a
+                >
+              </div>
+            </li>
+          </ul>
+    </html>

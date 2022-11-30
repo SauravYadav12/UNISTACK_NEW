@@ -1,0 +1,567 @@
+<%- include('../partials/header1.ejs') %>
+
+   
+
+
+    <!-- Requirement ID Section -->
+    <section class="heading mt-4 mb-4">
+
+        <div class="container mx-auto" style="width: 500px; text-align: center">
+            <h3>Requirement ID # <em style="font-size: 25px;">
+                    <%= reqID %>
+                </em> </h3>
+            <hr class="style-two">
+        </div>
+        <!-- Form Section Starts here -->
+    <!-- <form> -->
+           
+    </section>
+
+     <!-- Form Button Section  -->
+     <section class="func-buttons mt-4 mb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="resume">** Resume **</label>
+                        <p class=" "> <a href="<%= resume %>" target="_blank">
+                                <%= resume %>
+                            </a> </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group float-end">
+                        <a href="/requirements/updateReq/<%= reqID %>"
+                            class="btn btn-primary text-white mb-0 me-0" style="width: 100px">Edit</a>
+                        <a href="/requirements/reqList/1" class="btn btn-danger text-white mb-0 me-0"
+                            style="width: 100px">Cancel</a>
+                        <% if(username==="Sam" || username==="Anmol" ){%>
+                            <a href="/requirements/deleteReq/<%= reqID %>"
+                                class="btn btn-warning text-white mb-0 me-0" style="width: 100px">Delete</a>
+                            <%}%>
+
+                    </div>
+                </div>
+            </div>
+            <hr style="border: 1px solid #007BFF">
+        </div>
+    </section>
+    <!-- Form Button Section Ends Here  -->
+    <!-- Requirement ID Section Ends Here -->
+
+
+    <!-- Section 1 - contains information about Communication & rates -->
+    <section class="communication mt-4 mb-4">
+        <div class="container">
+            <div class="section-heading">
+
+                <h3><i class="far fa-hand-point-down"></i> 1. Requirement & Communication</h3>
+            </div>
+            <hr class="style-two">
+        </div>
+
+        <div class="container section-content">
+
+            <!-- Row 1 - Contains status and next Step -->
+            <div class="row">
+                <!-- column 1 -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="status"> <strong>1.1 Req Status</strong></label>
+                        <p>
+                            <%= reqStatus %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="Assigned"> <strong>1.2 Assigned To</strong></label>
+                        <p>
+                            <%= assignedTo %>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- column 2 -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="nextStep"> <strong>1.3 Next Step</strong></label>
+                        <p>
+                            <%= nextStep %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="consultantName"><strong> 1.4 Applied For </strong></label>
+                        <p>
+                            <%= appliedFor %>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row 1 Ends Here -->
+
+            <!-- Row 2 - Contains information about tax term and Remote -->
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="rate"> <strong>1.5 Rate</strong></label>
+                        <% rate.slice().reverse().forEach( r=> {%><p>
+                                <%= r %>
+                            </p>
+                            <%});%>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="taxType"> <strong>1.6 Tax Type</strong> </label>
+                        <% taxType.slice().reverse().forEach( tax=> {%><p>
+                                <%= tax %>
+                            </p>
+                            <%});%>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="remote"> <strong>1.7 Remote %</strong> </label>
+                        <% remote.slice().reverse().forEach( rem=> {%><p>
+                                <%= rem %>
+                            </p>
+                            <%});%>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="duration"> <strong>1.8 Duration</strong> </label>
+                        <% duration.slice().reverse().forEach( d=> {%><p>
+                                <%= d %>
+                            </p>
+                            <%});%>
+                    </div>
+                </div>
+
+            </div>
+            <!-- ROW 2 Ends Here -->
+
+            <!-- Row 3 Marketing persons comments -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="mComment"> <strong>1.9 Marketing Person's Comment</strong> </label>
+                        <%mComment.slice().reverse().forEach((comment)=>{%> <p style="background-color: #F0F0F0; padding: 5px 10px; border-radius: 2%;">
+                            <span style="font-weight: bold ;">[<%=comment.created_at.toLocaleString()%> <%= comment.user%>]</span> <%= comment.comment %>
+                                </p>
+                            <%});%>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Section 1 Ends Here -->
+
+
+    <!-- Section 2 -- Contain information about Clients -->
+
+    <section class="client-info mt-4 mb-4">
+
+        <div class="container">
+            <div class="section-heading">
+                <h3><i class="far fa-hand-point-down"></i> 2. Client Info</h3>
+            </div>
+            <hr class="style-two">
+        </div>
+
+
+        <div class="container section-content">
+            <!-- Row-1 information about client -->
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client-name"> <strong>2.1 Client Company</strong> </label>
+                        <p class=" ">
+                            <%= clientCompany %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client-website"> <strong>2.2 Client Website</strong> </label>
+                        <p class=" ">
+                            <a href="<%= clientWebsite %>" target="_blank">
+                                <%= clientWebsite %>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client-address"> <strong>2.3 Client Address</strong> </label>
+                        <p class=" ">
+                            <%= clientAddress %>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row-1 Ends Here -->
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client-person"> <strong>2.4 Client Person Name</strong> </label>
+                        <p class=" ">
+                            <%= clientPerson %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client-phone"> <strong>2.5 Client Phone number</strong> </label>
+                        <p class=" ">
+                            <%= clientPhone %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client-email"> <strong>2.6 Client Email</strong> </label>
+                        <p class=" ">
+                            <%= clientEmail %>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Section 2 Ends Here -->
+
+    <!-- Section 3 -- Contain information about Prime Vendors -->
+
+    <section class="primeVendor-info mt-4 mb-4">
+        <div class="container">
+            <div class="section-heading">
+                <h3><i class="far fa-hand-point-down"></i> 3. Prime Vendor Info</h3>
+            </div>
+            <hr class="style-two">
+        </div>
+
+        <div class="container section-content">
+
+            <!-- Row-1 information about Prime Vendors -->
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="primeVendor-name"> <strong>3.1 Prime Vendor Company</strong> </label>
+                        <p class=" ">
+                            <%= primeVendorCompany %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="primeVendor-website"> <strong>3.2 Prime Vendor Website</strong> </label>
+                        <p class=" ">
+                            <a href="<%= primeVendorWebsite %>" target="_blank">
+                                <%= primeVendorWebsite %>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row-1 Ends Here -->
+
+            <!-- Row-2 Prime Vendor Contact information -->
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="primeVendor-person"> <strong>3.3 Prime Vendor Person Name</strong> </label>
+                        <p class=" ">
+                            <%= primeVendorName%>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="primeVendor-phone"> <strong>3.4 Prime Vendor Phone number</strong> </label>
+                        <p class=" ">
+                            <%= primeVendorPhone %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="primeVendor-email"> <strong>3.5 Prime Vendor Email</strong> </label>
+                        <p class=" ">
+                            <%= primeVendorEmail %>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row-2 Ends Here -->
+        </div>
+
+    </section>
+
+    <!-- Section 3 Ends Here  -->
+
+
+    <!-- Section 4 - contains information about Layer or vendor company -->
+
+    <section class="vendor-info mt-4 mb-4">
+
+        <div class="container">
+            <div class="section-heading">
+                <h3><i class="far fa-hand-point-down"></i> 4. Vendor Info</h3>
+            </div>
+            <hr class="style-two">
+        </div>
+
+        <div class="container section-content">
+
+            <!-- Row-1 information about Vendors -->
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="vendor-name"> <strong>4.1 Vendor Company</strong> </label>
+                        <p class=" ">
+                            <%= vendorCompany %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="vendor-website"> <strong>4.2 Vendor Website</strong> </label>
+                        <p class=" ">
+                            <a href="<%= vendorWebsite %>" target="_blank">
+                                <%= vendorWebsite %>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row-1 Ends Here -->
+
+            <!-- Row-2 Vendor Contact information -->
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="vendor-person"> <strong>4.3 Vendor Person Name</strong> </label>
+                        <p class=" ">
+                            <%= vendorPersonName %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="vendor-phone"> <strong>4.4 Vendor Phone number</strong></label>
+                        <p class=" ">
+                            <%= vendorPhone %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="vendor-email"> <strong>4.5 Vendor Email</strong> </label>
+                        <p class=" ">
+                            <%= vendorEmail %>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row-2 Ends Here -->
+        </div>
+
+    </section>
+
+    <!-- Section 4 - Ends Here -->
+
+    <!-- Section 5 - Contains information about the JOB  -->
+    <section class="job-requirement mt-4 mb-4">
+
+        <div class="container">
+            <div class="section-heading">
+                <h3><i class="far fa-hand-point-down"></i> 5. Job Requirement Info</h3>
+            </div>
+            <hr class="style-two">
+        </div>
+
+        <div class="container section-content">
+
+            <!-- Row -1 - Starts here contains info about JOB  -->
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="requirement-date"> <strong>5.1 Requirement Entered Date</strong> </label>
+                        <p class=" ">
+                            <%= reqEnteredDate %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="requirement-date"> <strong>5.2 Got Requirement from</strong> </label>
+                        <p class=" ">
+                            <%= gotReqFrom %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="got-from"> <strong>5.3 Got on Resume</strong> </label>
+                        <p class=" ">
+                            <%= gotOnResume %>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row 1 - Ends Here -->
+
+            <!-- Row-2 Starts here - Job Description -->
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="job-title"> <strong>5.4 Job Title</strong> </label>
+                        <p class=" ">
+                            <%= jobTitle %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="employement-type"> <strong>5.5 Employement Type (If Mentioned)</strong> </label>
+                        <p class=" ">
+                            <%= employementType %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="portal-link"> <strong>5.6 Job Portal Link</strong> </label>
+                        <p class=" ">
+                            <a href="<%= jobPortalLink %>" target="_blank">
+                                <%= jobPortalLink %>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row-2 Ends Here - Job Description -->
+
+            <!-- Row-3 - Technical Keywords -->
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="support-person"> <strong>5.7 Requirement Entered By</strong> </label>
+                        <p class=" ">
+                            <%= reqEnteredBy %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="keywords"> <strong>5.9 Enter the Requirement keyword (sorted out from Job
+                                Description)</strong> </label>
+                        <p class=" ">
+                            <%= reqKeywords %>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row-3 Ends Here - Technical Keywords -->
+
+            <!-- Row-4 Starts - Job Description Complete -->
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="job-description"> <strong>5.9 Complete Job Description</strong> </label>
+                        <p class="text-area-view">
+                            <%= jobDescription %>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row-4 Ends here     -->
+            <hr style="border: 1px solid #007BFF">
+        </div>
+
+        <div class="container">
+            <div class=" float-start">
+                <p> Created by <strong>
+                        <%= recordOwner %>
+                    </strong> on date <strong>
+                        <%= createdAt.toLocaleDateString()%>
+                    </strong> Time @ <strong>
+                        <%= createdAt.toLocaleTimeString()%>
+                    </strong></p>
+            </div>
+
+            <div class=" float-end">
+                <em>
+                    <p> Updated by <strong>
+                            <%= updatedBy %>
+                        </strong> on date <strong>
+                            <%= updatedAt.toLocaleDateString()%>
+                        </strong> Time @ <strong>
+                            <%= updatedAt.toLocaleTimeString()%>
+                        </strong></p>
+                </em>
+            </div>
+        </div>
+
+    </section>
+    <!-- Section 5 Ends Here -->
+
+<!-- </form> -->
+
+    <!-- Form Ends here -->
+
+    <%- include('../partials/footer1.ejs')%>

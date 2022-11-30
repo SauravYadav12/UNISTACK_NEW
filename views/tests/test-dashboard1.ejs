@@ -1,0 +1,160 @@
+<%- include('../partials/header1.ejs') %>
+
+<div class="container-scroller">
+    
+<%- include('../partials/nav.ejs') %>
+  
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+  
+
+  <%- include('../partials/sidebar1.ejs') %>
+    
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="home-tab">
+             
+              <div class="tab-content tab-content-basic">
+                <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
+
+                  <div class="row">
+                    <div class="col-lg-12 d-flex flex-column">
+             
+                      <div class="row flex-grow">
+                        <div class="col-12 grid-margin stretch-card">
+                          <div class="card card-rounded">
+                            <div class="card-body">
+                              <div class="d-sm-flex justify-content-between align-items-start">
+                                <div>
+                                  <h4 class="card-title card-title-dash">Test Dashboard</h4>
+                                 <p class="card-subtitle card-subtitle-dash">Page <%= current %></p>
+                                </div>
+                                <div>
+                                  <a href="/tests/get-test-details" class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new</a>
+                                  <a href="/home" class="btn btn-info btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-table"></i>Export Page</a>
+                                </div>
+                              </div>
+                              <div class="table-responsive  mt-1">
+                                <table id="order-listing" class="table dataTable no-footer table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                          <th>View</th>
+                                          <th>Test ID</th>
+                                          <th>Test Status</th>
+                                          <th>Test entered date</th>
+                                          <th>Test Duration</th>
+                                          <th>Subject Line</th>
+                                          <th>Client Name</th>
+                                          <th>Prime Company</th>
+                                          <th>Vendor Company</th>
+                                          <th>Created by</th>
+                                          <th>Created At</th>
+                                        </tr>
+                                      </thead>
+                                  <tbody>
+                                    <%records.forEach(t=>{ %>
+                          
+                           
+                                    <tr onclick="window.location='/tests/view-test/<%= t.testId %>'" class="row-style">
+                                        <td> 
+                                            <a class="btn btn-primary text-white"
+                                            href="/tests/view-test/<%= t.testId %>">View</a>
+                                            </td>
+                                        <td>
+                                          <%= t.testId %>
+                                        </td>
+                                        <td>
+                                          <%= t.testEnteredDate %>
+                                        </td>
+                                        <td> <strong>
+                                            <%= t.testStatus %>
+                                          </strong></td>
+                                        <td>
+                                          <%= t.testDuration %>
+                                        </td>
+                                        <td>
+                                          <%= t.subjectLine %>
+                                        </td>
+                                        <td>
+                                          <%= t.clientName %>
+                                        </td>
+                                        <td>
+                                          <%= t.primeVendorCompany %>
+                                        </td>
+                                        <td>
+                                          <%= t.vendorCompany %>
+                                        </td>
+                                        <td>
+                                          <%= t.recordOwner %>
+                                        </td>
+                                        <td id="date-field">
+                                          <%= t.createdAt.toLocaleString(); %>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+               
+                  </div>
+                  
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <nav aria-label="...">
+          <% if (pages> 0) { %>
+            <ul class="pagination pagination-lg text-center justify-content-center mb-4">
+              <% if (current==1) { %>
+                <li class="page-item disabled"><a class="page-link">First</a></li>
+                <% } else { %>
+                  <li class="page-item"><a class="page-link" href="/tests/test-dashboard/1">First</a>
+                  </li>
+                  <% } %>
+                    <% var i=(Number(current)> 5 ? Number(current) - 4 : 1) %>
+                      <% if (i !==1) { %>
+                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                        <% } %>
+                          <% for (; i <=(Number(current) + 4) && i <=pages; i++) { %>
+                            <% if (i==current) { %>
+                              <li class="page-item active"><a class="page-link">
+                                  <%= i %>
+                                </a></li>
+                              <% } else { %>
+                                <li class="page-item"><a class="page-link"
+                                    href="/tests/test-dashboard/<%= i %>">
+                                    <%= i %>
+                                  </a></li>
+                                <% } %>
+                                  <% if (i==Number(current) + 4 && i < pages) { %>
+                                    <li class="page-item disabled"><a class="page-link">...</a></li>
+                                    <% } %>
+                                      <% } %>
+                                        <% if (current==pages) { %>
+                                          <li class="page-item disabled"><a class="page-link">Last</a></li>
+                                          <% } else { %>
+                                            <li class="page-item"><a class="page-link"
+                                                href="/tests/test-dashboard/<%= pages %>">Last</a></li>
+                                            <% } %>
+            </ul>
+            <% } %>
+        </nav>
+      </div>
+   
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+<%- include('../partials/footer1.ejs')%>

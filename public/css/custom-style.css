@@ -1,0 +1,26 @@
+.text-area-view{
+    height: 400px;
+    white-space: pre-line;
+    overflow: auto;
+    background-color: #F0F0F0;
+    padding: 0 20px;
+    border-radius: 1%;
+}
+
+.text-area-create{
+    height: 400px;
+    overflow: auto;
+}
+
+.text-area-comment{
+    height: auto;
+}
+
+.text-area-commentview{
+    height: auto;
+    white-space: pre-line;
+    overflow: auto;
+    background-color: #F0F0F0;
+    padding: 0 20px;
+    border-radius: 1%;
+}

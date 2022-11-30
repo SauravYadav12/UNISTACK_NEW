@@ -1,0 +1,64 @@
+
+<%- include('../partials/header.ejs') %>
+
+
+
+<form class="form-inline my-2 my-lg-0">
+  <input id ="myInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onkeyup="searchRows()">
+  <!-- <button class="btn btn-outline-light my-2 my-sm-0" type="submit" onkeyup="searchRows()">Search</button> -->
+</form>
+</div>
+</nav>
+
+</section> 
+<!-- Navigation Section - Ends here -->
+
+
+
+<!-- Side Navigation Section Starts Here -->
+
+<%- include('../partials/sidebar.ejs') %>
+
+<!-- /#sidebar-wrapper -->
+
+
+      <section class="page-content">
+              <div class="float-left ml-4 mt-4 mb-4 mr-auto"> 
+                <!-- <a href="/blacklist-details/create-blacklist-client" class="btn btn-success">
+                  <i class="far fa-plus-square"></i> New blacklist
+                </a>  -->
+      </div>
+
+      <div id="page-content-wrapper" >   
+              <div class="mt-4 blacklist-table">
+                          <table id="interviewTable" class="table" >
+                              <thead class="thead-dark">
+                                <tr>
+                                  <th scope="col">User</th>
+                                  <th scope="col">Login Time</th>
+                                  <th scope="col">Login Date</th>
+                                  <th></th>
+                                </tr>
+                              </thead>
+                              <tbody class="table-body">
+                                <% logs.slice().reverse().forEach(log=>{ %>
+                                  <tr>
+                                    <td> <%= log.username%> </td>
+                                    <td> <%= log.loginTime.toLocaleTimeString(); %> </td>
+                                    <td> <%= log.loginTime.toLocaleDateString(); %> </td>
+                                  </tr>
+                                <% }); %>
+                              </tbody>
+                          </table>
+                      </div>
+                        </div>
+                    </section>
+
+                </section>            
+                    
+
+    <script src="http://cdn.date-fns.org/v1.9.0/date_fns.min.js"></script>
+    <script src="/js/clock.js"></script>
+
+<%- include('../partials/footer.ejs')%>
+                

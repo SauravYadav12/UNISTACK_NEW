@@ -1,0 +1,518 @@
+<%- include('../partials/header1.ejs') %>
+
+  <!-- <form class="forms-sample my-2 my-lg-0">
+    <input id ="myInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onkeyup="searchRows()" onkeyup="searchInterviews()"> -->
+    <!-- <button class="btn btn-outline-light my-2 my-sm-0" type="submit" onkeyup="searchRows()">Search</button> -->
+  <!-- </form> -->
+<!-- </div> -->
+<!-- </nav> -->
+
+</section> 
+<!-- Navigation Section - Ends here -->
+        
+
+    <!-- Form Section Starts here -->
+    <form action="/postCreateReq" method="POST" id="create-req" class="forms-sample">
+
+        <!-- Requirement ID Section -->
+       <section class="heading mt-4">
+
+            <div class="container row mx-auto form-inline" style="width: 500px; text-align: center; padding-left:5%;">
+                <h3 class="form-group mb-2">Requirement ID #
+                    
+                        <input type="text" class="form-group mx-sm-3 form-control-plaintext" name="reqID" value="<%= reqNumber %>" readonly required> 
+                    
+                </h3>
+                <hr class="style-two">
+            </div>
+
+
+            <!-- Form Button Section  -->
+            <section class="func-buttons mb-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group float-right">
+                                <label for="resume">** Resume for <%= reqNumber %> **</label>
+                                <input type="url" class="form-control" name="resume" placeholder="Resume Google drive link" value="<%= typeof resume != 'undefined' ? resume :'' %>">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group float-end">
+                                <button class="btn btn-primary text-white mb-0 me-0 submit-create-form" style="width: 100px">Save</button>
+                                <a href="/requirements/reqlist/1" class="btn btn-danger text-white mb-0 me-0" type="button"></i>Cancel</a>
+
+                                <!-- <a href="/home/1" class="btn shadow rounded custom-button-3">Cancel</a> -->
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border: 1px solid #007BFF">
+                    <% include ../partials/error_create_record.ejs %>
+                </div>
+            </section>
+            <!-- Form Button Section Ends Here  -->
+
+       </section>
+       <!-- Requirement ID Section Ends Here -->
+
+    
+     <!-- Section 1 - contains information about Communication & rates -->
+    <section class="communication mt-4 mb-4"> 
+        <div class="container">
+            <div  class="section-heading">
+                
+                <h3><i class="far fa-hand-point-down"></i> 1. Requirement & Communication</h3>
+            </div>
+            <hr class="style-two">
+        </div>
+        
+        <div class="container section-content">
+            
+            <!-- Row 1 - Contains status and next Step -->
+            <div class="row">
+                <!-- column 1 -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="status">1.1 Req Status</label>
+                        <select class="form-select" name="reqStatus" id="exampleFormControlSelect1">
+                            <option value="<%= typeof reqStatus != 'undefined' ? reqStatus :'' %>"><%= reqStatus %></option>
+                            <option value="New Working">1. New Working</option>
+                            <option value="Call But No Response">2. Called But No Response</option>
+                            <option value="Spoke to vendor">3. Spoken to vendor</option>
+                            <option value="Submitted">4. Submitted</option>
+                            <option value="Interviewed">5. Interviewed</option>
+                            <option value="Rejected by vendor">6. Rejected by vendor</option>
+                            <option value="Cancelled">7. Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="assignedTo">1.2 Assigned To</label>
+                        <select class="form-select" name="assignedTo" id="exampleFormControlSelect1">
+                                <option value="<%= typeof assignedTo != 'undefined' ? assignedTo :'' %>"><%= assignedTo %></option>
+                                <option value="Anmol">1. Anmol</option>
+                                <option value="Aditi">2. Aditi</option>
+                                <option value="Alina">3. Alina</option>
+                                <option value="Ankush">4. Ankush</option>
+                                <option value="Ashwini">5. Ashwini</option>
+                                <option value="Deepak">6. Deepak</option>
+                                <option value="Rahul RR">7. Rahul RR</option>
+                                <option value="Rohit singh">8. Rohit Singh</option>
+                                <option value="Pramod">9. Pramod</option>
+                                <option value="Sam">10. Sam</option>
+                                <option value="Ritika Singh">11. Ritika Singh</option>
+                                <option value="Rajat K">12. Rajat K</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <!-- column 2 -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="nextStep">1.3 Next Step</label>
+                        <input type="text" class="form-control" placeholder="Review comment" name="nextStep" value="<%= typeof nextStep != 'undefined' ? nextStep :'' %>">
+                    </div>    
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="consultantName">1.4 Applied For</label>
+                        <select class="form-select" name="appliedFor" id="exampleFormControlSelect1">
+                                <option value="<%= typeof appliedFor != 'undefined' ? appliedFor :'' %>"><%= appliedFor %></option>
+                                <option value="Alexandra">1. Alexandra</option>
+                                <option value="Allan">2. Allan</option>
+                                <option value="Harsh">3. Harsh</option>
+                                <option value="Tayveer">4. Tayveer</option>
+                                <option value="Basant">5. Basant</option>
+                                <option value="Kevin">6. Kevin</option>
+                                <option value="Yagyaveer">7. Yagyaveer</option>
+                                <option value="Kuldeep">8. Kuldeep</option>
+                                <option value="Mahsen">9. Mahsen</option>
+                                <option value="Sonia">10. Sonia</option>
+                                <option value="Mina">11. Mina</option>
+                                <option value="Abby">12. Abby</option>
+                                <option value="Bibek">13. Bibek</option>
+                                <option value="Divyang">14. Divyang</option>
+                        </select>
+                    </div>    
+                </div>
+
+            </div>
+            <!-- Row 1 Ends Here -->
+
+            <!-- Row 2 - Contains information about tax term and Remote -->
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="rate">1.3 Rate</label>
+                        <input type="text" name="rate" class="form-control" placeholder="Enter rates" value="<%= typeof rate != 'undefined' ? rate :'' %>">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="taxType">1.4 Tax Type</label>
+                      <select class="form-select" name="taxType" id="">
+                          <option value="<%= typeof taxType != 'undefined' ? taxType :'' %>"><%= taxType %></option>
+                          <option value="C2C">1. C2C</option>
+                          <option value="1099">2. 1099</option>
+                          <option value="W2 with vendor">3. W2 with vendor</option>
+                          <option value="W2 with client">4. W2 with client</option>
+                      </select>  
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="remote">1.5 Remote %</label>
+                        <input type="text" name="remote" class="form-control" value="<%= typeof remote != 'undefined' ? remote :'' %>">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="duration">1.6 Duration</label>
+                        <input type="text" name="duration" class="form-control" placeholder="Enter duration" value="<%= typeof duration != 'undefined' ? duration :'' %>">
+                    </div>
+                </div>
+
+            </div>
+            <!-- ROW 2 Ends Here -->
+
+            <!-- Row 3 Marketing persons comments -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="mComments">1.7 Marketing Person's Comment</label>
+                        <textarea rows="5" cols="33" id="mComments" class="form-control text-area-comment" name="mComment"><%= mComment %></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    
+    <!-- Section 1 Ends Here -->
+
+
+    <!-- Section 2 -- Contain information about Clients -->
+
+    <section class="client-info mt-4 mb-4">
+
+        <div class="container">
+            <div class="section-heading">
+                <h3><i class="far fa-hand-point-down"></i> 2. Client Info</h3>
+            </div>
+            <hr class="style-two">
+        </div>
+
+
+        <div class="container section-content">
+            <!-- Row-1 information about client -->
+            <div class="row">
+                
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client-name">2.1 Client Company</label>
+                        <input type="text" name="clientCompany" class="form-control" placeholder="Enter client name" value="<%= typeof clientCompany != 'undefined' ? clientCompany :'' %>">
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client-website">2.2 Client Website</label>
+                        <input type="text" name="clientWebsite" class="form-control" placeholder="Enter client Website" >
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client-address">2.3 Client Address</label>
+                        <input type="text" name="clientAddress" class="form-control" placeholder="Enter client Address">
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row-1 Ends Here -->
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client-person">2.4 Client Person Name</label>
+                        <input type="text" class="form-control" placeholder="Enter Client person" name="clientPerson">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client-phone">2.5 Client Phone number</label>
+                        <input type="text" name="clientPhone" class="form-control" placeholder="Enter Phone number">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client-email">2.6 Client Email</label>
+                        <input type="text" name="clientEmail" class="form-control" placeholder="Enter Email">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    
+    </section>
+
+    <!-- Section 2 Ends Here -->
+
+    <!-- Section 3 -- Contain information about Prime Vendors -->
+
+     <section class="primeVendor-info mt-4 mb-4">
+        <div class="container">
+            <div class="section-heading">
+                <h3><i class="far fa-hand-point-down"></i> 3. Prime Vendor Info</h3>
+            </div>
+            <hr class="style-two">
+        </div>
+
+            <div class="container section-content">
+                
+                <!-- Row-1 information about Prime Vendors -->
+                <div class="row">
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="primeVendor-name">3.1 Prime Vendor Company</label>
+                            <input type="text" name="primeVendorCompany" class="form-control" placeholder="Enter Prime Vendor company" value="<%= typeof primeVendorCompany != 'undefined' ? primeVendorCompany :'' %>">
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="primeVendor-website">3.2 Prime Vendor Website</label>
+                            <input type="text" name="primeVendorWebsite" class="form-control" placeholder="Enter Prime Vendor Website">
+                        </div>
+                    </div>
+    
+                </div>
+                <!-- Row-1 Ends Here -->
+                
+                <!-- Row-2 Prime Vendor Contact information -->
+                <div class="row">
+    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="primeVendor-person">3.3 Prime Vendor Person Name</label>
+                            <input type="text" class="form-control" placeholder="Enter Prime Vendor person" name="primeVendorName">
+                        </div>
+                    </div>
+    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="primeVendor-phone">3.4 Prime Vendor Phone number</label>
+                            <input type="text" name="primeVendorPhone" class="form-control" placeholder="Enter Phone number">
+                        </div>
+                    </div>
+    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="primeVendor-email">3.5 Prime Vendor Email</label>
+                            <input type="text" name="primeVendorEmail" class="form-control" placeholder="Enter Email">
+                        </div>
+                    </div>
+    
+                </div>
+                <!-- Row-2 Ends Here -->
+            </div>
+        
+        </section>
+
+        <!-- Section 3 Ends Here  -->
+
+
+        <!-- Section 4 - contains information about Layer or vendor company -->
+
+        <section class="vendor-info mt-4 mb-4">
+        
+            <div class="container">
+                <div class="section-heading">
+                    <h3><i class="far fa-hand-point-down"></i> 4. Vendor Info</h3>
+                </div>
+                <hr class="style-two">
+            </div>
+
+                <div class="container section-content">
+                    
+                    <!-- Row-1 information about Vendors -->
+                    <div class="row">
+                        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="vendor-name">4.1 Vendor Company</label>
+                                <input type="text" name="vendorCompany" class="form-control" placeholder="Enter Vendor company" required value="<%= typeof vendorCompany != 'undefined' ? vendorCompany :'' %>">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="vendor-website">4.2 Vendor Website</label>
+                                <input type="text" name="vendorWebsite" class="form-control" placeholder="Enter Vendor Website" value="<%= typeof vendorWebsite != 'undefined' ? vendorWebsite :'' %>">
+                            </div>
+                        </div>
+        
+                    </div>
+                    <!-- Row-1 Ends Here -->
+                    
+                    <!-- Row-2 Vendor Contact information -->
+                    <div class="row">
+        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="vendor-person">4.3 Vendor Person Name</label>
+                                <input type="text" class="form-control" placeholder="Enter Vendor person" name="vendorPersonName" value="<%= typeof vendorPersonName != 'undefined' ? vendorPersonName :'' %>">
+                            </div>
+                        </div>
+        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="vendor-phone">4.4 Vendor Phone number</label>
+                                <input type="text" name="vendorPhone" class="form-control" placeholder="Enter Phone number" value="<%= typeof vendorPhone != 'undefined' ? vendorPhone :'' %>">
+                            </div>
+                        </div>
+        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="vendor-email">4.5 Vendor Email</label>
+                                <input type="text" name="vendorEmail" class="form-control" placeholder="Enter Email" value="<%= typeof vendorEmail != 'undefined' ? vendorEmail :'' %>">
+                            </div>
+                        </div>
+        
+                    </div>
+                    <!-- Row-2 Ends Here -->
+                </div>
+            
+            </section>
+
+            <!-- Section 4 - Ends Here -->
+
+            <!-- Section 5 - Contains information about the JOB  -->
+            <section class="job-requirement mt-4 mb-4">
+                
+                <div class="container">
+                    <div class="section-heading">
+                        <h3><i class="far fa-hand-point-down"></i> 5. Job Requirement Info</h3>
+                    </div>
+                    <hr class="style-two">
+                </div>
+
+                <div class="container section-content">
+                    
+                    <!-- Row -1 - Starts here contains info about JOB  -->
+                    <div class="row">
+                        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="requirement-date">5.1 Requirement Entered Date</label>
+                                <input type="date" name="reqEnteredDate" class="form-control" placeholder="select-date" required>
+                            </div>   
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="requirement-Type">5.2 Got Requirement from</label>
+                                <select name="gotReqFrom" id="" class="form-control">
+                                    <option value="Email">1. Got from online Resume</option>
+                                    <option value="consultant">2. Received on consultant's Email</option>
+                                    <option value="Portal">3. Got through Job Portal</option>
+                                </select>
+                            </div>   
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="got-from">5.3 Got on Resume</label>
+                                <input type="text" name="gotOnResume" class="form-control" placeholder="Enter resume name" value="<%= typeof gotOnResume != 'undefined' ? gotOnResume :'' %>">
+                            </div>
+                        </div>
+
+                    </div>
+                     <!-- Row 1 - Ends Here -->
+
+                     <!-- Row-2 Starts here - Job Description -->
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="job-title">5.4 Job Title</label>
+                                <input type="text" name="jobTitle" class="form-control" placeholder="Enter Job Title" required value="<%= typeof jobTitle != 'undefined' ? jobTitle :'' %>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="employement-type">5.5 Employement Type (If Mentioned) </label>
+                                <input type="text" name="employementType" class="form-control" placeholder="C2C/1099/W2/C2H">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="portal-link">5.6 Job Portal Link</label>
+                                <input type="text" name="jobPortalLink" placeholder="Enter job Portal link" class="form-control" value="<%= typeof jobPortalLink != 'undefined' ? jobPortalLink :'' %>">
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Row-2 Ends Here - Job Description -->
+
+                    <!-- Row-3 - Technical Keywords -->
+                    <div class="row">
+                        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="support-person">5.7 Requirement Entered By</label>
+                                <input type="text" name="reqEnteredBy" class="form-control" placeholder="Requirement by" value="<%= typeof reqEnteredBy != 'undefined' ? reqEnteredBy :'' %>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="keywords">5.9 Enter the Requirement keyword (sorted out from Job Description) </label>
+                                <input type="text" name="reqKeywords" class="form-control" placeholder="Enter the technical Keywords " value="<%= typeof reqKeywords != 'undefined' ? reqKeywords :'' %>">
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Row-3 Ends Here - Technical Keywords -->
+
+                    <!-- Row-4 Starts - Job Description Complete -->
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="job-description">5.9 Complete Job Description</label>
+                                <textarea name="jobDescription" class="form-control text-area-create" placeholder="Enter the complete Job Description"><%= jobDescription %></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Row-4 Ends here     -->
+                    <hr style="border: 1px solid #007BFF">  
+                </div>
+
+            </section>
+            <!-- Section 5 Ends Here -->
+
+            
+            
+    </form>
+
+    <!-- Form Ends here -->
+  <!-- <script src="/js/hardkeySave.js"></script> -->
+  <%- include('../partials/footer1.ejs') %>

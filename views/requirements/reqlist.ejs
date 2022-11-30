@@ -1,0 +1,163 @@
+<%- include('../partials/header1.ejs') %>
+
+<div class="container-scroller">
+    
+<%- include('../partials/nav.ejs') %>
+  
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+  
+
+  <%- include('../partials/sidebar1.ejs') %>
+    
+    <!-- partial -->
+    <%- include('../partials/main-panel-start.ejs') %>
+    
+
+        <div class="card-body">
+          <div class="d-sm-flex justify-content-between align-items-start">
+            <div>
+              <h4 class="card-title card-title-dash">Requirements</h4>
+              <p class="card-subtitle card-subtitle-dash">Page <%= current %></p>
+            </div>
+            <div>
+              <a href="/requirements/createReq" class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new</a>
+              <a href="/exportData/:page" class="btn btn-info btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-table"></i>Export Page</a>
+            </div>
+          </div>
+          <div class="table-responsive  mt-1">
+            <table id="order-listing" class="table dataTable no-footer table-striped table-hover">
+              <thead>
+
+                <tr>
+                  <th>View</th>
+                  <th>Edit</th>
+                  <th>Req ID</th>
+                  <th>Assigned to</th>
+                  <th>Applied For</th>
+                  <th>Client Name</th>
+                  <th>Req Status</th>
+                  <th>Next Step</th>
+                  <th>Vendor Company</th>
+                  <th>Vendor Person</th>
+                  <th>Vendor Phone</th>
+                  <th>Requirement Title</th>
+                  <th>Created by</th>
+                  <th>Created At</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%records.forEach(record=>{ %>
+      
+                <tr onclick="window.location='/requirements/viewReq/<%= record.reqID %>';" class="row-style">
+                  <td> 
+                    <a class="btn btn-primary text-white"
+                      href="/requirements/viewReq/<%= record.reqID %>">View</a>
+                  </td>
+
+                  <td> 
+                    <a class="btn btn-danger text-white"
+                      href="/requirements/updateReq/<%= record.reqID %>">Edit</a>
+                  </td>
+
+                    <td>
+                    <%= record.reqID %>
+                  </td>
+                  <td class="assigned-to"><strong>
+                      <%= record.assignedTo %>
+                    </strong></td>
+                  <td style="color: red;"> <strong>
+                      <%= record.appliedFor %>
+                    </strong> </td>
+                  <td><strong>
+                      <%= record.clientCompany.slice(0,10) %>
+                    </strong></td>
+                  <td class="status" style="font-weight: 600;">
+                    <label class="badge badge-dark">
+                      <%= record.reqStatus %>
+                    </label>
+                  </td>
+                  <td>
+                    <%= record.nextStep.slice(0,10) %>
+                  </td>
+                  <td style="font-weight: 600;">
+                    <% if(record.vendorCompany){ %>
+                    <%= record.vendorCompany.slice(0,10)  %>
+                    <%}%>
+                  </td>
+                  <td>
+                    <% if(record.vendorPersonName){ %>
+                    <%= record.vendorPersonName.slice(0,10)  %>
+                    <%}%>
+                  </td>
+                  <td>
+                    <% if(record.vendorPhone){ %>
+                      <%= record.vendorPhone.slice(0,10)  %>
+                    <%}%>
+                  </td>
+                  <td>
+                    <% if(record.jobTitle){ %>
+                      <%= record.jobTitle.slice(0,10)  %>
+                    <%}%>
+                  </td>
+                  <td>
+                    <%= record.recordOwner %>
+                  </td>
+                  <td>
+                    <%= record.createdAt.toLocaleString(); %>
+                  </td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+    <%- include('../partials/main-panel-end.ejs') %>
+                          
+
+        <nav aria-label="...">
+          <% if (pages> 0) { %>
+            <ul class="pagination pagination-lg text-center justify-content-center mb-4">
+              <% if (current==1) { %>
+                <li class="page-item disabled"><a class="page-link">First</a></li>
+                <% } else { %>
+                  <li class="page-item"><a class="page-link" href="/requirements/reqlist/1">First</a>
+                  </li>
+                  <% } %>
+                    <% var i=(Number(current)> 5 ? Number(current) - 4 : 1) %>
+                      <% if (i !==1) { %>
+                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                        <% } %>
+                          <% for (; i <=(Number(current) + 4) && i <=pages; i++) { %>
+                            <% if (i==current) { %>
+                              <li class="page-item active"><a class="page-link">
+                                  <%= i %>
+                                </a></li>
+                              <% } else { %>
+                                <li class="page-item"><a class="page-link"
+                                    href="/requirements/reqlist/<%= i %>">
+                                    <%= i %>
+                                  </a></li>
+                                <% } %>
+                                  <% if (i==Number(current) + 4 && i < pages) { %>
+                                    <li class="page-item disabled"><a class="page-link">...</a></li>
+                                    <% } %>
+                                      <% } %>
+                                        <% if (current==pages) { %>
+                                          <li class="page-item disabled"><a class="page-link">Last</a></li>
+                                          <% } else { %>
+                                            <li class="page-item"><a class="page-link"
+                                                href="/requirements/reqlist/<%= pages %>">Last</a></li>
+                                            <% } %>
+            </ul>
+            <% } %>
+        </nav>
+      </div>
+   
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+<%- include('../partials/footer1.ejs')%>
