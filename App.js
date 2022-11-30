@@ -144,7 +144,7 @@ if(port==null || port == ""){
 }
 
 app.listen(port,function(){
-  console.log("Successfully connected to server");
+  console.log(`Successfully connected to server port ${port}`);
 });
 
 // ===================================================================================
