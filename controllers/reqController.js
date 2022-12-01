@@ -35,7 +35,7 @@ exports.exportData = async (req,res) => {
   let page = req.params.page || 1
   let userp = req.user.username
   const date = Date.now();
-  console.log("landing date--", date);
+  console.log("landing date--", page);
 
   const records = await Unibase.find({}).sort({"_id":-1}).skip((perPage * page) - perPage).limit(perPage).exec();
   const workbook = new excelJS.Workbook();  // Create a new workbook

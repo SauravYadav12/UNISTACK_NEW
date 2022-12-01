@@ -22,7 +22,7 @@
             </div>
             <div>
               <a href="/requirements/createReq" class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new</a>
-              <a href="/exportData/:page" class="btn btn-info btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-table"></i>Export Page</a>
+              <a href="/exportData/<%= current %>" class="btn btn-info btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-table"></i>Export Page</a>
             </div>
           </div>
           <div class="table-responsive  mt-1">
@@ -63,7 +63,7 @@
                       <%= record.appliedFor %>
                     </strong> </td>
                   <td><strong>
-                      <%= record.clientCompany.slice(0,10) %>
+                      <%= record.clientCompany.slice(0,20) %>
                     </strong></td>
                   <td class="status" style="font-weight: 600;">
                     <label class="badge badge-dark">
@@ -75,22 +75,22 @@
                   </td>
                   <td style="font-weight: 600;">
                     <% if(record.vendorCompany){ %>
-                    <%= record.vendorCompany.slice(0,10)  %>
+                    <%= record.vendorCompany.slice(0,20)  %>
                     <%}%>
                   </td>
                   <td>
                     <% if(record.vendorPersonName){ %>
-                    <%= record.vendorPersonName.slice(0,10)  %>
+                    <%= record.vendorPersonName.slice(0,20)  %>
                     <%}%>
                   </td>
                   <td>
                     <% if(record.vendorPhone){ %>
-                      <%= record.vendorPhone.slice(0,10)  %>
+                      <%= record.vendorPhone.slice(0,25)  %>
                     <%}%>
                   </td>
                   <td>
                     <% if(record.jobTitle){ %>
-                      <%= record.jobTitle.slice(0,10)  %>
+                      <%= record.jobTitle.slice(0,20)  %>
                     <%}%>
                   </td>
                   <td>

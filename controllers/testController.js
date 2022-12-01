@@ -88,39 +88,37 @@ exports.getTestDetailsPage = async(req, res) => {
 };
 
 
-exports.getCreateTestpage = (req, res) => {
+exports.getCreateTestpage = async(req, res) => {
+
+    try {
+        //Find all Records
+
+    const lastRec = await Test.find().sort({ createdAt: -1 }).limit(1);
+    const newTestId = parseInt(lastRec[0].testId) + 1
     const username = req.user.username;
     const reqID = req.body.recordID;
-    let uniqueRecord = [];
-    var testId = 0;
 
-    Test.find().then(data=>{
-        for (let i = 0; i < data.length; i++){
-            uniqueRecord.push(data[i].testId);
-        }
-        let newRid = uniqueRecord[uniqueRecord.length - 1]
-        testId = parseInt(newRid) + 1
-
-            Unibase.findOne({ reqID: reqID }, (err, foundRecord) => {
-                if (!err) {
-                    res.render('tests/create-test', {
-                        path: '/tests/test-dashboard',
-                        docTitle: 'Create Test',
-                        reqID: foundRecord.reqID,
-                        testId: testId,
-                        vendorCompany: foundRecord.vendorCompany,
-                        primeVendorCompany: foundRecord.primeVendorCompany,
-                        consultant: foundRecord.appliedFor,
-                        jobDescription: foundRecord.jobDescription,
-                        clientName: foundRecord.clientCompany,
-                        taxType: foundRecord.taxType,
-                        duration: foundRecord.duration,
-                        username: username
-                    });
-                }
+    Unibase.findOne({ reqID: reqID }, (err, foundRecord) => {
+        if (!err) {
+            res.render('tests/create-test', {
+                path: '/tests/test-dashboard',
+                docTitle: 'Create Test',
+                reqID: foundRecord.reqID,
+                testId: newTestId,
+                vendorCompany: foundRecord.vendorCompany,
+                primeVendorCompany: foundRecord.primeVendorCompany,
+                consultant: foundRecord.appliedFor,
+                jobDescription: foundRecord.jobDescription,
+                clientName: foundRecord.clientCompany,
+                taxType: foundRecord.taxType,
+                duration: foundRecord.duration,
+                username: username
             });
-        })
-        .catch(err=>console.log(err))
+        }
+    });
+    } catch (error) {
+        console.log(error);
+    }
 
 }
 
