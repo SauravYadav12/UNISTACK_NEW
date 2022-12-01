@@ -31,7 +31,6 @@
 
                 <tr>
                   <th>View</th>
-                  <th>Edit</th>
                   <th>Req ID</th>
                   <th>Assigned to</th>
                   <th>Applied For</th>
@@ -54,13 +53,7 @@
                     <a class="btn btn-primary text-white"
                       href="/requirements/viewReq/<%= record.reqID %>">View</a>
                   </td>
-
-                  <td> 
-                    <a class="btn btn-danger text-white"
-                      href="/requirements/updateReq/<%= record.reqID %>">Edit</a>
-                  </td>
-
-                    <td>
+                  <td>
                     <%= record.reqID %>
                   </td>
                   <td class="assigned-to"><strong>

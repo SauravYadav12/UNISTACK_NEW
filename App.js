@@ -12,7 +12,9 @@ const requirementController = require('./controllers/reqController');
 const interviewController = require('./controllers/interviewController');
 const testController = require('./controllers/testController');
 const blackListController = require('./controllers/blacklist');
-const consultantDetailsController = require('./controllers/consultant-details');
+// const consultantDetailsController = require('./controllers/consultant-details');
+const consultants = require('./routes/consultant');
+
 //passport config
 
 require('./config/passport')(passport);
@@ -57,14 +59,14 @@ app.get('/create-unistack-users',userController.getCreateUserPage);
 
 app.get('/logout',userController.getLogoutPage);
 
-app.get("/reports-dashboard",requirementController.getDashboard1)
+app.get("/reports-dashboard",ensureAuthenticated,requirementController.getDashboard1)
 
 ////////////////////GET METHODS -  REQUIREMENT CREATION ///////////////////////
 app.get('/requirements/createReq',ensureAuthenticated,requirementController.getCreateReqPage);
-app.get('/all-records',requirementController.getSearchReq); // ADD THIS AS 2ND OPTION "ensureAuthenticated"
+app.get('/all-records',ensureAuthenticated,requirementController.getSearchReq); // ADD THIS AS 2ND OPTION "ensureAuthenticated"
 app.get('/home', ensureAuthenticated, requirementController.getAllwithPageNumber);
 app.get('/requirements/reqlist/:page', ensureAuthenticated, requirementController.getReqList);
-app.get("/exportData/:page",requirementController.exportData );
+app.get("/exportData/:page",ensureAuthenticated,requirementController.exportData );
 
 
 app.get('/requirements/viewReq/:reqID',ensureAuthenticated,requirementController.getViewRecordPage);
@@ -108,33 +110,34 @@ app.get('/interviews/all-interviews',ensureAuthenticated,interviewController.get
 // ==========================GET REQUESTS================================================
 
 // app.get('/tests/test-dashboard',testController.getTestDashboardPage);
-app.get('/tests/get-test-details',testController.getTestDetailsPage);
-app.get('/tests/view-test/:testId',testController.getTestViewPage);
-app.get('/tests/update-test/:testId',testController.getUpdateTestPage);
-app.get('/tests/delete-test/:testId',testController.getDeleteTestPage);
-app.get('/tests/test-dashboard/:page',testController.getAllTestWithPageNumber);
+app.get('/tests/get-test-details',ensureAuthenticated,testController.getTestDetailsPage);
+app.get('/tests/view-test/:testId',ensureAuthenticated,testController.getTestViewPage);
+app.get('/tests/update-test/:testId',ensureAuthenticated,testController.getUpdateTestPage);
+app.get('/tests/delete-test/:testId',ensureAuthenticated,testController.getDeleteTestPage);
+app.get('/tests/test-dashboard/:page',ensureAuthenticated,testController.getAllTestWithPageNumber);
 // =======================================================================================
 
-app.post('/tests/create-test',testController.getCreateTestpage);
-app.post('/tests/post-create-test',testController.postTestCreatePage);
-app.post('/tests/post-update-test',testController.postTestUpdate);
-app.post('/tests/confirm-delete',testController.postTestDelete);
+app.post('/tests/create-test',ensureAuthenticated,testController.getCreateTestpage);
+app.post('/tests/post-create-test',ensureAuthenticated,testController.postTestCreatePage);
+app.post('/tests/post-update-test',ensureAuthenticated,testController.postTestUpdate);
+app.post('/tests/confirm-delete',ensureAuthenticated,testController.postTestDelete);
 
 // =================================================================================
 ///////////////////////////BlackList Module////////////////////////////
 
-app.get('/blacklist-details/blacklist-home',blackListController.getBlacklistHome);
-app.get('/blacklist-details/client-blacklist-details',blackListController.getClientBlacklistHome);
-app.get('/blacklist-details/prime-vendor-blacklist-details',blackListController.getPrimeVendorBlacklistHome);
-app.get('/blacklist-details/vendor-blacklist-details',blackListController.getVendorBlacklistHome);
+app.get('/blacklist-details/blacklist-home',ensureAuthenticated,blackListController.getBlacklistHome);
+app.get('/blacklist-details/client-blacklist-details',ensureAuthenticated,blackListController.getClientBlacklistHome);
+app.get('/blacklist-details/prime-vendor-blacklist-details',ensureAuthenticated,blackListController.getPrimeVendorBlacklistHome);
+app.get('/blacklist-details/vendor-blacklist-details',ensureAuthenticated,blackListController.getVendorBlacklistHome);
 
 //===================================================================================
 
-app.get('/consultant-details',consultantDetailsController.getConsultantDetails);
+//Consultant Routes
+app.use('/',consultants);
 
 //=================================================================================
 
-app.get('/login/logs',userController.getLoginLogs);
+app.get('/login/logs',ensureAuthenticated,userController.getLoginLogs);
 
 //////////////////Setting Server Port///////////////////////////////////////////////
 
