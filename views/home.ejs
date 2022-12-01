@@ -298,9 +298,7 @@
                                           <%= interview.jobTitle.slice(0,20) %>
                                         </strong>
                                       </td>
-                                      <%}%> <% if(username==="Anmol" ||
-                                      username==="Sam" || username==="Rahul RR"
-                                      || username=="Pramod" ){ %>
+                                      <%}%> <% if(role === "Admin" || role === "SuperAdmin" ){ %>
                                       <td>
                                         <% if(interview.candidateName){%>
                                           <label class="badge badge-danger">

@@ -137,6 +137,7 @@ exports.getDashboard1 = async(req,res)=>{
     totalProjects,
     dateNow: date,
     today:todaysInterview,
+    role: req.user.role
   });
 
 }

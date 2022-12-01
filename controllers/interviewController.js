@@ -53,7 +53,8 @@ exports.getDashboardPage = (req, res) => {
                 dateNow: date,
                 pages: Math.ceil(interviewToday.length / perPage),
                 today: interviewToday.slice().reverse(),
-                username: username
+                username: username,
+                role:req.user.role
             });
         }
     });
@@ -69,7 +70,8 @@ exports.getAllInterviews = async(req,res,next)=>{
             interviews: records,
             docTitle: "UniStack || interviews",
             username: userp,
-            email: req.user.email
+            email: req.user.email,
+            role:req.user.role
           })
 
     } catch (error) {
@@ -106,7 +108,8 @@ exports.getConfirmedInterviews = (req,res,next)=>{
                 email: req.user.email,
                 current: page,
                 dateNow: date,
-                pages: Math.ceil(count / perPage)
+                pages: Math.ceil(count / perPage),
+                role:req.user.role
               })
         })
       })
@@ -137,7 +140,8 @@ exports.getCompletedInterviews = (req,res,next)=>{
                 email: req.user.email,
                 current: page,
                 dateNow: date,
-                pages: Math.ceil(count / perPage)
+                pages: Math.ceil(count / perPage),
+                role:req.user.role
               })
            })
       })
@@ -167,7 +171,8 @@ exports.getCancelledInterviews = (req,res,next)=>{
                   email: req.user.email,
                   current: page,
                   dateNow: date,
-                  pages: Math.ceil(count / perPage)
+                  pages: Math.ceil(count / perPage),
+                  role:req.user.role
                 })
              })
         })
@@ -198,7 +203,8 @@ exports.getCancelledInterviews = (req,res,next)=>{
                   email: req.user.email,
                   current: page,
                   dateNow: date,
-                  pages: Math.ceil(count / perPage)
+                  pages: Math.ceil(count / perPage),
+                  role:req.user.role
                 })
              })
         })
@@ -220,7 +226,8 @@ exports.getInterviewDetailsPage = async(req, res) => {
                 docTitle: 'Enter Interview Details',
                 records: records.reverse(),
                 username:userp,
-                email:req.user.email
+                email:req.user.email,
+                role:req.user.role
             });
         }
       })
@@ -259,7 +266,8 @@ exports.getCreateInterviewpage = (req, res) => {
                         clientName: foundRecord.clientCompany,
                         taxType: foundRecord.taxType,
                         duration: foundRecord.duration,
-                        username: username
+                        username: username,
+                        role:req.user.role
                     });
                 }
             });
@@ -379,7 +387,8 @@ exports.getInterviewViewPage = (req, res) => {
                     reqID: foundInt.reqID,
                     recordOwner: foundInt.recordOwner,
                     updatedBy: foundInt.updatedBy,
-                    username: username
+                    username: username,
+                    role:req.user.role
                 });
             }
         });
@@ -434,7 +443,8 @@ exports.getInterviewUpdatePage = (req, res) => {
                     tentativeReason: foundInt.tentativeReason,
                     recordOwner: foundInt.recordOwner,
                     updatedBy: foundInt.updatedBy,
-                    username: username
+                    username: username,
+                    role:req.user.role
                 });
             }
         });
@@ -444,6 +454,7 @@ exports.getInterviewUpdatePage = (req, res) => {
 exports.postInterviewUpdatePage = async(req, res) => {
     const intId = req.body.intId;
     const updatedBy = req.user.username;
+    const role = req.user.role
     req.body.updatedBy = req.user.username
     let interviewee;
 
@@ -453,7 +464,7 @@ exports.postInterviewUpdatePage = async(req, res) => {
         console.log("Record--", rec);
         req.body.clientName = rec.clientCompany;
     })
-    if(updatedBy === 'Anmol' || updatedBy === 'Rahul RR' || updatedBy === 'Sam'){
+    if(role === "Admin" || role === "SuperAdmin"){
         interviewee = req.body.candidateName;
     } else {
         interviewee = record.candidateName;
@@ -505,7 +516,8 @@ exports.getInterviewDeletePage = (req, res) => {
                 recordOwner: foundInt.recordOwner,
                 tentativeReason: foundInt.tentativeReason,
                 updatedBy: foundInt.updatedBy,
-                username: username
+                username: username,
+                role:req.user.role
             });
         }
     });

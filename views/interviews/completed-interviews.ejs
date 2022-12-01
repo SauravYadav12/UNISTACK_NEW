@@ -36,7 +36,7 @@
                                             <th>Subject Line</th>
                                             <th>Client Name</th>
                                             <th>Job Title</th>
-                                            <% if(username==="Anmol" || username==="Sam" || username==="Rahul RR" ){ %>
+                                            <% if(role === "Admin" || role === "SuperAdmin" ){ %>
                                               <th>Interviewee</th>
                                               <%}%>
                                                 <th>Created by</th>
@@ -103,8 +103,7 @@
                                                           <%= interview.jobTitle.slice(0,20) %>
                                                         </strong> </td>
                                                       <%}%>
-                                                        <% if(username==="Anmol" || username==="Sam" ||
-                                                          username==="Rahul RR" || username=="Pramod" ){ %>
+                                                        <% if(role === "Admin" || role === "SuperAdmin"){ %>
                                                           <td style="color:#fc6c85;">
                                                             <strong>
                                                               <%= interview.candidateName %>
