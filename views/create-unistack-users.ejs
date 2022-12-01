@@ -1,97 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+  
 
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="/css/login.css" />
-    <title>create User</title>
-  </head>
-  <body>
-    <div class="wrapper fadeInDown">
-      <div id="formContent">
-        <!-- Tabs Titles -->
+<%- include('partials/header1.ejs') %>
 
-        <!-- Icon -->
-        <div class="fadeIn first">
-          <h1 class="logo-heading">
-            <img src="/img/unistack.png" id="icon" alt="User Icon" /> <span style="color: #00BBF9;">Uni</span><span style="color: #FEE440;">St</span><span style="color: #ff34ac;">ack</span> 
-          </h1>
-        </div>
-        <% include partials/messages.ejs %>
-        <!-- Login Form -->
-        <form action="/create-unibase-users" method="POST">
-          <input
-            type="text"
-            id="login"
-            class="fadeIn second"
-            name="username"
-            placeholder="Username"
-            value="<%= typeof username != 'undefined' ? username :'' %>"
-          />
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email"
-            class="fadeIn second"
-            value="<%= typeof email != 'undefined' ? email :'' %>"
-          />
-          <input
-            type="password"
-            id="password"
-            class="fadeIn third"
-            name="password"
-            placeholder="Password"
-            value="<%= typeof email != 'undefined' ? password :'' %>"
-          />
-          <input
-            type="password"
-            id="password"
-            class="fadeIn third"
-            name="password2"
-            placeholder="Re-Enter Password"
-            value="<%= typeof email != 'undefined' ? password2 :'' %>"
-          />
-          <input type="submit" class="fadeIn fourth custom-button-1" value="Create" />
-        </form>
 
-        <!-- Remind Passowrd -->
-        <div id="formFooter">
-          <a class="underlineHover" href="#"
-            >If you don't have an Account, Please contact the Admin</a
-          >
+<div class="container-scroller">
+  <div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="content-wrapper d-flex align-items-center auth px-0">
+      <div class="row w-100 mx-0">
+        <div class="col-lg-4 mx-auto">
+          <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+            <div class="brand-logo">
+              <!-- <img src="/images/unistack.png" width="20px" alt="logo"> -->
+              <span style="color: #00BBF9; font-size: 48px;">Uni</span><span style="color: #FEE440; font-size: 48px;">St</span><span style="color: #ff34ac; font-size: 48px;">ack</span> 
+            </div>
+            <h4 class="fw-light">Register Now</h4>
+             <% include partials/messages.ejs %>
+
+            <form class="pt-3" action="/create-unistack-users" method="POST">
+
+              <div class="form-group">
+                <input type="text"
+                class="form-control form-control-lg rounded"
+                id="login"
+                name="username"
+                placeholder="Username"
+                value="<%= typeof username != 'undefined' ? username :'' %>">
+              </div>
+
+              <div class="form-group">
+                <input type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
+                value="<%= typeof email != 'undefined' ? email :'' %>" 
+                class="form-control form-control-lg rounded">
+              </div>
+              <div class="form-group">
+                <input type="password"
+                id="password"
+                class="form-control form-control-lg rounded"
+                name="password"
+                placeholder="Password"
+                value="<%= typeof email != 'undefined' ? password :'' %>">
+              </div>
+              <div class="form-group">
+                <input type="password"
+                id="password"
+                class="form-control form-control-lg rounded"
+                name="password2"
+                placeholder="Re-Enter Password"
+                value="<%= typeof email != 'undefined' ? password2 :'' %>">
+              </div>
+              <div class="form-group">
+                <select class="form-select" name="role">
+                  <option value="User" selected>User</option>
+                  <option value="Manager">Manager</option>
+                </select>
+              </div>
+              <div class="mt-3">
+                <button class="btn btn-block btn-primary btn-sm font-weight-medium auth-form-btn" type="submit">
+                  Resgister
+                </button>
+              </div>
+              
+            </form>
+
+          </div>
         </div>
       </div>
     </div>
+    <!-- content-wrapper ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+<%- include('partials/footer1.ejs')%>

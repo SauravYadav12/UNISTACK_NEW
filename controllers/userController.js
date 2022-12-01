@@ -39,11 +39,12 @@ exports.postCreateUserPage = (req, res) => {
   const password = req.body.password;
   const password2 = req.body.password2;
   const email = req.body.email;
+  const role = req.body.role
 
   let errors = [];
 
   //check required fields
-  if (!username || !email || !password || !password2) {
+  if (!username || !email || !password || !password2 || !role) {
     errors.push({ msg: "Please fill in all Fields" });
   }
 
@@ -58,12 +59,13 @@ exports.postCreateUserPage = (req, res) => {
   }
 
   if (errors.length > 0) {
-    res.render("create-unibase-users", {
+    res.render("create-unistack-users", {
       errors,
       username,
       email,
       password,
       password2,
+      role
     });
   } else {
     //If Validation passed
@@ -71,18 +73,20 @@ exports.postCreateUserPage = (req, res) => {
       if (user) {
         // If user already exists
         errors.push({ msg: "Email is already registered" });
-        res.render("create-unibase-users", {
+        res.render("create-unistack-users", {
           errors,
           username,
           email,
           password,
           password2,
+          role
         });
       } else {
         const newUser = new User({
           username,
           email,
           password,
+          role
         });
         // Hashing the password
         bcrypt.genSalt(10, (err, salt) =>

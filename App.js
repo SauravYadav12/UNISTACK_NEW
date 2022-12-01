@@ -78,7 +78,7 @@ app.post('/postUpdateReq',ensureAuthenticated,requirementController.postUpdateRe
 app.post('/postDeletePage',ensureAuthenticated,requirementController.postDeletePage);
 //////////////////POST REQUEST///////////////////
 
-app.post('/create-unibase-users',userController.postCreateUserPage);
+app.post('/create-unistack-users',userController.postCreateUserPage);
 app.post('/login/login',userController.postLoginPage);
 
 
