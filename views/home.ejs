@@ -247,11 +247,17 @@
                                       </td>
                                       <td><%= interview.intId %></td>
                                       <td>
-                                        <label
-                                          class="<%= interview.interviewStatus === 'Interview Confirm' ? 'badge badge-success' : 'badge badge-warning' %>"
-                                        >
-                                          <%= interview.interviewStatus %>
-                                        </label>
+                                        <%if (interview.interviewStatus === 'Interview Confirm'){%>
+                                          <label class="badge badge-success"><%= interview.interviewStatus %></label>
+                                        <%} else if(interview.interviewStatus === 'Interview Tentative'){%>
+                                          <label class="badge badge-warning"><%= interview.interviewStatus %></label>
+                                        <%} else if(interview.interviewStatus === 'Interview Completed'){%>
+                                          <label class="badge badge-primary"><%= interview.interviewStatus %></label>
+                                        <%} else {%>
+                                          <label class="badge badge-danger"><%= interview.interviewStatus %></label>
+                                        <%}%>
+
+
                                       </td>
                                       <td>
                                         <strong>
