@@ -62,13 +62,14 @@ exports.getDashboardPage = (req, res) => {
 exports.getAllInterviews = async(req,res,next)=>{
     let userp = req.user.username
     try {
-        const records = await Interview.find()
+        const records = await Interview.find().sort({createdAt:-1});
 
         res.render('interviews/all-interviews', {
             path: "/interviews/all-interviews",
             interviews: records,
             docTitle: "UniStack || interviews",
             username: userp,
+            email: req.user.email
           })
 
     } catch (error) {

@@ -12,7 +12,8 @@ exports.getConsultantDetails = (req,res)=>{
     res.render('consultant_details/consultant_details',{
         path:'/consultant_details/consultant_details',
         docTitle:"Consultant Details",
-        username:username
+        username:username,
+        email:req.user.email
     });
 
 };

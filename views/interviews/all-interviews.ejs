@@ -1,75 +1,31 @@
-<%- include('../partials/header.ejs') %>
+<%- include('../partials/header1.ejs') %>
 
 
-  <form class="form-inline my-2 my-lg-0">
-    <input id="search_table" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <!-- <button class="btn btn-outline-light my-2 my-sm-0" type="submit" onkeyup="searchRows()">Search</button> -->
-  </form>
-  </div>
-  </nav>
+<div class="container-scroller">
+  
+  <%- include('../partials/nav.ejs') %>
 
-  </section>
-  <!-- Navigation Section - Ends here -->
+  <div class="container-fluid page-body-wrapper">
 
-
-  <!-- Side Navigation Section Starts Here -->
-
-  <%- include('../partials/sidebar.ejs') %>
+  <%- include('../partials/sidebar1.ejs') %>
 
     <!-- /#sidebar-wrapper -->
 
     <!-- Page Content -->
+    <%- include('../partials/main-panel-start.ejs') %>
 
-
-
-    <section class="page-content table-view bg-main">
-      <div class="d-flex flex-row justify-content-center">
-        <div class="mb-1" style="margin-left: 3%; margin-top: 2%;">
-          <a href="/interviews/get-interview-details" class="btn shadow rounded custom-button-3 on-hover ">
-            <i class="far fa-plus-square"></i> New interview
-          </a>
+      <div class="card-body">
+        <div class="d-sm-flex justify-content-between align-items-start">
+          <div>
+            <h4 class="card-title card-title-dash">All Interviews</h4>
+            <p class="card-subtitle card-subtitle-dash">All Interviews</p>
+          </div>
+          <div>
+            <a href="/interviews/get-interview-details" class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new</a>
+          </div>
         </div>
-      </div>
-      
-      <div class="d-flex flex-row justify-content-center">
-              <!-- Seperate tab buttons -->
-      <div class="mb-1" style=" margin-top: 2%; margin-right: 2%;">
-        <a href="/interviews/confirmed-interviews/1" class="btn shadow rounded custom-interview-button-1 on-hover">
-          <i class="far fa-calendar"></i> Confirmed interviews
-        </a>
-      </div>
-
-      <div class=" mb-4" style=" margin-top: 2%; margin-right: 1%;">
-        <a href="/interviews/tentative-interviews/1" class="btn shadow rounded custom-interview-button-2 on-hover">
-          <i class="far fa-pause-circle"></i> Tentative interviews
-        </a>
-      </div>
-
-      <div class="mb-4" style=" margin-top: 2%; margin-right: 1%;">
-        <a href="/interviews/completed-interviews/1" class="btn shadow rounded custom-interview-button-4 on-hover">
-          <i class="fas fa-list-ol"></i> Completed interviews
-        </a>
-      </div>
-
-      <div class=" mb-4" style=" margin-top: 2%; margin-right: 1%;">
-        <a href="/interviews/cancelled-interviews/1" class="btn shadow rounded custom-interview-button-3 on-hover">
-          <i class="far fa-window-close"></i> Cancelled interviews
-        </a>
-      </div>
-
-      <div class="mb-4" style=" margin-top: 2%; margin-right: 1%;">
-        <a href="/interviews/all-interviews" class="btn shadow rounded custom-interview-button-5 on-hover">
-          <i class="fas fa-globe-americas"></i> All interviews
-        </a>
-      </div>
-      <!-- Seperate Tab Buttons -->
-      </div>
-
-   
-
-      <div id="page-content-wrapper mr-auto">
-        <div>
-          <table id="interviewTable" class="content-table shadow rounded" style="margin-top: 2%;">
+        <div class="table-responsive  mt-1">
+          <table id="order-listing" class="table dataTable no-footer table-striped table-hover">
             <thead>
               <tr>
                 <th>View</th>
@@ -83,100 +39,87 @@
                 <th>Client Name</th>
                 <th>Job Title</th>
                 <% if(username ==="Anmol" || username === "Sam" || username === "Rahul RR"){ %>
-                  <th>Interviewee</th>
+                <th>Interviewee</th>
                 <%}%>
-                <th>Created by</th>
-                <th>Created At</th>
-              </tr>
-            </thead>
-
-            
-            <tbody class="table-body">
-              
-              <%if(interviews.length==0 ){%>
-                <tr>
-                  <td>No Interviews</td>
+                  <th>Created by</th>
+                  <th>Created At</th>
                 </tr>
-                <% } else{%>
-                  <% interviews.reverse().slice().forEach(interview=>{ %>
-                    <tr onclick="window.location='/interviews/view-interviews/<%= interview.intId %>'"
-                      class="row-style">
-                      <td scope="row"> <a class="btn shadow rounded custom-button-1 rowview-button"
-                          href="/interviews/view-interviews/<%= interview.intId %>">View</a></td>
-                      <td>
-                        <%= interview.intId %>
-                      </td>
-                      <td class="changeColor"><strong>
-                          <%= interview.interviewStatus %>
-                        </strong></td>
-                      <td> <strong>
-                          <%= interview.consultant %>
-                        </strong> </td>
-                      <td>
-                        <%= interview.interviewDate %>
-                      </td>
-                      <td> <strong>
-                          <%= interview.interviewTime.slice(0,10) %>
-                        </strong></td>
-                        <td> <strong>
-                          <%= interview.result %>
-                        </strong> </td>
-                      <td>
-                        <div style="width: 300px; white-space:normal;">
-                          <%= interview.subjectLine.slice(0,20) %>
-                        </div>
-                      </td>
-                      <td>
-                        <%= interview.clientName.slice(0,20) %>
-                      </td>
-
-                      <% if(interview.jobTitle == undefined) {%>
-                        <td> <strong>
-                            <%= interview.jobTitle %>
-                          </strong> </td>
-                        <%} else {%>
-                            <td> <strong>
-                                <%= interview.jobTitle.slice(0,20) %>
-                              </strong> </td>
-                        <%}%>
-                        
-                      <% if(username === "Anmol" || username === "Sam" || username === "Rahul RR" || username=="Pramod" ){ %>
-                        <td style="color:#fc6c85;">
-                          <strong>
-                          <%= interview.candidateName %>
-                          </strong>
-                        </td>
-                      <%}%>
-                      <td>
-                        <%= interview.recordOwner %>
-                      </td>
-                      <td id="date-field">
-                        <%= interview.createdAt.toLocaleString(); %>
-                      </td>
-                    </tr>
-                    <%});%>
-                      <%}%>
-
+              </thead>
+  
+              
+              <tbody class="table-body">
+                
+              <% interviews.forEach(interview=>{ %>
+              <tr onclick="window.location='/interviews/view-interviews/<%= interview.intId %>'" class="row-style">
+                <td>
+                  <a class="btn btn-primary text-white" href="/interviews/view-interviews/<%= interview.intId %>">View</a>
+                </td>
+                <td>
+                  <%= interview.intId %>
+                </td>
+                <td class="changeColor">
+                  <%if (interview.interviewStatus === 'Interview Confirm'){%>
+                    <label class="badge badge-success"><%= interview.interviewStatus %></label>
+                  <%} else if(interview.interviewStatus === 'Interview Tentative'){%>
+                    <label class="badge badge-warning"><%= interview.interviewStatus %></label>
+                  <%} else if(interview.interviewStatus === 'Interview Completed'){%>
+                    <label class="badge badge-primary"><%= interview.interviewStatus %></label>
+                  <%} else {%>
+                    <label class="badge badge-danger"><%= interview.interviewStatus %></label>
+                  <%}%>
+                </td>
+                <td style="color: red;"> <strong>
+                    <%= interview.consultant %>
+                  </strong> </td>
+                <td>
+                  <%= interview.interviewDate %>
+                </td>
+                <td> <strong>
+                    <%= interview.interviewTime.slice(0,12) %>
+                  </strong></td>
+                <td> <strong>
+                    <%= interview.result %>
+                  </strong> </td>
+                <td>
+                  <div style="width: 300px; white-space:normal;">
+                    <%= interview.subjectLine.slice(0,20) %>
+                  </div>
+                </td>
+                <td>
+                  <%= interview.clientName.slice(0,20) %>
+                </td>
+                <% if(interview.jobTitle == undefined) {%>
+                <td> <strong>
+                    <%= interview.jobTitle %>
+                  </strong> </td>
+                <%} else {%>
+                <td> <strong>
+                    <%= interview.jobTitle.slice(0,20) %>
+                  </strong> </td>
+                <%}%>
+                <% if(username === "Anmol" || username === "Sam" || username === "Rahul RR" || username=="Pramod" ){ %>
+                <td style="color:#fc6c85;">
+                  <label class="badge badge-danger">
+  
+                    <strong>
+                      <%= interview.candidateName %>
+                    </strong>
+                  </label>
+                </td>
+                <%}%>
+                <td>
+                  <%= interview.recordOwner %>
+                </td>
+                <td id="date-field">
+                  <%= interview.createdAt.toLocaleString(); %>
+                </td>
+              </tr>
+              <%});%>                        
             </tbody>
-
-
           </table>
-
-         
         </div>
       </div>
-    </section>
 
-    <!-- /#page-content-wrapper -->
+    <%- include('../partials/main-panel-end.ejs') %>
 
-    </div>
-    <!-- /#wrapper -->
-
-    </section>
-
-
-    <script src="/js/interview-search.js"></script>
-    <script src="http://cdn.date-fns.org/v1.9.0/date_fns.min.js"></script>
-    <script src="/js/clock.js"></script>
-
-    <%- include('../partials/footer.ejs')%>
+    <%- include('../partials/footer1.ejs')%>
