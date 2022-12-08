@@ -32,11 +32,11 @@
               <th>View</th>
               <th>ID</th>
               <th>Name</th>
+              <th>Psuedo Name</th>
               <th>Visa Status</th>
               <th>City</th>
               <th>State</th>
               <th>Zipcode</th>
-              <th>Timezone</th>
               <th>Degree</th>
               <th>Passing year</th>
               <th>University</th>
@@ -58,6 +58,9 @@
               <td><strong>
                   <%= record.consultantName %>
                 </strong></td>
+                <td>
+                  <%= record.psuedoName  %>
+                </td>
               <td> <strong>
                   <%= record.visaStatus %>
                 </strong> </td>
@@ -70,9 +73,7 @@
               <td>
                 <%= record.zipcode %>
               </td>
-              <td>
-                <%= record.timeZone  %>
-              </td>
+              
               <td>
                 <%= record.degree  %>
               </td>

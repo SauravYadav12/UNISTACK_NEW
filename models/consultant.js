@@ -62,6 +62,9 @@ const consultant = new mongoose.Schema({
     projectDescription:{
         type:[String],
     },
+    psuedoName:{
+        type:String
+    },
     createdBy: {
         type: String,
     },
