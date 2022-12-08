@@ -73,7 +73,9 @@
                         <div class="form-group">
                             <label for="assignedTo">1.2 Visa Status</label>
                             <select class="form-select" name="visaStatus" id="exampleFormControlSelect1">
-                                <option value="Anmol">1. US Citizen</option>
+                                <% visaStatus.forEach((visa, i) =>{%>
+                                <option value="<%=visa%>"> <%=i+1%>. <%=visa%></option>
+                                <%})%>
                             </select>
                         </div>
                     </div>
@@ -90,7 +92,9 @@
                         <div class="form-group">
                             <label for="timeZone">1.4 Consultant Timezone</label>
                             <select class="form-select" name="timeZone" id="exampleFormControlSelect1">
-                                <option value="EST">1. EST</option>
+                                <% timeZone.forEach((time, i) =>{%>
+                                    <option value="<%=time%>"> <%=i+1%>. <%=time%></option>
+                                <%})%>
                             </select>
                         </div>
                     </div>

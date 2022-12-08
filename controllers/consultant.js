@@ -24,6 +24,9 @@ exports.getConsultantDetails = async(req,res)=>{
 };
 
 exports.getCreateConsultant = (req,res)=>{
+
+  const visaStatus = ['US Citizen','Green Card','GC EAD','H1B'];
+  const timeZone = ['EST','CST','MST','PST'];
     
   res.render('consultant/create-consultant',{
       path: "/consultant",
@@ -31,6 +34,8 @@ exports.getCreateConsultant = (req,res)=>{
       username: req.user.username,
       email:req.user.email,
       projects: 5,
+      visaStatus,
+      timeZone,
       role: req.user.role,
     });
 
@@ -59,8 +64,8 @@ exports.postCreateConsultant = async(req,res)=>{
 
 exports.getConsultant = async(req,res) => {
   const projects = [];
-  console.log(req.path);
-  
+  const visaStatus = ['US Citizen','Green Card','GC EAD','H1B'];
+  const timeZone = ['EST','CST','MST','PST'];
   try {
     const consultant = await Consultant.findById({_id:req.params.id});
     for(i=0; i < consultant.projectName.length; i++){
@@ -83,6 +88,8 @@ exports.getConsultant = async(req,res) => {
       return res.render('consultant/update-consultant',{
         consultant,
         projects,
+        visaStatus,
+        timeZone,
         role: req.user.role,
       });
     }
