@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
-const reqModel = require('../models/unibaseDB');
-const userModel = require('../models/userDB');
-const interviewModel = require('../models/interviewDB');
-const User = mongoose.model('user', userModel.userSchema);
-const Unibase = mongoose.model('unibase', reqModel.unibaseSchema);
-const Interview = mongoose.model('interview', interviewModel.interviewSchema);
+const Unibase = require('../models/unibaseDB');
+const User = require('../models/userDB');
+const Interview = require('../models/interviewDB');
+
 
 function formatDate(date) {
     var offset = -300; //Timezone offset for EST in minutes.
@@ -42,7 +40,6 @@ exports.getDashboardPage = (req, res) => {
                 interviewToday.push(interview[i]);
             }
         };
-
 
         if (!err) {
 
@@ -89,7 +86,7 @@ exports.getConfirmedInterviews = (req,res,next)=>{
   let userp = req.user.username
   let d = new Date();
   let date = formatDate(d)
-
+    console.log("date", date);
   Interview
       .find({interviewStatus:"Interview Confirm"})
       .sort({"_id":-1})
@@ -320,7 +317,7 @@ exports.postInterviewPage = (req, res) => {
             paymentStatus: req.body.paymentStatus,
             reqID: req.body.reqID,
             tentativeReason: req.body.tentativeReason,
-            recordOwner: username
+            recordOwner: username,
         });
 
         newInt.save(err => {
@@ -347,7 +344,6 @@ exports.getInterviewViewPage = (req, res) => {
         intId: intId
     }, (err, foundInt) => {
         const reqID = foundInt.reqID;
-
         Unibase.findOne({
             reqID: reqID
         }, (err, foundRecord) => {

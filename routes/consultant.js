@@ -1,14 +1,16 @@
 const express = require("express");
 const passport = require("passport");
-const Consultant = require("../controllers/consultant-details");
+const Consultant = require("../controllers/consultant");
 const router = express.Router();
 const { ensureAuthenticated } = require('../config/auth');
 
 
-router.get('/consultant-details',ensureAuthenticated,Consultant.getConsultantDetails);
-// router.post('/create-consultant',Consultant.create);
-// router.get('/show-consultant/:id', Consultant.showConsultant);
-// router.patch('/update-consultant/:id',Consultant.update);
+router.get('/consultant-list',ensureAuthenticated,Consultant.getConsultantDetails);
+router.get('/add-consultant',ensureAuthenticated,Consultant.getCreateConsultant);
+router.post('/create-consultant',ensureAuthenticated,Consultant.postCreateConsultant);
+router.get('/view-consultant/:id',ensureAuthenticated,Consultant.getConsultant);
+router.get('/get-update-consultant/:id',ensureAuthenticated,Consultant.getConsultant);
+router.post('/update-consultant/:id',ensureAuthenticated,Consultant.postUpdateConsultant);
 
 
-module.exports = router;
+module.exports = router;    

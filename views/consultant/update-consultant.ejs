@@ -1,0 +1,258 @@
+<%- include('../partials/header1.ejs') %>
+
+
+    <!-- Form Section Starts here -->
+    <form action="/update-consultant/<%=consultant._id%>" method="POST">
+
+
+        <!-- Requirement ID Section -->
+        <section class="heading mt-4">
+
+            <div class="container row mx-auto form-inline" style="width: 500px; text-align: center; padding-left:5%;">
+                <h3 class="form-group mb-2">ConsultantID # <%= consultant.consultantId %></h3>
+                <hr class="style-two">
+            </div>
+
+
+            <!-- Form Button Section  -->
+            <section class="func-buttons mb-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group float-right">
+                                <input type="text" class="form-control" name="consultantId" value="<%= consultant.consultantId%>" hidden>
+                                <input type="text" class="form-control" name="createdBy" value="<%= consultant.createdBy%>"hidden>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group float-end">
+                                <button type="submit" class="btn btn-primary text-white mb-0 me-0 submit-create-form"
+                                    style="width: 100px">Save</button>
+                                <a href="/view-consultant/<%=consultant._id%>" class="btn btn-danger text-white mb-0 me-0"
+                                    type="button"></i>Back</a>
+
+                                <!-- <a href ="/home/1" class="btn shadow rounded custom-button-3">Cancel</a> -->
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border: 1px solid #007BFF">
+                </div>
+            </section>
+            <!-- Form Button Section Ends Here  -->
+
+        </section>
+        <!-- Requirement ID Section Ends Here -->
+
+
+        <!-- Section 1 - contains information about Communication & rates -->
+        <section class="communication mt-4 mb-4">
+            <div class="container">
+                <div class="section-heading">
+                    <h3><i class="far fa-hand-point-down"></i> 1. Consultant Info</h3>
+                </div>
+                <hr class="style-two">
+            </div>
+
+            <div class="container section-content">
+
+                <!-- Row 1 - Contains status and next Step -->
+                <div class="row">
+                    <!-- column 1 -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="nextStep">1.1 Consultant Name</label>
+                            <input type="text" class="form-control" placeholder="Name" name="consultantName" value="<%= consultant.consultantName%>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="assignedTo">1.2 Visa Status</label>
+                            <select class="form-select" name="visaStatus" id="exampleFormControlSelect1">
+                                <option value="<%= consultant.visaStatus%>"><%= consultant.visaStatus%></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- column 2 -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="nextStep">1.3 Date of Birth</label>
+                            <input type="date" class="form-control" name="dob" max="2005-12-31" value="<%= consultant.dob.toISOString().split('T')[0]%>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="timeZone">1.4 Consultant Timezone</label>
+                            <select class="form-select" name="timeZone" id="exampleFormControlSelect1">
+                                <option value="<%= consultant.timeZone%>"><%= consultant.timeZone%></option>
+                                <option value="EST">1. EST</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Row 1 Ends Here -->
+
+                <!-- Row 2 - Contains information about tax term and Remote -->
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="Address">1.5 Address</label>
+                            <input type="text" name="address" class="form-control" placeholder="Address" value="<%= consultant.address%>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="City">1.6 City</label>
+                            <input type="text" name="city" class="form-control" placeholder="City" value="<%= consultant.city%>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="State">1.7 State</label>
+                            <input type="text" name="state" class="form-control" placeholder="State" value="<%= consultant.state%>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="Zipcode">1.8 Zipcode</label>
+                            <input type="text" name="zipcode" class="form-control" placeholder="zipcode" value="<%= consultant.zipcode%>">
+                        </div>
+                    </div>
+
+                </div>
+                <!-- ROW 2 Ends Here -->
+
+                <!-- Row 3 Marketing persons comments -->
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="degree">1.9 Degree Name</label>
+                            <input type="text" name="degree" class="form-control" placeholder="Degree name" value="<%= consultant.degree%>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="university">1.10 University</label>
+                            <input type="text" name="university" class="form-control" placeholder="university" value="<%= consultant.university%>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="yearPassing">1.11 Year of Passing</label>
+                            <input type="text" name="yearPassing" class="form-control" placeholder="Year of Passing" value="<%= consultant.yearPassing%>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="SSN">1.12 SSN</label>
+                            <input type="text" name="ssn" class="form-control" placeholder="Enter ssn" value="<%= consultant.ssn%>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dlno">1.13 Driving License</label>
+                            <input type="text" name="dlNo" class="form-control" placeholder="Enter DL No." value="<%= consultant.dlNo%>">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Section 1 Ends Here -->
+
+        <section class="communication mt-4 mb-4">
+            <div class="container">
+                <div class="section-heading">
+
+                    <h3><i class="far fa-hand-point-down"></i> 2. Resume Info</h3>
+                </div>
+                <hr class="style-two">
+            </div>
+
+            <div class="container section-content">
+                <% projects.forEach((project,i) =>{ %>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>PROJECT <%=i+1%>
+                            </h4>
+                            <hr style="width: 10% ;">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="ProjectName"> Project Name</label>
+                                <input type="text" name="projectName" class="form-control"
+                                    placeholder="Enter Project name" value="<%=project.name%>">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="ProjectState"> Project City</label>
+                                <input type="text" name="projectCity" class="form-control"
+                                    placeholder="Enter Project City" value="<%=project.city%>">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="ProjectState"> Project State</label>
+                                <input type="text" name="projectState" class="form-control"
+                                    placeholder="Enter Project state" value="<%=project.state%>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="projectStartDate"> Project Start Date</label>
+                                <input type="text" name="projectStartDate" class="form-control"
+                                    placeholder="Enter Start Date" value="<%=project.startDate%>">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="projectEndDate"> Project End Date</label>
+                                <input type="text" name="projectEndDate" class="form-control"
+                                    placeholder="Enter End Date" value="<%=project.endDate%>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="projectDescrption"> Project Description</label>
+                                <textarea class="form-control text-area-comment" name="projectDescription"><%= project.description%></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <%})%>
+                    <hr style="border: 1px solid #007BFF;">
+            </div>
+
+        </section>
+
+    </form>
+    </div>
+    </div>
+
+
+    <%- include('../partials/footer1.ejs')%>

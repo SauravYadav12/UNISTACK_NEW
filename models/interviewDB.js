@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb+srv://saurav1286:Saurav_1286@cluster0-xmgbj.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology: true}, function(){
-  console.log("Successfully Connected to Interview Database");
-});
+// mongoose.connect("mongodb+srv://saurav1286:Saurav_1286@cluster0-xmgbj.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology: true}, function(){
+//   console.log("Successfully Connected to Interview Database");
+// });
 
 // mongoose.connect("mongodb://localhost:27017/unibaseDB",{useNewUrlParser:true}, function(){
 //   console.log("Successfully Connected to Database");
 // });
 
-exports.interviewSchema = new mongoose.Schema({
+const interviewSchema = new mongoose.Schema({
   intId : String,
   interviewDate: String,
   interviewTime: String,
@@ -41,3 +41,7 @@ exports.interviewSchema = new mongoose.Schema({
 },{
   timestamps: true
 });
+
+const Interview = mongoose.model('Interview',interviewSchema);
+
+module.exports = Interview;

@@ -159,7 +159,7 @@
                     <div class="form-group">
                         <label for="mComment"> <strong>1.9 Marketing Person's Comment</strong> </label>
                         <%mComment.slice().reverse().forEach((comment)=>{%> <p style="background-color: #F0F0F0; padding: 5px 10px; border-radius: 2%;">
-                            <span style="font-weight: bold ;">[<%=comment.created_at.toLocaleString()%> <%= comment.user%>]</span> <%= comment.comment %>
+                            <span style="font-weight: bold ;">[<%=comment.created_at.toLocaleString()%><%= comment.user%>]</span> <%= comment.comment %>
                                 </p>
                             <%});%>
                     </div>

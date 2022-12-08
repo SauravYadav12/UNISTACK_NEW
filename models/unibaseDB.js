@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb+srv://saurav1286:Saurav_1286@cluster0-xmgbj.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology: true}, function(){
-  console.log("Successfully Connected to Unibase Database");
-});
+// mongoose.connect("mongodb+srv://saurav1286:Saurav_1286@cluster0-xmgbj.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology: true}, function(){
+//   console.log("Successfully Connected to Unibase Database");
+// });
 
 // mongoose.connect("mongodb://localhost:27017/unibaseDB",{useNewUrlParser:true}, function(){
 //   console.log("Successfully Connected to Database");
 // });
 
-exports.unibaseSchema = new mongoose.Schema({
+const unibaseSchema = new mongoose.Schema({
   reqID: {
     type: String,
     unique: true,
@@ -53,3 +53,8 @@ exports.unibaseSchema = new mongoose.Schema({
 }, {
   timestamps:true
 });
+
+
+const Unibase = mongoose.model('Unibase',unibaseSchema);
+
+module.exports = Unibase;

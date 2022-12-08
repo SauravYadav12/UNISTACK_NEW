@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs');
 
 //Load User Model
 
-const userModel = require('../models/userDB');
-const User = mongoose.model('user',userModel.userSchema);
+const User = require('../models/userDB');
+// const User = mongoose.model('user',userModel.userSchema);
 
 module.exports = function(passport){
     passport.use(

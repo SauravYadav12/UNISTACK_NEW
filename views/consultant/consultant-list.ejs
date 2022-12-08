@@ -1,0 +1,103 @@
+<%- include('../partials/header1.ejs') %>
+
+<div class="container-scroller">
+    
+<%- include('../partials/nav.ejs') %>
+  
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+  
+
+  <%- include('../partials/sidebar1.ejs') %>
+    
+    <!-- partial -->
+    <%- include('../partials/main-panel-start.ejs') %>
+    
+    <div class="card-body">
+      <div class="d-sm-flex justify-content-between align-items-start">
+        <div>
+          <h4 class="card-title card-title-dash">Consultants</h4>
+          <p class="card-subtitle card-subtitle-dash">Details </p>
+        </div>
+        <div>
+          <a href="/add-consultant" class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new</a>
+          <a href="/exportData" class="btn btn-info btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-table"></i>Export Page</a>
+        </div>
+      </div>
+      <div class="table-responsive  mt-1">
+        <table id="order-listing" class="table dataTable no-footer table-striped table-hover">
+          <thead>
+
+            <tr>
+              <th>View</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Visa Status</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Zipcode</th>
+              <th>Timezone</th>
+              <th>Degree</th>
+              <th>Passing year</th>
+              <th>University</th>
+              <th>Created By</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody class="table-body">
+            <%consultants.forEach(record=>{ %>
+  
+            <tr class="row-style">
+              <td> 
+                <a class="btn btn-primary text-white"
+                  href="/view-consultant/<%= record._id %>">View</a>
+              </td>
+              <td>
+                <%= record.consultantId %>
+              </td>
+              <td><strong>
+                  <%= record.consultantName %>
+                </strong></td>
+              <td> <strong>
+                  <%= record.visaStatus %>
+                </strong> </td>
+              <td><strong>
+                  <%= record.city %>
+                </strong></td>
+              <td>
+                  <%= record.state %>
+              </td>
+              <td>
+                <%= record.zipcode %>
+              </td>
+              <td>
+                <%= record.timeZone  %>
+              </td>
+              <td>
+                <%= record.degree  %>
+              </td>
+              <td>
+                  <%= record.yearPassing %>
+              </td>
+              <td>
+                  <%= record.university  %>
+              </td>
+              <td>
+                Sam
+              </td>
+              <td>
+                <%= record.createdAt.toLocaleString(); %>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+   
+
+    <%- include('../partials/main-panel-end.ejs') %>
+
+         
+<%- include('../partials/footer1.ejs')%>
+             

@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const reqModel = require('../models/unibaseDB');
-const userModel = require('../models/userDB');
-const interviewModel = require('../models/interviewDB');
-const testModel = require('../models/testDB')
-const User = mongoose.model('user', userModel.userSchema);
-const Unibase = mongoose.model('unibase', reqModel.unibaseSchema);
-const Interview = mongoose.model('interview', interviewModel.interviewSchema);
-const Test = mongoose.model('test', testModel.testSchema);
+const Unibase = require('../models/unibaseDB');
+const User = require('../models/userDB');
+const Interview = require('../models/interviewDB');
+const Test = require('../models/testDB')
+// const User = mongoose.model('user', userModel.userSchema);
+// const Unibase = mongoose.model('unibase', reqModel.unibaseSchema);
+// const Interview = mongoose.model('interview', interviewModel.interviewSchema);
+// const Test = mongoose.model('test', testModel.testSchema);
 
 
 exports.getTestDashboardPage = async(req, res) => {
@@ -18,7 +18,8 @@ exports.getTestDashboardPage = async(req, res) => {
             path: '/tests/test-dashboard',
             docTitle: 'Test Dashboard',
             username: req.user.username,
-            test: tests
+            test: tests,
+            role: req.user.role,
         });
 
         
@@ -30,7 +31,8 @@ exports.getTestDashboardPage = async(req, res) => {
             path: '/home',
             docTitle: 'home',
             username: req.user.username,
-            error:error
+            error:error,
+            role: req.user.role,
         });
     }
 
@@ -61,7 +63,8 @@ exports.getAllTestWithPageNumber = (req, res, next) => {
                   docTitle: "UniStack || Test",
                   username: userp,
                   current: page,
-                  pages: Math.ceil(count / perPage)
+                  pages: Math.ceil(count / perPage),
+                  role: req.user.role,
                 })
             })
         })
@@ -79,6 +82,7 @@ exports.getTestDetailsPage = async(req, res) => {
         records:records.reverse(),
         username:req.user.username,
         email: req.user.email,
+        role: req.user.role,
     });
     // Unibase.find({}, (err, record) => {
     //     if (!err) {
@@ -112,7 +116,8 @@ exports.getCreateTestpage = async(req, res) => {
                 clientName: foundRecord.clientCompany,
                 taxType: foundRecord.taxType,
                 duration: foundRecord.duration,
-                username: username
+                username: username,
+                role: req.user.role,
             });
         }
     });
@@ -164,7 +169,7 @@ exports.postTestCreatePage = (req, res) => {
         rateForTest: req.body.rateForTest,
         paymentStatus: req.body.paymentStatus,
         reqID: req.body.reqID,
-        recordOwner: username
+        recordOwner: username,
     });
 
     newTest.save(err => {
@@ -223,7 +228,8 @@ exports.getTestViewPage = (req, res) => {
                     createdAt: foundTest.createdAt,
                     updatedAt: foundTest.updatedAt,
                     updatedBy: foundTest.updatedBy,
-                    username: username
+                    username: username,
+                    role: req.user.role,
                 });
             }
         });
@@ -272,7 +278,8 @@ exports.getUpdateTestPage = (req, res) => {
                     createdAt: foundTest.createdAt,
                     updatedAt: foundTest.updatedAt,
                     updatedBy: foundTest.updatedBy,
-                    username: username
+                    username: username,
+                    role: req.user.role,
                 });
             }
         });
@@ -369,7 +376,9 @@ exports.getDeleteTestPage = (req, res) => {
                     createdAt: foundTest.createdAt,
                     updatedAt: foundTest.updatedAt,
                     updatedBy: foundTest.updatedBy,
-                    username: username
+                    username: username,
+                    role: req.user.role,
+
                 });
             }
         });

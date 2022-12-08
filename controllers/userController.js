@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
-const userModel = require("../models/userDB");
-const logModel = require("../models/loginLogs");
-const User = mongoose.model("user", userModel.userSchema);
-const Logs = mongoose.model("logs", logModel.logsSchema);
+const User = require("../models/userDB");
+const Logs = require("../models/loginLogs");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const nodemailer = require("nodemailer");
@@ -113,25 +111,12 @@ exports.postCreateUserPage = (req, res) => {
 // Login Post
 
 exports.postLoginPage = (req, res, next) => {
-  console.log(req.body);
 
   const login = passport.authenticate("local", {
     successRedirect: "/home",
     failureRedirect: "/",
     failureFlash: true,
   })(req, res, next);
-
-  // passport.authenticate('local' ,function(err, user, info) {
-    
-  //   if (err) { return next(err); }
-    
-  //   if (!user) { return res.json({status:"fail", message:"No user Found"}); }
-    
-  //   req.logIn(user, function(err) {
-  //       if (err) { return next(err); }
-  //       return res.redirect('/home/1')
-  //   });
-  // })(req, res, next);
 
   const loginTime = new Date();
   const userEmail = req.body.email;

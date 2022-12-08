@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb+srv://saurav1286:Saurav_1286@cluster0-xmgbj.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology: true}, function(){
-  console.log("Successfully Connected to Test Database");
-});
+// mongoose.connect("mongodb+srv://saurav1286:Saurav_1286@cluster0-xmgbj.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology: true}, function(){
+//   console.log("Successfully Connected to Test Database");
+// });
 
 // mongoose.connect("mongodb://localhost:27017/unibaseDB",{useNewUrlParser:true}, function(){
 //   console.log("Successfully Connected to Database");
 // });
 
-exports.testSchema = new mongoose.Schema({
+const testSchema = new mongoose.Schema({
   testId : String,
   testEnteredDate: String,
   testDuration: String,
@@ -38,3 +38,7 @@ exports.testSchema = new mongoose.Schema({
 },{
   timestamps: true
 });
+
+const Test = mongoose.model('Test',testSchema);
+
+module.exports = Test;

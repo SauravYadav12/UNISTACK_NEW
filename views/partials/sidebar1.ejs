@@ -48,17 +48,19 @@
 
       <li class="nav-item">
         <a class="nav-link" href="/tests/test-dashboard/1">
-          <i class="menu-icon mdi mdi-card-text-outline"></i>
+          <i class="menu-icon mdi mdi-calendar-check"></i>
           <span class="menu-title">Tests</span>
         </a>
       </li>
 
+      <% if(role === "Admin" || role === "SuperAdmin"){%>
       <li class="nav-item">
-        <a class="nav-link" href="/consultant-details">
-          <i class="menu-icon mdi mdi-card-text-outline"></i>
+        <a class="nav-link" href="/consultant-list">
+          <i class="menu-icon mdi mdi-account-supervisor"></i>
           <span class="menu-title">Consultants</span>
         </a>
       </li>
+      <%}%>
 
       <!-- <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">

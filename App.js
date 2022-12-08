@@ -2,30 +2,28 @@
 //////////////////////DECLARATIONS/////////////////////
 const express = require('express');
 const bodyParser = require('body-parser');
-const ejs = require('ejs');
 const app = express();
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const { ensureAuthenticated } = require('./config/auth');
-// const requirementController = require('./controllers/reqController');
-const interviewController = require('./controllers/interviewController');
-const testController = require('./controllers/testController');
-const blackListController = require('./controllers/blacklist');
-// const consultantDetailsController = require('./controllers/consultant-details');
+const mongoose = require('mongoose');
 const consultants = require('./routes/consultant');
 const requirements = require('./routes/requirements');
 const interviews = require('./routes/interview');
 const tests = require('./routes/test');
-
+const morgan = require('morgan');
 //passport config
 
 require('./config/passport')(passport);
 
 const userController = require('./controllers/userController');
 
+// app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
-
+app.use(morgan('combined',{
+  skip: function (req, res) { return res.statusCode < 400 }
+}));
 app.use(session({
     secret:'secret',
     resave: true,
@@ -51,6 +49,27 @@ app.use((req,res,next)=>{
     next();
 });
 
+const dotenv = require('dotenv');
+
+dotenv.config({ path: './config.env' });
+
+//Database Setup
+const DB = process.env.DATABASE.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD
+);
+
+mongoose
+  .connect(DB, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('DB Connections successfull'))
+  .catch(()=>console.log("Could not establish database connection"));
+
+
 // ===================================================================================
 
 //requirement Routes
@@ -75,15 +94,6 @@ app.post('/create-unistack-users',userController.postCreateUserPage);
 app.post('/login/login',userController.postLoginPage);
 app.get('/logout',userController.getLogoutPage);
 app.get('/login/logs',ensureAuthenticated,userController.getLoginLogs);
-
-// =================================================================================
-///////////////////////////BlackList Module////////////////////////////
-
-app.get('/blacklist-details/blacklist-home',ensureAuthenticated,blackListController.getBlacklistHome);
-app.get('/blacklist-details/client-blacklist-details',ensureAuthenticated,blackListController.getClientBlacklistHome);
-app.get('/blacklist-details/prime-vendor-blacklist-details',ensureAuthenticated,blackListController.getPrimeVendorBlacklistHome);
-app.get('/blacklist-details/vendor-blacklist-details',ensureAuthenticated,blackListController.getVendorBlacklistHome);
-
 
 //////////////////Setting Server Port///////////////////////////////////////////////
 

@@ -1,10 +1,9 @@
-const mongoose = require("mongoose");
-const reqModel = require("../models/unibaseDB");
-const userModel = require("../models/userDB");
-const interviewModel = require('../models/interviewDB');
-const User = mongoose.model("user", userModel.userSchema);
-const Unibase = mongoose.model("unibase", reqModel.unibaseSchema);
-const Interview = mongoose.model('interview', interviewModel.interviewSchema);
+const Unibase = require("../models/unibaseDB");
+const User = require("../models/userDB");
+const Interview = require('../models/interviewDB');
+// const User = mongoose.model("user", userModel.userSchema);
+// const Unibase = mongoose.model("unibase", reqModel.unibaseSchema);
+// const Interview = mongoose.model('interview', interviewModel.interviewSchema);
 const excelJS = require('exceljs');
 
 
@@ -108,6 +107,7 @@ exports.getDashboard1 = async(req,res)=>{
         path: "/reports-dashboard",
         docTitle: "UniStack || Reports",
         username: userp,
+        role: req.user.role
       });
 }
 
@@ -122,9 +122,6 @@ exports.getDashboard1 = async(req,res)=>{
   const totalProjects = await Interview.find({result: "Offer"}).countDocuments().exec();
   const todaysInterview = await Interview.find({interviewDate:date});
   const totalInterviews = await Interview.countDocuments().exec();
-  // const positionToday = await Unibase.find().select('reqID').sort({'_id':-1});
-  // console.log("Todaysposition", positionToday);
-  // console.log(d.toISOString());
 
   await res.render('home', {
     path: "/home",
@@ -164,7 +161,8 @@ exports.getReqList = async(req, res, next) => {
         username: userp,
         email: req.user.email,
         current: page,
-        pages: Math.ceil(count / perPage)
+        pages: Math.ceil(count / perPage),
+        role: req.user.role
       })
   } catch (error) {
       return res.status(400).json({
@@ -190,6 +188,7 @@ exports.getCreateReqPage = async(req, res) => {
     path: '/home',
     docTitle: 'Create Requirement',
     username: username,
+    role: req.user.role,
     error_create_record,
     reqNumber: newReqId,
     appliedFor:'',
@@ -199,41 +198,9 @@ exports.getCreateReqPage = async(req, res) => {
     mComment:'',
     jobDescription:'',
 });
-
-    // Unibase.find({}, function (err, records) {
-    //   let arr = [];
-    //   console.log("Spot2");
-        
-    //   if(!err){
-    //     console.log("Spot3");
-
-    //       records.forEach(i => {
-    //           let j = parseInt(i.reqID);
-    //           arr.push(j);
-    //       });
-    //       console.log("Spot4");
-
-    //       let c = arr[arr.length - 1];
-    //         console.log("Spot5");
-
-    //           res.render('requirements/createReq', {
-    //             path: '/home',
-    //             docTitle: 'Create Requirement',
-    //             username: username,
-    //             error_create_record,
-    //             reqNumber: c + 1,
-    //             appliedFor:'',
-    //             assignedTo:'',
-    //             reqStatus:'',
-    //             taxType:'',
-    //             mComment:'',
-    //             jobDescription:'',
-    //        });
-    //     }
-    //   });
 };
 
-exports.postCreatePage = (req, res) => {
+exports.postCreatePage = async(req, res) => {
   const author = req.user.username;
   let mComment = [];
   let rate;
@@ -306,7 +273,7 @@ exports.postCreatePage = (req, res) => {
       reqEnteredBy: req.body.reqEnteredBy,
       reqKeywords: req.body.reqKeywords,
       jobDescription: req.body.jobDescription,
-      recordOwner: author
+      recordOwner: author,
   });
   
 
@@ -322,30 +289,21 @@ exports.postCreatePage = (req, res) => {
                 remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,reqEnteredDate,
                 jobTitle,jobPortalLink,jobDescription, reqKeywords, employementType} = req.body;
 
-              
-          Unibase.find({}, function (err, records) {
+          const lastRec = Unibase.find().sort({ createdAt: -1 }).limit(1);
+          const newReqId = parseInt(lastRec[0].reqID) + 1
 
-              if (!err) {
-                  let arr = []
-                  records.forEach(i => {
-                      let j = parseInt(i.reqID);
-                      arr.push(j);
-                  });
-                  let c = arr[arr.length - 1];
-
-                  console.log(c);
-                  res.render('requirements/createReq', {
-                      error_create_record,
-                      path: '/home',
-                      docTitle: 'Create Requirement',
-                      username: author,
-                      reqNumber: c + 1,
-                      reqStatus,nextStep,appliedFor,assignedTo,resume,mComment,rate,taxType,
-                      remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,reqEnteredDate,
-                      jobTitle,jobPortalLink,jobDescription,reqKeywords,employementType,
-                  });
-              }
-          });
+          res.render('requirements/createReq', {
+            error_create_record,
+            path: '/home',
+            docTitle: 'Create Requirement',
+            username: author,
+            reqNumber:newReqId,
+            role: req.user.role,
+            reqStatus,nextStep,appliedFor,assignedTo,resume,mComment,rate,taxType,
+            remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,reqEnteredDate,
+            jobTitle,jobPortalLink,jobDescription,reqKeywords,employementType,
+        });
+          
       }
   });
 };
@@ -402,6 +360,8 @@ exports.getViewRecordPage = (req, res) => {
         recordOwner: foundRecord.recordOwner,
         updatedBy: foundRecord.updatedBy,
         username: user,
+        email:req.user.email,
+        role: req.user.role,
       });
     } else {
       console.log(err);
@@ -466,6 +426,7 @@ exports.getUpdateReqPage = async(req, res) => {
         jobDescription: foundRecord.jobDescription,
         createdAt: foundRecord.createdAt,
         updatedAt: foundRecord.updatedAt,
+        role: req.user.role,
       });
     } else {
       console.log(err);
@@ -605,6 +566,7 @@ exports.postUpdateRecordPage = async(req, res) => {
       reqKeywords: req.body.reqKeywords,
       jobDescription: req.body.jobDescription,
       updatedBy: whoUpdateIt,
+      role: req.user.role,
     },
     (err, record) => {
       if (!err) {
@@ -664,6 +626,7 @@ exports.getDeletePage = (req, res) => {
         createdAt: foundRecord.createdAt,
         updatedAt: foundRecord.updatedAt,
         username: user,
+        role: req.user.role,
       });
     } else {
       console.log(err);
