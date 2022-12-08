@@ -339,23 +339,34 @@
 
             <div class="row">
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
-                        <label for="candidateName">4.1 Candidate name </label>
+                        <label for="assignedStatus">4.1 Assigned Status </label>
+                        <select name="assignedStatus" class="form-select">
+                            <option value="<%=assignedStatus%>"><%=assignedStatus%></option>
+                            <option value="Assigned">Assigned</option>
+                            <option value="Not Assigned" selected>Not Assigned</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="candidateName">4.2 Candidate name </label>
                         <input type="text" name="candidateName" class="form-control" value="<%= candidateName %>">
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
-                        <label for="rateForInterview">4.2 Rates for Interview</label>
+                        <label for="rateForInterview">4.3 Rates for Interview</label>
                         <input type="text" name="rateForInterview" class="form-control" value="<%= rateForInterview %>">
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
-                        <label for="paymentStatus">4.3 Payment Status</label>
+                        <label for="paymentStatus">4.4 Payment Status</label>
                         <select name="paymentStatus" class="form-control" >
                             <option value=""></option>
                             <option value="<%= paymentStatus %>" selected> <%= paymentStatus %></option>

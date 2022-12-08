@@ -11,17 +11,11 @@ const consultant = new mongoose.Schema({
     visaStatus: {
         type: String,
     },
-    address: {
+    currentAddress: {
         type: String,
     },
-    city: {
+    previousAddress:{
         type: String,
-    },
-    state: {
-        type: String,
-    },
-    zipcode: {
-        type: Number
     },
     dob: {
         type: Date,

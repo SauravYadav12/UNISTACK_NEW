@@ -318,6 +318,7 @@ exports.postInterviewPage = (req, res) => {
             reqID: req.body.reqID,
             tentativeReason: req.body.tentativeReason,
             recordOwner: username,
+            assignedStatus: req.body.assignedStatus,
         });
 
         newInt.save(err => {
@@ -384,7 +385,8 @@ exports.getInterviewViewPage = (req, res) => {
                     recordOwner: foundInt.recordOwner,
                     updatedBy: foundInt.updatedBy,
                     username: username,
-                    role:req.user.role
+                    role:req.user.role,
+                    assignedStatus: foundInt.assignedStatus,
                 });
             }
         });
@@ -440,7 +442,8 @@ exports.getInterviewUpdatePage = (req, res) => {
                     recordOwner: foundInt.recordOwner,
                     updatedBy: foundInt.updatedBy,
                     username: username,
-                    role:req.user.role
+                    role:req.user.role,
+                    assignedStatus: foundInt.assignedStatus
                 });
             }
         });
@@ -455,9 +458,7 @@ exports.postInterviewUpdatePage = async(req, res) => {
     let interviewee;
 
     const record = await Interview.findOne({intId:intId});
-    console.log("--rec--",record)
     Unibase.findOne({reqID:record.reqID}, (err, rec)=>{
-        console.log("Record--", rec);
         req.body.clientName = rec.clientCompany;
     })
     if(role === "Admin" || role === "SuperAdmin"){
@@ -465,9 +466,7 @@ exports.postInterviewUpdatePage = async(req, res) => {
     } else {
         interviewee = record.candidateName;
     }
-    console.log("Int Bdoy",req.body);
     const updatedRec = await Interview.findByIdAndUpdate(record._id, req.body, {new:true});
-    console.log("UpdatedRed",updatedRec);
     res.redirect('/interviews/view-interviews/' + record.intId);
 };
 
@@ -513,7 +512,8 @@ exports.getInterviewDeletePage = (req, res) => {
                 tentativeReason: foundInt.tentativeReason,
                 updatedBy: foundInt.updatedBy,
                 username: username,
-                role:req.user.role
+                role:req.user.role,
+                assignedStatus:foundInt.assignedStatus
             });
         }
     });

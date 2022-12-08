@@ -37,7 +37,8 @@ const interviewSchema = new mongoose.Schema({
   recordOwner: String,
   reqID:String,
   jobTitle: String,
-  updatedBy: String
+  updatedBy: String,
+  assignedStatus:String,
 },{
   timestamps: true
 });
