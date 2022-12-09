@@ -116,8 +116,13 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="github">1.9 Submitted Github(if Yes Enter the Link)</label>
-                        <input type="text" class="form-control" name="gitHubLink" placeholder="Enter GitHub link">
+                        <label for="interviewWith">1.9 interview With </label>
+                        <select name="interviewWith" class="form-select">
+                            <option value="" selected></option>
+                            <option value="Client">Client</option>
+                            <option value="IMP/PV">IMP/PV</option>
+                            <option value="Vendor">Vendor</option>
+                        </select>
                     </div>
                 </div>
 
@@ -164,10 +169,10 @@
 
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="interviewMode">1.14 Interview Mode </label>
-                        <select name="interviewMode" class="form-select" required>
+                        <label for="interviewViaMode">1.14 Interview via Mode </label>
+                        <select name="interviewViaMode" class="form-select" required>
                             <option value="" selected></option>
-                            <option value="Not confirmed">Not confirmed</option>
+                            <option value="Not confirmed" >Not confirmed</option>
                             <option value="Phone">Phone</option>
                             <option value="Video">Video</option>
                             <option value="Video + Coding">Video + Coding</option>
@@ -180,6 +185,7 @@
                         <label for="meetingType">1.15 Meeting type </label>
                         <select name="meetingType" class="form-select" required>
                             <option value="" selected></option>
+                            <option value="Audio">Audio</option>
                             <option value="Google Meet">Google Meet</option>
                             <option value="Zoom">Zoom</option>
                             <option value="Microsoft Teams">Microsoft Teams</option>
@@ -187,20 +193,20 @@
                         </select>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="interviewDuration">1.16 Interview Duration </label>
-                    <select name="interviewDuration" class="form-select" required>
-                        <option value="" selected></option>
-                        <option value="15 min">15 min</option>
-                        <option value="30 min">30 min</option>
-                        <option value="45 min">45 min</option>
-                        <option value="1 Hour">1 Hour</option>
-                        <option value="2 Hour">2 Hour</option>
-                        <option value="3 Hour">3 Hour</option>
-                    </select>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="interviewDuration">1.16 Interview Duration </label>
+                        <select name="interviewDuration" class="form-select" required>
+                            <option value="" selected></option>
+                            <option value="15 min">15 min</option>
+                            <option value="30 min">30 min</option>
+                            <option value="45 min">45 min</option>
+                            <option value="1 Hour">1 Hour</option>
+                            <option value="2 Hour">2 Hour</option>
+                            <option value="3 Hour">3 Hour</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 

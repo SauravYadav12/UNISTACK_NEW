@@ -133,9 +133,9 @@
      <div class="row">
          <div class="col-md-3">
              <div class="form-group">
-                  <label class="fw-bold" for="github">1.9 Submitted Github(if Yes Enter the Link)</label>
+                  <label class="fw-bold" for="github">1.9 SInterview With</label>
                  <p class="  ">
-                        <%= gitHubLink %>
+                        <%= interviewWith %>
                  </p>
              </div>
          </div>
@@ -175,12 +175,12 @@
             <label class="fw-bold" for="tentativeReason">1.13 Tentative Reason (if Any) || <%if(tentativeReason) {%> updated At - <%=updatedAt.toLocaleString()%> || updated By - <%=updatedBy%> <%}%> </label>
             <input type="text" class="form-control" name="tentativeReason" value="<%= tentativeReason %>" disabled>
         </div>
-        <% if(interviewMode){%>
+        <% if(interviewViaMode){%>
         <div class="col-md-3">
             <div class="form-group">
                 <label class="fw-bold">1.14 Interview Mode </label>
                 <p class="  ">
-                       <%= interviewMode %>
+                       <%= interviewViaMode %>
                 </p>
             </div>
         </div>

@@ -270,7 +270,6 @@ exports.getCreateInterviewpage = async(req, res) => {
 }
 
 
-
 exports.postInterviewPage = async(req, res) => {
 
     try {
@@ -285,9 +284,24 @@ exports.postInterviewPage = async(req, res) => {
           const newId =  1 ;
           req.body.intId = newId;
         }
+        if(req.body.interviewWith === "Vendor"){
+            req.body.subjectLine = `${req.body.interviewDuration}_${req.body.interviewType}_${req.body.interviewViaMode}_${req.body.meetingType}_Interview_With_Vendor_${req.body.vendorCompany}`;
+        }  
+        if(req.body.interviewWith === "IMP/PV"){
+            req.body.subjectLine = `${req.body.interviewDuration}_${req.body.interviewType}_${req.body.interviewViaMode}_${req.body.meetingType}_Interview_With_IMP/PV_${req.body.primeVendorCompany}`;
+        } 
 
-        const int = await Interview.create(req.body);
-        const req = await Unibase.findByIdAndUpdate(int.recordId,{$push:{interviewId:{id:int._id, round: int.interviewRound}}},{new:true});
+        if(req.body.interviewWith === "Client"){
+            req.body.subjectLine = `${req.body.interviewDuration}_${req.body.interviewType}_${req.body.interviewViaMode}_${req.body.meetingType}_Interview_With_Client_${req.body.clientName}`;
+        } 
+        
+        Interview.create(req.body).then(int => {
+            console.log("int", int);
+            Unibase.findByIdAndUpdate(int.recordId,{$push:{interviews:{id:int._id, round:int.interviewRound}}},{new:true}).then(rec=>{
+                console.log("updatedRec",rec)
+            });
+        });
+
         return res.redirect('/interviews/confirmed-interviews/1');
         
     } catch (error) {
@@ -319,6 +333,7 @@ exports.getInterviewViewPage = (req, res) => {
                     interviewTime: foundInt.interviewTime,
                     interviewType: foundInt.interviewType,
                     interviewLink: foundInt.interviewLink,
+                    interviewWith:foundInt.interviewWith,
                     interviewStatus: foundInt.interviewStatus,
                     consultant: foundRecord.appliedFor,
                     marketingPerson: foundInt.marketingPerson,
@@ -348,7 +363,7 @@ exports.getInterviewViewPage = (req, res) => {
                     username: username,
                     role:req.user.role,
                     interviewRound:0,
-                    interviewMode:0
+                    interviewViaMode:0
                 });
             }
         });
@@ -404,7 +419,8 @@ exports.getInterviewUpdatePage = (req, res) => {
                     recordOwner: foundInt.recordOwner,
                     updatedBy: foundInt.updatedBy,
                     interviewRound:0,
-                    interviewMode:0,
+                    interviewViaMode:0,
+                    interviewWith:foundInt.interviewWith,
                     username: username,
                     role:req.user.role,
                 });
@@ -430,7 +446,7 @@ exports.postInterviewUpdatePage = async(req, res) => {
         interviewee = record.candidateName;
     }
     const updatedRec = await Interview.findByIdAndUpdate(record._id, req.body, {new:true});
-    res.redirect('/interviews/view-interviews/' + record.intId);
+    return res.redirect('/interviews/view-interviews/' + record.intId);
 };
 
 

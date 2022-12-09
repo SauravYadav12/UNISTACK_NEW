@@ -139,8 +139,13 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="github">1.9 Submitted Github(if Yes Enter the Link)</label>
-                    <input type="text" class="form-control" name="gitHubLink" value="<%= gitHubLink %>">
+                    <label for="interviewWith">1.9 interview With </label>
+                    <select name="interviewWith" class="form-select">
+                        <option value="<%=interviewWith%>" selected><%= interviewWith %></option>
+                        <option value="Client">Client</option>
+                        <option value="IMP/PV">IMP/PV</option>
+                        <option value="Vendor">Vendor</option>
+                    </select>
                 </div>
             </div>
 
@@ -187,12 +192,12 @@
                 <input type="text" class="form-control" name="tentativeReason" placeholder="Enter Tentative Reason" value="<%= tentativeReason %>">
             </div>
 
-            <% if(interviewMode){%>
+            <% if(interviewViaMode){%>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="interviewMode">1.14 Interview Mode </label>
-                    <select name="interviewMode" class="form-select">
-                        <option value="<%=interviewMode%>" selected><%= interviewMode %></option>
+                    <label for="interviewViaMode">1.14 Interview Mode </label>
+                    <select name="interviewViaMode" class="form-select">
+                        <option value="<%=interviewViaMode%>" selected><%= interviewViaMode %></option>
                         <option value="Not confirmed">Not confirmed</option>
                         <option value="Phone">Phone</option>
                         <option value="Video">Video</option>
@@ -207,6 +212,7 @@
                     <select name="meetingType" class="form-select">
                         <option value="<%=meetingType%>" selected><%= meetingType %></option>
                         <option value="Google Meet">Google Meet</option>
+                        <option value="Audio">Audio</option>
                         <option value="Zoom">Zoom</option>
                         <option value="Microsoft Teams">Microsoft Teams</option>
                         <option value="Webex">Webex</option>
