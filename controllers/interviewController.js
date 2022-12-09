@@ -288,7 +288,7 @@ exports.postInterviewPage = async(req, res) => {
 
         const int = await Interview.create(req.body);
         const req = await Unibase.findByIdAndUpdate(int.recordId,{$push:{interviewId:{id:int._id, round: int.interviewRound}}},{new:true});
-        res.redirect('/interviews/confirmed-interviews/1');
+        return res.redirect('/interviews/confirmed-interviews/1');
         
     } catch (error) {
         console.log(error);
@@ -347,6 +347,8 @@ exports.getInterviewViewPage = (req, res) => {
                     updatedBy: foundInt.updatedBy,
                     username: username,
                     role:req.user.role,
+                    interviewRound:0,
+                    interviewMode:0
                 });
             }
         });
@@ -401,6 +403,8 @@ exports.getInterviewUpdatePage = (req, res) => {
                     tentativeReason: foundInt.tentativeReason,
                     recordOwner: foundInt.recordOwner,
                     updatedBy: foundInt.updatedBy,
+                    interviewRound:0,
+                    interviewMode:0,
                     username: username,
                     role:req.user.role,
                 });

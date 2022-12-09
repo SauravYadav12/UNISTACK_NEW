@@ -157,22 +157,25 @@
                  </p>
              </div>
          </div>
+
+         <% if(interviewRound){%>
          <div class="col-md-3">
             <div class="form-group">
-                 <label class="fw-bold" for="result">1.12 Result </label>
+                 <label class="fw-bold" for="interviewRound">1.12 Interview Round </label>
                 <p class="  ">
                        <%= interviewRound %>
                 </p>
             </div>
         </div>
+        <%}%>
      </div>
 
      <div class="row">
-        <div class="col-md-12 form-group">
+        <div class="col-md-3 form-group">
             <label class="fw-bold" for="tentativeReason">1.13 Tentative Reason (if Any) || <%if(tentativeReason) {%> updated At - <%=updatedAt.toLocaleString()%> || updated By - <%=updatedBy%> <%}%> </label>
             <input type="text" class="form-control" name="tentativeReason" value="<%= tentativeReason %>" disabled>
         </div>
-
+        <% if(interviewMode){%>
         <div class="col-md-3">
             <div class="form-group">
                 <label class="fw-bold">1.14 Interview Mode </label>
@@ -197,6 +200,8 @@
                 </p>
             </div>
         </div>
+
+        <%}%>
     </div>
 
  </div>
