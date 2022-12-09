@@ -8,6 +8,9 @@ const consultant = new mongoose.Schema({
     consultantName: {
         type: String,
     },
+    consultantStatus:{
+        type:String,
+    },
     visaStatus: {
         type: String,
     },

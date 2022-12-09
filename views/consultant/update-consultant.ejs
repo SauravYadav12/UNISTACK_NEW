@@ -58,16 +58,28 @@
                 <!-- Row 1 - Contains status and next Step -->
                 <div class="row">
                     <!-- column 1 -->
+
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="nextStep">1.1 Consultant Name</label>
+                            <label for="consultantStatus">1.1 Consultant Status</label>
+                            <select class="form-select" name="consultantStatus">
+                                <option value="<%= consultant.consultantStatus%>"><%= consultant.consultantStatus%></option>
+                                <option value="Active"> Active</option>
+                                <option value="Not Active">Not Active</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="nextStep">1.2 Consultant Name</label>
                             <input type="text" class="form-control" placeholder="Name" name="consultantName" value="<%= consultant.consultantName%>">
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="assignedTo">1.2 Visa Status</label>
+                            <label for="assignedTo">1.3 Visa Status</label>
                             <select class="form-select" name="visaStatus" id="exampleFormControlSelect1">
                                 <option value="<%= consultant.visaStatus%>"><%= consultant.visaStatus%></option>
                                 <% visaStatus.forEach((visa, i) =>{%>
@@ -80,20 +92,12 @@
                     <!-- column 2 -->
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="nextStep">1.3 Date of Birth</label>
+                            <label for="nextStep">1.4 Date of Birth</label>
+                            <% if(consultant.dob){%>
                             <input type="date" class="form-control" name="dob" max="2005-12-31" value="<%= consultant.dob.toISOString().split('T')[0]%>">
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="timeZone">1.4 Consultant Timezone</label>
-                            <select class="form-select" name="timeZone" id="exampleFormControlSelect1">
-                                <option value="<%= consultant.timeZone%>"><%= consultant.timeZone%></option>
-                                <% timeZone.forEach((time, i) =>{%>
-                                    <option value="<%=time%>"> <%=i+1%>. <%=time%></option>
-                                <%})%>
-                            </select>
+                            <%} else {%>
+                            <input type="date" class="form-control" name="dob" max="2005-12-31" value="">
+                            <%}%>
                         </div>
                     </div>
 
@@ -123,23 +127,35 @@
                 <!-- Row 3 Marketing persons comments -->
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label for="degree">1.9 Degree Name</label>
+                            <label for="timeZone">1.7 Consultant Timezone</label>
+                            <select class="form-select" name="timeZone" id="exampleFormControlSelect1">
+                                <option value="<%= consultant.timeZone%>"><%= consultant.timeZone%></option>
+                                <% timeZone.forEach((time, i) =>{%>
+                                    <option value="<%=time%>"> <%=i+1%>. <%=time%></option>
+                                <%})%>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="degree">1.8 Degree Name</label>
                             <input type="text" name="degree" class="form-control" placeholder="Degree name" value="<%= consultant.degree%>">
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label for="university">1.10 University</label>
+                            <label for="university">1.9 University</label>
                             <input type="text" name="university" class="form-control" placeholder="university" value="<%= consultant.university%>">
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label for="yearPassing">1.11 Year of Passing</label>
+                            <label for="yearPassing">1.10 Year of Passing</label>
                             <input type="text" name="yearPassing" class="form-control" placeholder="Year of Passing" value="<%= consultant.yearPassing%>">
                         </div>
                     </div>
@@ -148,20 +164,20 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="SSN">1.12 SSN</label>
+                            <label for="SSN">1.11 SSN</label>
                             <input type="text" name="ssn" class="form-control" placeholder="Enter ssn" value="<%= consultant.ssn%>">
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="dlno">1.13 Driving License</label>
+                            <label for="dlno">1.12 Driving License</label>
                             <input type="text" name="dlNo" class="form-control" placeholder="Enter DL No." value="<%= consultant.dlNo%>">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="psuedoName">1.14 Psuedo Name of Consultant</label>
+                            <label for="psuedoName">1.13 Psuedo Name of Consultant</label>
                             <input type="text" name="psuedoName" class="form-control" placeholder="Enter Psuedo Name" value="<%= consultant.psuedoName%>">
                         </div>
                     </div>

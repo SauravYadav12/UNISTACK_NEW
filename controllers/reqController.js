@@ -5,6 +5,7 @@ const Interview = require('../models/interviewDB');
 // const Unibase = mongoose.model("unibase", reqModel.unibaseSchema);
 // const Interview = mongoose.model('interview', interviewModel.interviewSchema);
 const excelJS = require('exceljs');
+const Consultant = require("../models/consultant");
 
 
 
@@ -178,13 +179,19 @@ exports.getCreateReqPage = async(req, res) => {
   const username = req.user.username;
   let error_create_record = "";
 
+  // find All Users 
+  const users = await User.find().select('_id username');
+
+  // find All consultant 
+  const consultant = await Consultant.find().select('_id consultantName');
+  console.log(consultant);
   //Find all Records
 
   const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
   const newReqId = parseInt(lastRec[0].reqID) + 1
   // console.log("Last rec",newReqId);
 
-  res.render('requirements/createReq', {
+  return res.render('requirements/createReq', {
     path: '/home',
     docTitle: 'Create Requirement',
     username: username,
@@ -197,6 +204,8 @@ exports.getCreateReqPage = async(req, res) => {
     taxType:'',
     mComment:'',
     jobDescription:'',
+    users,
+    consultant
 });
 };
 
@@ -371,14 +380,8 @@ exports.getViewRecordPage = (req, res) => {
 
 exports.getUpdateReqPage = async(req, res) => {
 
-  //Grab all Users name
-  let users = []
-  
-  const allUsers = await User.find({});
-  
-  allUsers.forEach(user =>{
-    users.push(user.username);
-  });
+  // find All Users 
+  const users = await User.find().select('_id username');
 
   const reqID = req.params.reqID;
 
@@ -387,7 +390,7 @@ exports.getUpdateReqPage = async(req, res) => {
       res.render("requirements/updateReq", {
         path: "/home",
         docTitle: "Update Requirement",
-        users:users,
+        users,
         reqID: foundRecord.reqID,
         reqStatus: foundRecord.reqStatus,
         nextStep: foundRecord.nextStep,

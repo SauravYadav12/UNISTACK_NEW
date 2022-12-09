@@ -79,17 +79,9 @@
                         <label for="assignedTo">1.2 Assigned To</label>
                         <select class="form-select" name="assignedTo" id="exampleFormControlSelect1">
                             <option value="<%= assignedTo%>" selected> <%= assignedTo %> </option>                            
-                            <option value="Anmol">1. Anmol</option>
-                            <option value="Aditi">2. Aditi</option>
-                            <option value="Alina">3. Alina</option>
-                            <option value="Ankush">4. Ankush</option>
-                            <option value="Ashwini">5. Ashwini</option>
-                            <option value="Deepak">6. Deepak</option>
-                            <option value="Rahul RR">7. Rahul RR</option>
-                            <option value="Rohit singh">8. Rohit Singh</option>
-                            <option value="Pramod">9. Pramod</option>
-                            <option value="Sam">10. Sam</option>
-                            <option value="Ritika Singh">11. Ritika Singh</option>
+                            <% users.forEach((user,i)=>{ %>
+                                <option value="user.username"><%=i+1%>. <%=user.username%> </option>
+                            <%})%>
                         </select>
                     </div>
                 </div>

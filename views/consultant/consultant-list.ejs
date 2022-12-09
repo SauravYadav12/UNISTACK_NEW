@@ -27,10 +27,10 @@
       <div class="table-responsive  mt-1">
         <table id="order-listing" class="table dataTable no-footer table-striped table-hover">
           <thead>
-
             <tr>
               <th>View</th>
               <th>ID</th>
+              <th>Status</th>
               <th>Name</th>
               <th>Psuedo Name</th>
               <th>Visa Status</th>
@@ -51,6 +51,18 @@
               </td>
               <td>
                 <%= record.consultantId %>
+              </td>
+              <td>
+                <%if(record.consultantStatus === "Active"){%>
+                  <label class="badge badge-success fw-bold">
+                    <%= record.consultantStatus%>
+                  </label>
+                <%}%>
+                <%if(record.consultantStatus === "Not Active"){%>
+                  <label class="badge badge-danger fw-bold">
+                    <%= record.consultantStatus%>
+                  </label>
+                <%}%>
               </td>
               <td><strong>
                   <%= record.consultantName %>

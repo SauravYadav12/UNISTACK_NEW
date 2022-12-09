@@ -17,10 +17,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <div class="form-group float-start">
+                        <a class="btn btn-success text-white mb-0 me-0" style="width: auto">Create Script</a>
+                    </div>
                     <div class="form-group float-end">
                         <a href="/interviews/update-interview/<%= intId %>" class="btn btn-primary text-white mb-0 me-0" style="width: 100px">Edit</a>
                         <a href="/interviews/confirmed-interviews/1" style="width: 100px" class="btn btn-danger text-white mb-0 me-0">Cancel</a>
-                        <%if(username == 'Sam' || username == 'Anmol'){%>
+                        <% if(role === "Admin" || role === "SuperAdmin"){ %>
                             <a href="/interviews/delete-interview/<%= intId %>" class="btn btn-warning text-white mb-0 me-0" style="width: 100px">Delete</a>
                         <%}%>
                     </div>
@@ -211,7 +214,7 @@
             </div>
         </div>
         <%}%>
-        
+
     </div>
 
  </div>
@@ -348,7 +351,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                      <label class="fw-bold" for="reqID">3.2 Req ID </label>
-                   <a href="/requirements/viewReq/<%= reqID %>"> <input style="cursor: pointer; color: lightseagreen;" type="text" class="form-control" name="reqID" value="<%= reqID %>" disabled> </a> 
+                     <a href="/requirements/viewReq/<%= reqID %>"> <input style="cursor: pointer; color: lightseagreen;" type="text" class="form-control" name="reqID" value="<%= reqID %>" disabled> </a> 
                 </div>
             </div>
 
