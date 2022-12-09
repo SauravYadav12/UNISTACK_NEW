@@ -9,12 +9,10 @@
 
         <div class="container mx-auto form-inline" style="width: 500px; text-align: center">
             <h3 class="form-group mb-2">Interview ID # <%= intId %>
-                <!-- <em>
-                    <input type="text" class="form-group mx-sm-3 form-control-plaintext" name="intId"
-                        value="<%= intId %>" readonly required>
-                </em> -->
             </h3>
             <hr class="style-two">
+            <input type="text" name="intId" value="<%= intId %>" hidden>
+            <input type="text" name="recordId" value="<%= recordId %>" hidden>
         </div>
     </section>
     <!-- Requirement ID Section Ends Here -->
@@ -56,6 +54,7 @@
                             <option value="Technical"> Technical </option>
                             <option value="Techno Managerial">Techno Managerial</option>
                             <option value="Non Technical">Non Technical</option>
+                            <option value="Prep Call">Prep Call</option>
                         </select>
                     </div>
                 </div>
@@ -92,7 +91,7 @@
                     <div class="form-group">
                         <label for="marketing-person">1.6 Maketing Person</label>
                         <input type="text" name="marketingPerson" class="form-control"
-                            placeholder="Enter Marketing person Name">
+                            placeholder="Enter Marketing person Name" value="<%=marketingPerson%>" readonly>
                     </div>
                 </div>
 
@@ -115,21 +114,21 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label for="github">1.9 Submitted Github(if Yes Enter the Link)</label>
                         <input type="text" class="form-control" name="gitHubLink" placeholder="Enter GitHub link">
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label for="code">1.10 Submitted Any Code(if Yes Enter the Link)</label>
                         <input type="text" class="form-control" name="codeLink" placeholder="Enter Code link">
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label for="code">1.11 Result </label>
                         <select name="result" class="form-select">
@@ -141,12 +140,67 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="interviewRound">1.12 Interview Round </label>
+                        <select name="interviewRound" class="form-select" required>
+                            <option value="" selected></option>
+                            <option value="Round 1">Round 1</option>
+                            <option value="Round 2">Round 2</option>
+                            <option value="Round 3">Round 3</option>
+                            <option value="Round 4">Round 4</option>
+                            <option value="Final Round">Final Round</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
-                <div class="col-md-12">
-                    <label for="tentativeReason">1.12 Tentative Reason (if Any)</label>
+                <div class="col-md-3">
+                    <label for="tentativeReason">1.13 Tentative Reason (if Any)</label>
                     <input type="text" class="form-control" name="tentativeReason" placeholder="Enter Tentative Reason">
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="interviewMode">1.14 Interview Mode </label>
+                        <select name="interviewMode" class="form-select" required>
+                            <option value="" selected></option>
+                            <option value="Not confirmed">Not confirmed</option>
+                            <option value="Phone">Phone</option>
+                            <option value="Video">Video</option>
+                            <option value="Video + Coding">Video + Coding</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="meetingType">1.15 Meeting type </label>
+                        <select name="meetingType" class="form-select" required>
+                            <option value="" selected></option>
+                            <option value="Google Meet">Google Meet</option>
+                            <option value="Zoom">Zoom</option>
+                            <option value="Microsoft Teams">Microsoft Teams</option>
+                            <option value="Webex">Webex</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="interviewDuration">1.16 Interview Duration </label>
+                    <select name="interviewDuration" class="form-select" required>
+                        <option value="" selected></option>
+                        <option value="15 min">15 min</option>
+                        <option value="30 min">30 min</option>
+                        <option value="45 min">45 min</option>
+                        <option value="1 Hour">1 Hour</option>
+                        <option value="2 Hour">2 Hour</option>
+                        <option value="3 Hour">3 Hour</option>
+                    </select>
                 </div>
             </div>
 
@@ -177,7 +231,7 @@
                         <label for="subjectLine">2.1 Subject line (Enter Duration + Mode Of Interview + Interview With
                             only)</label>
                         <input type="text" name="subjectLine" class="form-control"
-                            placeholder="Subject line for interview" required>
+                            placeholder="Subject line for interview" readonly>
                     </div>
                 </div>
 
@@ -320,34 +374,24 @@
 
             <div class="row">
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="assignedStatus">4.1 Assigned Status </label>
-                        <select name="assignedStatus" class="form-select">
-                            <option value="Assigned">Assigned</option>
-                            <option value="Not Assigned" selected>Not Assigned</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="candidateName">4.2 Candidate name </label>
+                        <label for="candidateName">4.1 Candidate name </label>
                         <input type="text" name="candidateName" class="form-control"
                             placeholder="Enter Candidates name">
                     </div>
                 </div>
                 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="rateForInterview">4.3 Rates for Interview</label>
+                        <label for="rateForInterview">4.2 Rates for Interview</label>
                         <input type="text" name="rateForInterview" class="form-control" placeholder="Enter Rates">
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="paymentStatus">4.4 Payment Status</label>
+                        <label for="paymentStatus">4.3 Payment Status</label>
                         <select name="paymentStatus" class="form-select">
                             <option value="" selected></option>
                             <option value="Paid">Paid</option>

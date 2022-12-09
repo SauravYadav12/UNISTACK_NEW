@@ -173,10 +173,10 @@ exports.getCancelledInterviews = (req,res,next)=>{
                 })
              })
         })
-  }
+}
 
   
-  exports.getTentativeInterviews = (req,res,next)=>{
+exports.getTentativeInterviews = (req,res,next)=>{
 
     let perPage = 10
     let page = req.params.page || 1
@@ -205,13 +205,13 @@ exports.getCancelledInterviews = (req,res,next)=>{
                 })
              })
         })
-  }
+}
   
 
 
 exports.getInterviewDetailsPage = async(req, res) => {
     let userp = req.user.username
-    let perPage = 500
+    let perPage = 1000
     Unibase
       .find({})
       .sort({"_id":-1})
@@ -232,106 +232,67 @@ exports.getInterviewDetailsPage = async(req, res) => {
 };
 
 
-exports.getCreateInterviewpage = (req, res) => {
-    const username = req.user.username;
-    const reqID = req.body.recordID;
-    var intId = 0;
-    var uniqueRecord = [];
+exports.getCreateInterviewpage = async(req, res) => {
 
-    Interview.find().then(data=>{
-        
-        for (let i = 0; i < data.length; i++){
-            uniqueRecord.push(data[i].intId);
+    try {
+        const lastRec = await Interview.find().sort({ createdAt: -1 }).limit(1);
+        const foundRecord = await Unibase.findById(req.body.recordID);
+    
+        if(lastRec.length){
+           newId = parseInt(lastRec[0].intId) + 1
+        } else {
+           newId =  1 ;
         }
-        let newRid = uniqueRecord[uniqueRecord.length - 1]
-        intId = parseInt(newRid) + 1
-
-            Unibase.findOne({
-                reqID: reqID
-            }, (err, foundRecord) => {
-                if (!err) {
-                    res.render('interviews/createInterview', {
-                        path: '/interviews/dashboard',
-                        docTitle: 'Create Interview',
-                        reqID: foundRecord.reqID,
-                        intId: intId,
-                        vendorCompany: foundRecord.vendorCompany,
-                        jobTitle: foundRecord.jobTitle,
-                        primeVendorCompany: foundRecord.primeVendorCompany,
-                        consultant: foundRecord.appliedFor,
-                        jobDescription: foundRecord.jobDescription,
-                        clientName: foundRecord.clientCompany,
-                        taxType: foundRecord.taxType,
-                        duration: foundRecord.duration,
-                        username: username,
-                        role:req.user.role
-                    });
-                }
-            });
-        })
-        .catch(err=>console.log(err))
+    
+        return res.render('interviews/createInterview', {
+            path: '/interviews/dashboard',
+            docTitle: 'Create Interview',
+            reqID: foundRecord.reqID,
+            recordId:foundRecord._id,
+            intId: newId,
+            marketingPerson:foundRecord.assignedTo,
+            vendorCompany: foundRecord.vendorCompany,
+            jobTitle: foundRecord.jobTitle,
+            primeVendorCompany: foundRecord.primeVendorCompany,
+            consultant: foundRecord.appliedFor,
+            jobDescription: foundRecord.jobDescription,
+            clientName: foundRecord.clientCompany,
+            taxType: foundRecord.taxType,
+            duration: foundRecord.duration,
+            username: req.user.username,
+            role:req.user.role
+        });
+        
+    } catch (error) {
+        console.log(error);   
+    }
+   
 }
 
 
 
-exports.postInterviewPage = (req, res) => {
+exports.postInterviewPage = async(req, res) => {
 
-    const username = req.user.username;
-    var uniqueRecord = [];
-
+    try {
+        console.log(req.body);
+        const lastRec = await Interview.find().sort({ createdAt: -1 }).limit(1);
     
-    Interview.find().then(data=>{
-        
-        for (let i = 0; i < data.length; i++){
-            uniqueRecord.push(data[i].intId);
+        if(lastRec.length){
+           const newId = parseInt(lastRec[0].intId) + 1
+            req.body.intId = newId;
+
+        } else {
+          const newId =  1 ;
+          req.body.intId = newId;
         }
-        let newRid = uniqueRecord[uniqueRecord.length - 1]
-        req.body.intId = parseInt(newRid) + 1
-    
 
-        const newInt = new Interview({
-            intId: req.body.intId,
-            interviewDate: req.body.interviewDate,
-            interviewTime: req.body.interviewTime,
-            interviewType: req.body.interviewType,
-            interviewStatus: req.body.interviewStatus,
-            consultant: req.body.consultant,
-            marketingPerson: req.body.marketingPerson,
-            vendorCompany: req.body.vendorCompany,
-            primeVendorCompany: req.body.primeVendorCompany,
-            gitHubLink: req.body.gitHubLink,
-            codeLink: req.body.codeLink,
-            result: req.body.result,
-            subjectLine: req.body.subjectLine,
-            interviewLink:req.body.interviewLink,
-            interviewMode: req.body.interviewMode,
-            interviewFocus: req.body.interviewFocus,
-            jobDescription: req.body.jobDescription,
-            interviewFeedback: req.body.interviewFeedback,
-            taxType: req.body.taxType,
-            clientName: req.body.clientName,
-            jobTitle: req.body.jobTitle,
-            duration: req.body.duration,
-            candidateName: req.body.candidateName,
-            rateForInterview: req.body.rateForInterview,
-            paymentStatus: req.body.paymentStatus,
-            reqID: req.body.reqID,
-            tentativeReason: req.body.tentativeReason,
-            recordOwner: username,
-            assignedStatus: req.body.assignedStatus,
-        });
-
-        newInt.save(err => {
-
-            if (!err) {
-                console.log("Interview saved successfully");
-                res.redirect('/interviews/confirmed-interviews/1');
-            } else {
-                console.log(err);
-            }
-        });
-    })
-    .catch(err=>console.log(err));
+        const int = await Interview.create(req.body);
+        const req = await Unibase.findByIdAndUpdate(int.recordId,{$push:{interviewId:{id:int._id, round: int.interviewRound}}},{new:true});
+        res.redirect('/interviews/confirmed-interviews/1');
+        
+    } catch (error) {
+        console.log(error);
+    }   
 };
 
 
@@ -386,7 +347,6 @@ exports.getInterviewViewPage = (req, res) => {
                     updatedBy: foundInt.updatedBy,
                     username: username,
                     role:req.user.role,
-                    assignedStatus: foundInt.assignedStatus,
                 });
             }
         });
@@ -443,7 +403,6 @@ exports.getInterviewUpdatePage = (req, res) => {
                     updatedBy: foundInt.updatedBy,
                     username: username,
                     role:req.user.role,
-                    assignedStatus: foundInt.assignedStatus
                 });
             }
         });
@@ -513,7 +472,6 @@ exports.getInterviewDeletePage = (req, res) => {
                 updatedBy: foundInt.updatedBy,
                 username: username,
                 role:req.user.role,
-                assignedStatus:foundInt.assignedStatus
             });
         }
     });

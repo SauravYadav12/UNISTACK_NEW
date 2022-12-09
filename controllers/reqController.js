@@ -277,7 +277,7 @@ exports.postCreatePage = async(req, res) => {
   });
   
 
-  newReq.save(err => {
+  newReq.save(async(err) => {
     
     if (!err) {
           console.log("Record Created Successfully");
@@ -289,10 +289,10 @@ exports.postCreatePage = async(req, res) => {
                 remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,reqEnteredDate,
                 jobTitle,jobPortalLink,jobDescription, reqKeywords, employementType} = req.body;
 
-          const lastRec = Unibase.find().sort({ createdAt: -1 }).limit(1);
+          const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
           const newReqId = parseInt(lastRec[0].reqID) + 1
 
-          res.render('requirements/createReq', {
+          return res.render('requirements/createReq', {
             error_create_record,
             path: '/home',
             docTitle: 'Create Requirement',

@@ -33,7 +33,7 @@
                                 <select style="overflow:scroll;" name="recordID" id="" class="form-select">
                                     <option value="" selected></option>
                                     <% records.slice().reverse().forEach(record =>{%>
-                                        <option value="<%= record.reqID%>"><%= record.reqID %> - <%= record.vendorCompany%> - <%= record.primeVendorCompany%> - <%= record.clientCompany%> </option>
+                                        <option value="<%= record._id%>"><%= record.reqID %> - <%= record.vendorCompany%> - <%= record.primeVendorCompany%> - <%= record.clientCompany%> </option>
                                     <%})%>
                                 </select>
                             </div>

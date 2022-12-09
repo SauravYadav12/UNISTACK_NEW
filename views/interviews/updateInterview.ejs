@@ -79,6 +79,7 @@
                         <option value="Technical"> Technical </option>
                         <option value="Techno Managerial">Techno Managerial</option>
                         <option value="Non Technical">Non Technical</option>
+                        <option value="Prep Call">Prep Call</option>
                     </select>
                 </div>
             </div>
@@ -136,25 +137,24 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="github">1.9 Submitted Github(if Yes Enter the Link)</label>
                     <input type="text" class="form-control" name="gitHubLink" value="<%= gitHubLink %>">
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="code">1.10 Submitted Any Code(if Yes Enter the Link)</label>
                     <input type="text" class="form-control" name="codeLink" value="<%= codeLink %>">
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="code">1.11 Result </label>
                     <select name="result" class="form-select">
-                        <option value=""></option>
                         <option value="<%=result%>" selected><%= result %></option>
                         <option value="Offer">Offer</option>
                         <option value="Negative">Negative</option>
@@ -163,13 +163,69 @@
                     </select>
                 </div>
             </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="interviewRound">1.12 Interview Round </label>
+                    <select name="interviewRound" class="form-select">
+                        <option value="<%=interviewRound%>" selected><%= interviewRound %></option>
+                        <option value="Round 1">Round 1</option>
+                        <option value="Round 2">Round 2</option>
+                        <option value="Round 3">Round 3</option>
+                        <option value="Round 4">Round 4</option>
+                        <option value="Final Round">Final Round</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <label for="tentativeReason">1.12 Tentative Reason (if Any) || <% if(updatedBy){%> updated At - <%=updatedAt.toLocaleTimeString()%> || updated By - <%= updatedBy%> <%}%> </label>
+            <div class="col-md-6">
+                <label for="tentativeReason">1.13 Tentative Reason (if Any) || <% if(updatedBy){%> updated At - <%=updatedAt.toLocaleTimeString()%> || updated By - <%= updatedBy%> <%}%> </label>
                 <input type="text" class="form-control" name="tentativeReason" placeholder="Enter Tentative Reason" value="<%= tentativeReason %>">
             </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="interviewMode">1.14 Interview Mode </label>
+                    <select name="interviewMode" class="form-select">
+                        <option value="<%=interviewMode%>" selected><%= interviewMode %></option>
+                        <option value="Not confirmed">Not confirmed</option>
+                        <option value="Phone">Phone</option>
+                        <option value="Video">Video</option>
+                        <option value="Video + Coding">Video + Coding</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="meetingType">1.15 Meeting type </label>
+                    <select name="meetingType" class="form-select">
+                        <option value="<%=meetingType%>" selected><%= meetingType %></option>
+                        <option value="Google Meet">Google Meet</option>
+                        <option value="Zoom">Zoom</option>
+                        <option value="Microsoft Teams">Microsoft Teams</option>
+                        <option value="Webex">Webex</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="interviewDuration">1.16 Interview Duration </label>
+                    <select name="interviewDuration" class="form-select" required>
+                        <option value="<%=interviewDuration%>" selected><%= interviewDuration %></option>
+                        <option value="15 min">15 min</option>
+                        <option value="30 min">30 min</option>
+                        <option value="45 min">45 min</option>
+                        <option value="1 Hour">1 Hour</option>
+                        <option value="2 Hour">2 Hour</option>
+                        <option value="3 Hour">3 Hour</option>
+                    </select>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -339,34 +395,23 @@
 
             <div class="row">
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="assignedStatus">4.1 Assigned Status </label>
-                        <select name="assignedStatus" class="form-select">
-                            <option value="<%=assignedStatus%>"><%=assignedStatus%></option>
-                            <option value="Assigned">Assigned</option>
-                            <option value="Not Assigned" selected>Not Assigned</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="candidateName">4.2 Candidate name </label>
+                        <label for="candidateName">4.1 Candidate name </label>
                         <input type="text" name="candidateName" class="form-control" value="<%= candidateName %>">
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="rateForInterview">4.3 Rates for Interview</label>
+                        <label for="rateForInterview">4.2 Rates for Interview</label>
                         <input type="text" name="rateForInterview" class="form-control" value="<%= rateForInterview %>">
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="paymentStatus">4.4 Payment Status</label>
+                        <label for="paymentStatus">4.3 Payment Status</label>
                         <select name="paymentStatus" class="form-control" >
                             <option value=""></option>
                             <option value="<%= paymentStatus %>" selected> <%= paymentStatus %></option>

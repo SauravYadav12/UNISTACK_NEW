@@ -131,7 +131,7 @@
      </div>
 
      <div class="row">
-         <div class="col-md-4">
+         <div class="col-md-3">
              <div class="form-group">
                   <label class="fw-bold" for="github">1.9 Submitted Github(if Yes Enter the Link)</label>
                  <p class="  ">
@@ -140,7 +140,7 @@
              </div>
          </div>
 
-         <div class="col-md-4">
+         <div class="col-md-3">
              <div class="form-group">
                   <label class="fw-bold" for="code">1.10 Submitted Any Code(if Yes Enter the Link)</label>
                  <p class="  ">
@@ -149,7 +149,7 @@
              </div>
          </div>
 
-         <div class="col-md-4">
+         <div class="col-md-3">
              <div class="form-group">
                   <label class="fw-bold" for="result">1.11 Result </label>
                  <p class="  ">
@@ -157,12 +157,45 @@
                  </p>
              </div>
          </div>
+         <div class="col-md-3">
+            <div class="form-group">
+                 <label class="fw-bold" for="result">1.12 Result </label>
+                <p class="  ">
+                       <%= interviewRound %>
+                </p>
+            </div>
+        </div>
      </div>
 
      <div class="row">
         <div class="col-md-12 form-group">
-            <label class="fw-bold" for="tentativeReason">1.12 Tentative Reason (if Any) || <%if(tentativeReason) {%> updated At - <%=updatedAt.toLocaleString()%> || updated By - <%=updatedBy%> <%}%> </label>
+            <label class="fw-bold" for="tentativeReason">1.13 Tentative Reason (if Any) || <%if(tentativeReason) {%> updated At - <%=updatedAt.toLocaleString()%> || updated By - <%=updatedBy%> <%}%> </label>
             <input type="text" class="form-control" name="tentativeReason" value="<%= tentativeReason %>" disabled>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="fw-bold">1.14 Interview Mode </label>
+                <p class="  ">
+                       <%= interviewMode %>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="fw-bold">1.15 Meeting Type </label>
+                <p class="  ">
+                       <%= meetingType %>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="fw-bold">1.16 interviewDuration </label>
+                <p class="  ">
+                       <%= interviewDuration %>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -351,36 +384,27 @@
 
                     <div class="row">
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                 <label class="fw-bold" for="candidateName">4.1 Assigned Status </label>
-                                <p class="  ">
-                                    <%= assignedStatus %>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                 <label class="fw-bold" for="candidateName">4.2 Candidate name </label>
+                                 <label class="fw-bold" for="candidateName">4.1 Candidate name </label>
                                 <p class="  ">
                                     <%= candidateName %>
                                 </p>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                 <label class="fw-bold" for="rateForInterview">4.3 Rates for Interview</label>
+                                 <label class="fw-bold" for="rateForInterview">4.2 Rates for Interview</label>
                                 <p class="  ">
                                     <%= rateForInterview %>
                                 </p>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                 <label class="fw-bold" for="paymentStatus">4.4 Payment Status</label>
+                                 <label class="fw-bold" for="paymentStatus">4.3 Payment Status</label>
                                 <p class="  ">
                                     <%= paymentStatus %>
                                 </p>

@@ -36,9 +36,11 @@ const interviewSchema = new mongoose.Schema({
   paymentStatus:String,
   recordOwner: String,
   reqID:String,
+  interviewRound:String,
+  interviewMode:String,
+  meetingType:String,
   jobTitle: String,
   updatedBy: String,
-  assignedStatus:String,
 },{
   timestamps: true
 });
