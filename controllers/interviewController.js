@@ -297,7 +297,7 @@ exports.postInterviewPage = async(req, res) => {
         
         Interview.create(req.body).then(int => {
             console.log("int", int);
-            Unibase.findByIdAndUpdate(int.recordId,{$push:{interviews:{id:int._id, round:int.interviewRound}}},{new:true}).then(rec=>{
+            Unibase.findByIdAndUpdate(int.recordId,{$addToSet:{interviews:{id:int._id, round:int.interviewRound}}},{new:true}).then(rec=>{
                 console.log("updatedRec",rec)
             });
         });
@@ -314,7 +314,6 @@ exports.postInterviewPage = async(req, res) => {
 exports.getInterviewViewPage = (req, res) => {
     const intId = req.params.intId;
     const username = req.user.username;
-
 
     Interview.findOne({
         intId: intId
@@ -362,8 +361,11 @@ exports.getInterviewViewPage = (req, res) => {
                     updatedBy: foundInt.updatedBy,
                     username: username,
                     role:req.user.role,
-                    interviewRound:0,
-                    interviewViaMode:0
+                    interviewRound:foundInt.interviewRound,
+                    interviewViaMode:foundInt.interviewViaMode,
+                    interviewWith:foundInt.interviewWith,
+                    meetingType:foundInt.meetingType,
+                    interviewDuration: foundInt.interviewDuration
                 });
             }
         });
@@ -418,9 +420,11 @@ exports.getInterviewUpdatePage = (req, res) => {
                     tentativeReason: foundInt.tentativeReason,
                     recordOwner: foundInt.recordOwner,
                     updatedBy: foundInt.updatedBy,
-                    interviewRound:0,
-                    interviewViaMode:0,
+                    interviewRound:foundInt.interviewRound,
+                    interviewViaMode:foundInt.interviewViaMode,
                     interviewWith:foundInt.interviewWith,
+                    meetingType:foundInt.meetingType,
+                    interviewDuration: foundInt.interviewDuration,
                     username: username,
                     role:req.user.role,
                 });
@@ -431,11 +435,20 @@ exports.getInterviewUpdatePage = (req, res) => {
 
 exports.postInterviewUpdatePage = async(req, res) => {
     const intId = req.body.intId;
-    const updatedBy = req.user.username;
     const role = req.user.role
     req.body.updatedBy = req.user.username
-    let interviewee;
 
+    if(req.body.interviewWith === "Vendor"){
+        req.body.subjectLine = `${req.body.interviewDuration}_${req.body.interviewType}_${req.body.interviewViaMode}_${req.body.meetingType}_Interview_With_Vendor_${req.body.vendorCompany}`;
+    }  
+    if(req.body.interviewWith === "IMP/PV"){
+        req.body.subjectLine = `${req.body.interviewDuration}_${req.body.interviewType}_${req.body.interviewViaMode}_${req.body.meetingType}_Interview_With_IMP/PV_${req.body.primeVendorCompany}`;
+    } 
+
+    if(req.body.interviewWith === "Client"){
+        req.body.subjectLine = `${req.body.interviewDuration}_${req.body.interviewType}_${req.body.interviewViaMode}_${req.body.meetingType}_Interview_With_Client_${req.body.clientName}`;
+    } 
+    
     const record = await Interview.findOne({intId:intId});
     Unibase.findOne({reqID:record.reqID}, (err, rec)=>{
         req.body.clientName = rec.clientCompany;
@@ -492,6 +505,11 @@ exports.getInterviewDeletePage = (req, res) => {
                 updatedBy: foundInt.updatedBy,
                 username: username,
                 role:req.user.role,
+                interviewRound:foundInt.interviewRound,
+                interviewViaMode:foundInt.interviewViaMode,
+                interviewWith:foundInt.interviewWith,
+                meetingType:foundInt.meetingType,
+                interviewDuration: foundInt.interviewDuration
             });
         }
     });

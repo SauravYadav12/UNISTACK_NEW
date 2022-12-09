@@ -137,9 +137,11 @@
         </div>
 
         <div class="row">
+
+          <% if(interviewWith){%>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="interviewWith">1.9 interview With </label>
+                    <label for="interviewWith">1.9 Interview With </label>
                     <select name="interviewWith" class="form-select">
                         <option value="<%=interviewWith%>" selected><%= interviewWith %></option>
                         <option value="Client">Client</option>
@@ -148,6 +150,7 @@
                     </select>
                 </div>
             </div>
+            <%}%>
 
             <div class="col-md-3">
                 <div class="form-group">
@@ -168,8 +171,8 @@
                     </select>
                 </div>
             </div>
-            <% if(interviewRound){%>
 
+            <% if(interviewRound){%>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="interviewRound">1.12 Interview Round </label>
@@ -184,6 +187,7 @@
                 </div>
             </div>
             <%}%>
+
         </div>
 
         <div class="row">
@@ -195,7 +199,7 @@
             <% if(interviewViaMode){%>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="interviewViaMode">1.14 Interview Mode </label>
+                    <label for="interviewViaMode">1.14 Interview Via Mode </label>
                     <select name="interviewViaMode" class="form-select">
                         <option value="<%=interviewViaMode%>" selected><%= interviewViaMode %></option>
                         <option value="Not confirmed">Not confirmed</option>
@@ -205,12 +209,15 @@
                     </select>
                 </div>
             </div>
+            <%}%>
 
+            <% if(meetingType){%>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="meetingType">1.15 Meeting type </label>
                     <select name="meetingType" class="form-select">
                         <option value="<%=meetingType%>" selected><%= meetingType %></option>
+                        <option value="Not confirmed">Not confirmed</option>
                         <option value="Google Meet">Google Meet</option>
                         <option value="Audio">Audio</option>
                         <option value="Zoom">Zoom</option>
@@ -219,7 +226,9 @@
                     </select>
                 </div>
             </div>
+            <%}%>
 
+            <% if(interviewDuration){%>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="interviewDuration">1.16 Interview Duration </label>
