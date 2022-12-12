@@ -1,9 +1,6 @@
 const Unibase = require("../models/unibaseDB");
 const User = require("../models/userDB");
 const Interview = require('../models/interviewDB');
-// const User = mongoose.model("user", userModel.userSchema);
-// const Unibase = mongoose.model("unibase", reqModel.unibaseSchema);
-// const Interview = mongoose.model('interview', interviewModel.interviewSchema);
 const excelJS = require('exceljs');
 const Consultant = require("../models/consultant");
 
@@ -24,11 +21,6 @@ function formatDate(date) {
 
   return [year, month, day].join('-');
 };
-
-// const getTodaysInterview = async (req)=>{
-  
-//     return interviewToday
-// }
 
 exports.exportData = async (req,res) => {
   let perPage = 300

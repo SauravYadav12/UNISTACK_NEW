@@ -33,7 +33,7 @@ exports.getCreateConsultant = (req,res)=>{
       docTitle: "UniStack || Reports",
       username: req.user.username,
       email:req.user.email,
-      projects: 5,
+      projects: 6,
       visaStatus,
       timeZone,
       role: req.user.role,
