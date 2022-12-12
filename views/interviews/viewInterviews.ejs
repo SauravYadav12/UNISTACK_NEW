@@ -10,16 +10,23 @@
         </div>
    
 <!-- Form Section Starts here -->
-<form>
+
      
     <!-- Form Button Section  -->
     <section class="func-buttons mt-4 mb-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group float-start">
-                        <a class="btn btn-success text-white mb-0 me-0" style="width: auto">Create Script</a>
-                    </div>
+                    <% if(username === "Sam"){%>
+                    <form action="/generate-script" method="post">
+                        <div class="form-group float-start">
+                            <input type="text" name="interviewId" value="<%=interviewId%>" hidden>
+                            <input type="text" name="recordId" value="<%=recordId%>" hidden>
+                            <input type="text" name="consultant" value="<%=consultant%>" hidden>
+                            <button class="btn btn-success text-white mb-0 me-0" style="width: auto" type="submit">Generate Script</button>
+                        </div>
+                    </form>
+                    <%}%>
                     <div class="form-group float-end">
                         <a href="/interviews/update-interview/<%= intId %>" class="btn btn-primary text-white mb-0 me-0" style="width: 100px">Edit</a>
                         <a href="/interviews/confirmed-interviews/1" style="width: 100px" class="btn btn-danger text-white mb-0 me-0">Cancel</a>
@@ -29,6 +36,7 @@
                     </div>
                 </div>
             </div>
+            
             <hr style="border: 1px solid #007BFF">
         </div>
     </section>
@@ -36,7 +44,6 @@
 </section>
 <!-- Requirement ID Section Ends Here -->   
    
-
 
 <!-- Section 1 - contains information about Communication & rates -->
 <section class="interview-details mt-4 mb-4"> 
@@ -449,7 +456,7 @@
             <em><p> Updated by <strong><%= updatedBy %></strong> on date <strong><%= updatedAt.toLocaleDateString()%></strong> Time @ <strong><%= updatedAt.toLocaleTimeString()%></strong></p></em>
         </div>
 </div>
-</form>
+
 
 <!-- Form Ends here -->
 

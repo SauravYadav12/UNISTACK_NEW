@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Unibase = require('../models/unibaseDB');
 const User = require('../models/userDB');
 const Interview = require('../models/interviewDB');
+const Consultant = require('../models/consultant');
 
 
 function formatDate(date) {
@@ -328,6 +329,8 @@ exports.getInterviewViewPage = (req, res) => {
                     path: '/interviews/dashboard',
                     docTitle: 'View interview',
                     intId: foundInt.intId,
+                    interviewId: foundInt._id,
+                    recordId:foundInt.recordId,
                     interviewDate: foundInt.interviewDate,
                     interviewTime: foundInt.interviewTime,
                     interviewType: foundInt.interviewType,
@@ -530,3 +533,26 @@ exports.postInterviewDeletePage = (req, res) => {
 
     res.redirect('/interviews/dashboard/1');
 };
+
+exports.generateScript = async(req,res)=>{
+    console.log("script--",req.body);
+    try {
+        console.log("Entered")
+        const interview = await Interview.findById(req.body.interviewId);
+        const record = await Unibase.findById(req.body.recordId);
+        const consultant = await Consultant.findOne({consultantName: "Mina Youssuef"});
+        console.log("int--",interview);
+        console.log("record", record);
+        console.log("consultant", consultant);
+
+        return res.render('interviews/interview-script',{
+            docTitle:"script",
+            consultant,
+            record,
+            interview
+        })
+    } catch (error) {
+        console.log(error)
+    }
+    
+}

@@ -83,7 +83,7 @@
                         <select class="form-select" name="assignedTo" id="exampleFormControlSelect1">
                                 <option value="<%= typeof assignedTo != 'undefined' ? assignedTo :'' %>"><%= assignedTo %></option>
                                 <% users.forEach((user,i)=>{ %>
-                                 <option value="user.username"><%=i+1%>. <%=user.username%> </option>
+                                 <option value="<%=user.username%>"><%=i+1%>. <%=user.username%> </option>
                                 <%})%>
                         </select>
                     </div>
