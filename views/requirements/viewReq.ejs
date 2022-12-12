@@ -53,10 +53,9 @@
 
                         <div class="d-flex">
                            <% interviews.forEach(interview=>{%>
-                            <button class="btn btn-primary"> <%= interview.round %></button>
+                            <a href="/interviews/view-interviews/<%= interview.intId %>" class="btn btn-primary"><%= interview.intId%> - <%= interview.round %></a>
                             <%})%>
                         </div>
-
                         <%}%>
                     </div>
                 </div>

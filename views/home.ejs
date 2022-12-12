@@ -208,7 +208,7 @@
                                       <th>View</th>
                                       <th>Int ID</th>
                                       <th>Int Status</th>
-                                      <th>Tentative Reason</th>
+                                      <!-- <th>Tentative Reason</th> -->
                                       <th>Consultant</th>
                                       <th>Int date</th>
                                       <th>Int Time (EST)</th>
@@ -256,14 +256,8 @@
                                         <%} else {%>
                                           <label class="badge badge-danger"><%= interview.interviewStatus %></label>
                                         <%}%>
-
-
                                       </td>
-                                      <td>
-                                        <strong>
-                                          <%= interview.tentativeReason %>
-                                        </strong>
-                                      </td>
+                                      
                                       <td>
                                         <strong>
                                           <%= interview.consultant %>

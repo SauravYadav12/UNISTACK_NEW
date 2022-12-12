@@ -37,6 +37,22 @@
                 </div>
             </div>
             
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="previous Rounds" class="fw-bold">Previous Rounds (If Any)</label>
+                        <% if(interviews){%>
+                            <div class="d-flex">
+                                <% interviews.forEach(interview =>{ %>
+                                    <% if(interview.intId !== intId){ %>   
+                                         <a href="/interviews/view-interviews/<%= interview.intId %>" class="btn btn-primary"><%= interview.intId%> - <%= interview.round %></a>
+                                    <%}%>
+                                <%})%>
+                            </div>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
             <hr style="border: 1px solid #007BFF">
         </div>
     </section>

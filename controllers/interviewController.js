@@ -364,6 +364,7 @@ exports.getInterviewViewPage = (req, res) => {
                     updatedBy: foundInt.updatedBy,
                     username: username,
                     role:req.user.role,
+                    interviews: foundRecord.interviews,
                     interviewRound:foundInt.interviewRound,
                     interviewViaMode:foundInt.interviewViaMode,
                     interviewWith:foundInt.interviewWith,
