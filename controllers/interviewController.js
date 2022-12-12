@@ -298,7 +298,7 @@ exports.postInterviewPage = async(req, res) => {
         
         Interview.create(req.body).then(int => {
             console.log("int", int);
-            Unibase.findByIdAndUpdate(int.recordId,{$addToSet:{interviews:{id:int._id, round:int.interviewRound}}},{new:true}).then(rec=>{
+            Unibase.findByIdAndUpdate(int.recordId,{$push:{interviews:{id:int._id, round:int.interviewRound, intId:int.intId}}},{new:true}).then(rec=>{
                 console.log("updatedRec",rec)
             });
         });

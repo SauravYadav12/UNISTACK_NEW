@@ -368,6 +368,7 @@ exports.getViewRecordPage = (req, res) => {
         updatedAt: foundRecord.updatedAt,
         recordOwner: foundRecord.recordOwner,
         updatedBy: foundRecord.updatedBy,
+        interviews: foundRecord.interviews,
         username: user,
         email:req.user.email,
         role: req.user.role,

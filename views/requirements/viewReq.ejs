@@ -44,6 +44,23 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="fw-bold" for="resume">Interviews (if Any)</label>
+                        <%if(interviews){%>
+
+                        <div class="d-flex">
+                           <% interviews.forEach(interview=>{%>
+                            <button class="btn btn-primary"> <%= interview.round %></button>
+                            <%})%>
+                        </div>
+
+                        <%}%>
+                    </div>
+                </div>
+            </div>
             <hr style="border: 1px solid #007BFF">
         </div>
     </section>
