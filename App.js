@@ -91,7 +91,7 @@ app.get('/',userController.getLoginPage);
 app.get('/404',userController.get404Page);
 app.get('/create-unistack-users',userController.getCreateUserPage);
 app.post('/create-unistack-users',userController.postCreateUserPage);
-app.post('/login/login',userController.postLoginPage);
+app.post('/login',userController.postLoginPage);
 app.get('/logout',userController.getLogoutPage);
 app.get('/login/logs',ensureAuthenticated,userController.getLoginLogs);
 

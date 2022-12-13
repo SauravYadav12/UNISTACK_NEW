@@ -190,6 +190,7 @@ exports.getCreateReqPage = async(req, res) => {
     role: req.user.role,
     error_create_record,
     reqNumber: newReqId,
+    projects:6,
     appliedFor:'',
     assignedTo:'',
     reqStatus:'',
