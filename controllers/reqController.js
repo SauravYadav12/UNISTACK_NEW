@@ -176,7 +176,6 @@ exports.getCreateReqPage = async(req, res) => {
 
   // find All consultant 
   const consultant = await Consultant.find().select('_id consultantName');
-  console.log(consultant);
   //Find all Records
 
   const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
@@ -190,7 +189,6 @@ exports.getCreateReqPage = async(req, res) => {
     role: req.user.role,
     error_create_record,
     reqNumber: newReqId,
-    projects:6,
     appliedFor:'',
     assignedTo:'',
     reqStatus:'',
@@ -211,6 +209,10 @@ exports.postCreatePage = async(req, res) => {
   let duration;
   let error_create_record;
 
+  const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
+  const newReqId = parseInt(lastRec[0].reqID) + 1
+
+  req.body.reqID = newReqId;
 
   if (req.body.mComment != "") {
       mComment = [{

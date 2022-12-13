@@ -59,21 +59,21 @@
             <div class="col-md-3">
                 <div class="form-group">
                    <label for="InterviewDate">1.1 Interview Date</label>
-                    <input type="date" class="form-control" name="interviewDate" value="<%= interviewDate %>">
+                    <input type="date" class="form-control" name="interviewDate" value="<%= interviewDate %>" required>
                 </div>
             </div>
             <!-- column 2 -->
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="interview Time">1.2 Interview Time</label>
-                    <input type="text" class="form-control" value="<%= interviewTime %>" name="interviewTime">
+                    <input type="text" class="form-control" value="<%= interviewTime %>" name="interviewTime" required>
                 </div>    
             </div>
 
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="rate">1.3 Interview Type </label>
-                    <select name="interviewType" class="form-select">
+                    <select name="interviewType" class="form-select" required>
                         <option value=""></option>
                         <option value="<%=interviewType%>" selected><%= interviewType %></option>
                         <option value="Technical"> Technical </option>
@@ -138,11 +138,11 @@
 
         <div class="row">
 
-          <% if(interviewWith){%>
+            <% if(interviewWith){%>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="interviewWith">1.9 Interview With </label>
-                    <select name="interviewWith" class="form-select">
+                    <select name="interviewWith" class="form-select" required>
                         <option value="<%=interviewWith%>" selected><%= interviewWith %></option>
                         <option value="Client">Client</option>
                         <option value="IMP/PV">IMP/PV</option>
@@ -176,7 +176,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="interviewRound">1.12 Interview Round </label>
-                    <select name="interviewRound" class="form-select">
+                    <select name="interviewRound" class="form-select" required>
                         <option value="<%=interviewRound%>" selected><%= interviewRound %></option>
                         <option value="Round 1">Round 1</option>
                         <option value="Round 2">Round 2</option>
@@ -200,7 +200,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="interviewViaMode">1.14 Interview Via Mode </label>
-                    <select name="interviewViaMode" class="form-select">
+                    <select name="interviewViaMode" class="form-select" required>
                         <option value="<%=interviewViaMode%>" selected><%= interviewViaMode %></option>
                         <option value="Not confirmed">Not confirmed</option>
                         <option value="Phone">Phone</option>
@@ -215,7 +215,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="meetingType">1.15 Meeting type </label>
-                    <select name="meetingType" class="form-select">
+                    <select name="meetingType" class="form-select" required>
                         <option value="<%=meetingType%>" selected><%= meetingType %></option>
                         <option value="Not confirmed">Not confirmed</option>
                         <option value="Google Meet">Google Meet</option>
