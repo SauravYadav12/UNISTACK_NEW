@@ -45,7 +45,7 @@
         <div class="col-md-9 p-3">
 
             <h4 class="fw-bold">INTERVIEW DETAILS  
-                <a class="btn btn-primary btn-sm float-end" href="/downloadPDF"> Download PDF</a>
+                <!-- <a class="btn btn-primary btn-sm float-end" href="/downloadPDF"> Download PDF</a> -->
             </h4>
             <hr style="border: 1px solid black ;">
                 
@@ -56,7 +56,7 @@
                     <li class="pb-3" style="overflow-wrap:anywhere ;"><strong class="pe-2">INTERVIEW LINK:</strong> <a href="<%= interview.interviewLink%>"> <%= interview.interviewLink%></a></li>
                     <li class="pb-3"><strong class="pe-2">INTERVIEW FOCUS:</strong>  <%= interview.interviewFocus.toUpperCase()%></li>
                     <li class="pb-3"><strong class="pe-2">INTERVIEWER DETAILS:</strong>  <%= interview.interviewMode.toUpperCase()%></li>
-                    <li class="pb-3" style="page-break-after:always;"><strong class="pe-2">PRIME VENDOR NAME:</strong>  <%= record.primeVendorCompany.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">PRIME VENDOR NAME:</strong>  <%= record.primeVendorCompany.toUpperCase()%></li>
                     <li class="pb-3"><strong class="pe-2">VENDOR NAME:</strong>  <%= record.vendorCompany%></li>
                     <li class="pb-3"><strong class="pe-2">CLIENT NAME:</strong>  <%= record.clientCompany%></li>
                 </ul>
