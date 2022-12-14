@@ -539,10 +539,10 @@ exports.generateScript = async(req,res)=>{
     console.log("script--",req.body);
     const projects = [];
     try {
-        console.log("Entered")
         const interview = await Interview.findById(req.body.interviewId);
         const record = await Unibase.findById(req.body.recordId);
-        const consultant = await Consultant.findOne({consultantName: req.body.consultantName});
+        const consultant = await Consultant.findOne({psuedoName: req.body.consultant});
+        console.log("Entered",consultant);
 
 
         for(i=0; i < consultant.projectName.length; i++){
