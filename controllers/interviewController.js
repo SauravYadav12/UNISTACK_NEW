@@ -3,6 +3,9 @@ const Unibase = require('../models/unibaseDB');
 const User = require('../models/userDB');
 const Interview = require('../models/interviewDB');
 const Consultant = require('../models/consultant');
+const path = require('path');
+const ejs = require('ejs');
+const pdf = require('html-pdf');
 
 
 function formatDate(date) {
@@ -536,14 +539,14 @@ exports.postInterviewDeletePage = (req, res) => {
 };
 
 exports.generateScript = async(req,res)=>{
-    console.log("script--",req.body);
+    console.log("script--",req.path);
+    ScriptPath = req.path;
     const projects = [];
     try {
         const interview = await Interview.findById(req.body.interviewId);
         const record = await Unibase.findById(req.body.recordId);
         const consultant = await Consultant.findOne({consultantName: req.body.consultant});
-        console.log("Entered",consultant);
-
+        // console.log("Entered",consultant);
 
         for(i=0; i < consultant.projectName.length; i++){
 
@@ -575,7 +578,20 @@ exports.generateScript = async(req,res)=>{
 }
 
 exports.downloadScriptPdf = async(req,res) => {
-    console.log(req);
+    
+    console.log("spot 1",projects);
 
-    return res.download('./script.pdf');
+    const newPath = path.join(__dirname,'..','views','interviews/interview-script.ejs');
+    ejs.renderFile(newPath, {}, function(err, str) {
+    console.log("spot 2");
+        
+        if (err) return console.log(err);
+
+        pdf.create(str).toFile("script.pdf", function(err, data) {
+        console.log("spot 3");
+
+        if (err) return res.send(err);
+        console.log("File Created Successfully")
+        });    
+    });
 }

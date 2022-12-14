@@ -104,17 +104,31 @@
                 <!-- Row 2 - Contains information about tax term and Remote -->
                 <div class="row">
 
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="Address">1.5 Current Address</label>
                             <input type="text" name="currentAddress" class="form-control" placeholder="Address">
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="Address">1.6 Previous Address</label>
                             <input type="text" name="previousAddress" class="form-control" placeholder="Address">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="Address">1.14 Email</label>
+                            <input type="email" name="email" class="form-control" placeholder="Email">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="Address">1.15 Phone</label>
+                            <input type="text" name="phone" class="form-control" placeholder="Phone">
                         </div>
                     </div>
 
@@ -159,24 +173,31 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="SSN">1.11 SSN</label>
                             <input type="text" name="ssn" class="form-control" placeholder="Enter ssn">
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="dlno">1.12 Driving License</label>
                             <input type="text" name="dlNo" class="form-control" placeholder="Enter DL No.">
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="psuedoName">1.13 Psuedo Name of Consultant</label>
                             <input type="text" name="psuedoName" class="form-control" placeholder="Enter Psuedo Name">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="SkypeID">1.16 SkypeId</label>
+                            <input type="text" name="skypeId" class="form-control" placeholder="Enter skypeId">
                         </div>
                     </div>
                 </div>
@@ -196,7 +217,7 @@
             </div>
 
             <div class="container section-content">
-                <% projects.forEach((project,i)=>{%>
+                <% for(i=0;i<6;i++){%>
 
                     <div class="row">
                         <div class="col-md-12">
@@ -255,7 +276,7 @@
                             </div>
                         </div>
                     </div>
-                    <%})%>
+                    <%}%>
                         <hr style="border: 1px solid #007BFF;">
             </div>
 

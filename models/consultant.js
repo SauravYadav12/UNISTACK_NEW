@@ -20,6 +20,15 @@ const consultant = new mongoose.Schema({
     previousAddress:{
         type: String,
     },
+    email:{
+        type:String,
+    },
+    phone:{
+        type:String,
+    },
+    skypeId:{
+        type:String
+    },
     dob: {
         type: Date,
     },

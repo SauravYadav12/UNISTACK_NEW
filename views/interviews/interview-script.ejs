@@ -8,12 +8,14 @@
             <h4 class="fw-bold d-flex justify-content-center">CONSULTANT DETAILS</h4>
             <hr style="border: 1px solid black ;">
             <div class="row p-3">
+
                 <ul>
-                    <li class="pb-3"><strong class="pe-2">NAME:</strong>  <%= consultant.psuedoName.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">MARKETING NAME:</strong>  <%= consultant.psuedoName.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">FULL LEGAL NAME:</strong>  <%= consultant.consultantName.toUpperCase()%></li>
                     <li class="pb-3"><strong class="pe-2">LOCATION:</strong>  <%= consultant.currentAddress.toUpperCase()%></li>
-                    <li class="pb-3"><strong class="pe-2">EMAIL:</strong>  <%= consultant.psuedoName.toUpperCase()%></li>
-                    <li class="pb-3"><strong class="pe-2">PHONE:</strong>  <%= consultant.psuedoName.toUpperCase()%></li>
-                    <li class="pb-3"><strong class="pe-2">SKYPE:</strong>  <%= consultant.psuedoName.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">EMAIL:</strong>  <%= consultant.email%></li>
+                    <li class="pb-3"><strong class="pe-2">PHONE:</strong>  <%= consultant.phone%></li>
+                    <li class="pb-3"><strong class="pe-2">SKYPE:</strong>  <%= consultant.skypeId%></li>
                     <li class="pb-3"><strong class="pe-2">INT. SCHEDULE:</strong>  Time - <%= interview.interviewTime.toUpperCase()%>, Date - <%= interview.interviewDate%></li>
                 </ul>
             </div>
@@ -54,7 +56,7 @@
                     <li class="pb-3" style="overflow-wrap:anywhere ;"><strong class="pe-2">INTERVIEW LINK:</strong> <a href="<%= interview.interviewLink%>"> <%= interview.interviewLink%></a></li>
                     <li class="pb-3"><strong class="pe-2">INTERVIEW FOCUS:</strong>  <%= interview.interviewFocus.toUpperCase()%></li>
                     <li class="pb-3"><strong class="pe-2">INTERVIEWER DETAILS:</strong>  <%= interview.interviewMode.toUpperCase()%></li>
-                    <li class="pb-3"><strong class="pe-2">PRIME VENDOR NAME:</strong>  <%= record.primeVendorCompany.toUpperCase()%></li>
+                    <li class="pb-3" style="page-break-after:always;"><strong class="pe-2">PRIME VENDOR NAME:</strong>  <%= record.primeVendorCompany.toUpperCase()%></li>
                     <li class="pb-3"><strong class="pe-2">VENDOR NAME:</strong>  <%= record.vendorCompany%></li>
                     <li class="pb-3"><strong class="pe-2">CLIENT NAME:</strong>  <%= record.clientCompany%></li>
                 </ul>
