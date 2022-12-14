@@ -32,5 +32,5 @@
 
 .script-container{
     margin: 10px 0;
-    height: 100vh;
+    height: max-content;
 }

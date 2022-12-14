@@ -103,7 +103,7 @@
                         <select class="form-select" name="appliedFor" id="exampleFormControlSelect1">
                                 <option value="<%= typeof appliedFor != 'undefined' ? appliedFor :'' %>"><%= appliedFor %></option>
                                 <% consultants.forEach((consultant,i)=>{%>
-                                <option value="<%=consultant.psuedoName%>"><%=i+1%>. <%=consultant.psuedoName%></option>
+                                <option value="<%=consultant.consultantName%>"><%=i+1%>. <%=consultant.consultantName%></option>
                                 <%})%>
                         </select>
                     </div>    
