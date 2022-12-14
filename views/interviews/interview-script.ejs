@@ -2,23 +2,92 @@
 
 <div class="container">
     
-    <div class="d-flex justify-content-center align-items-center mt-4">
-        <h3>Script</h3>
-    </div>
-    <div class="d-flex justify-content-center align-items-center">
-        <hr style="width:500px ;">
-    </div>
+    <div class="row script-container" >
+        
+        <div class="col-md-3 script-sidebar p-3 rounded-3 ">
+            <h4 class="fw-bold d-flex justify-content-center">CONSULTANT DETAILS</h4>
+            <hr style="border: 1px solid black ;">
+            <div class="row p-3">
+                <ul>
+                    <li class="pb-3"><strong class="pe-2">NAME:</strong>  <%= consultant.psuedoName.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">LOCATION:</strong>  <%= consultant.currentAddress.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">EMAIL:</strong>  <%= consultant.psuedoName.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">PHONE:</strong>  <%= consultant.psuedoName.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">SKYPE:</strong>  <%= consultant.psuedoName.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">INT. SCHEDULE:</strong>  Time - <%= interview.interviewTime.toUpperCase()%>, Date - <%= interview.interviewDate%></li>
+                </ul>
+            </div>
 
-    <!-- heading section -->
-    <div class="row">
-        <div class="col-md-12">
-            <h2>1. Consultant Details</h2>
+            <div class="row">
+                <h5 class="fw-bold d-flex">PERSONAL DETAILS</h5>
+                <hr style="border: 1px solid black ; width: 170px; margin-left: 10px;">
+            </div>
+
+            <div class="row p-3">
+                <ul>
+                    <li class="pb-3"><strong class="pe-2">VISA STATUS:</strong>  <%= consultant.visaStatus.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">UNIVERSITY:</strong>  <%= consultant.university.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">YEAR PASSING:</strong>  <%= consultant.yearPassing.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">DEGREE:</strong>  <%= consultant.degree.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">DOB:</strong>  <%= consultant.dob.toDateString()%></li>
+                    <li class="pb-3"><strong class="pe-2">SSN (Last 4 Digits):</strong>  <%= consultant.ssn%></li>
+
+                </ul>
+            </div>
+
         </div>
-        <div class="col-md-12">
-            <hr style="border: 1px solid #007Ebc ;">
+
+        <div class="col-md-9 p-3">
+
+            <h4 class="fw-bold">INTERVIEW DETAILS  
+                <a class="btn btn-primary btn-sm float-end" href="/downloadPDF"> Download PDF</a>
+            </h4>
+            <hr style="border: 1px solid black ;">
+                
+            
+            <div class="row p-3 ">
+                <ul>
+                    <li class="pb-3"><strong class="pe-2">ABOUT INTERVIEW:</strong>  <%= interview.subjectLine.toUpperCase()%></li>
+                    <li class="pb-3" style="overflow-wrap:anywhere ;"><strong class="pe-2">INTERVIEW LINK:</strong> <a href="<%= interview.interviewLink%>"> <%= interview.interviewLink%></a></li>
+                    <li class="pb-3"><strong class="pe-2">INTERVIEW FOCUS:</strong>  <%= interview.interviewFocus.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">INTERVIEWER DETAILS:</strong>  <%= interview.interviewMode.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">PRIME VENDOR NAME:</strong>  <%= record.primeVendorCompany.toUpperCase()%></li>
+                    <li class="pb-3"><strong class="pe-2">VENDOR NAME:</strong>  <%= record.vendorCompany%></li>
+                    <li class="pb-3"><strong class="pe-2">CLIENT NAME:</strong>  <%= record.clientCompany%></li>
+                </ul>
+            </div>
+
+            <h4 class="fw-bold">JOB DESCRIPTION</h4>
+            <hr style="border: 1px solid black ;">
+
+            <div class="row p-3">
+                <ul>
+                    <li class="pb-3"><strong class="pe-2">JOB ROLE:</strong>  <%= record.jobDescription%></li>
+                    <li class="pb-3"><strong class="pe-2">TECHNICAL SKILLS REQUIRED:</strong>  <%= record.reqKeywords%></li>
+                </ul>
+            </div>
+
+            <h4 class="fw-bold">CONSULTANT'S EXPERIENCE</h4>
+            <hr style="border: 1px solid black ;">
+
+            <div class="row p-3">
+                <% projects.forEach((project,i)=>{%>
+                    <h5 class="fw-bold">PROJECT <%= i +1%> </h5>
+                    <hr style="border: 1px solid black ; width: 300px;">
+                    <ul>
+                        <li class="pb-3"><strong class="pe-2">CLIENT NAME:</strong>  <%= project.name%></li>
+                        <li class="pb-3"><strong class="pe-2">CITY:</strong>  <%= project.city%></li>
+                        <li class="pb-3"><strong class="pe-2">STATE:</strong>  <%= project.state%></li>
+                        <li class="pb-3"><strong class="pe-2">PROJECT START DATE:</strong>  <%= project.startDate%></li>
+                        <li class="pb-3"><strong class="pe-2">PROJECT END DATE:</strong>  <%= project.endDate%></li>
+                        <li class="pb-3"><strong class="pe-2">PROJECT DESCRIPTION:</strong>  <%= project.description%></li>
+
+                    </ul>
+                <%})%>
+            </div>
         </div>
+
     </div>
-    <!-- heading section -->
 
 </div>
 

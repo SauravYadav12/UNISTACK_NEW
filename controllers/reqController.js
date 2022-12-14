@@ -175,7 +175,7 @@ exports.getCreateReqPage = async(req, res) => {
   const users = await User.find().select('_id username');
 
   // find All consultant 
-  const consultant = await Consultant.find().select('_id consultantName');
+  const consultants = await Consultant.find().select('_id consultantName psuedoName');
   //Find all Records
 
   const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
@@ -196,7 +196,7 @@ exports.getCreateReqPage = async(req, res) => {
     mComment:'',
     jobDescription:'',
     users,
-    consultant
+    consultants
 });
 };
 
@@ -378,7 +378,8 @@ exports.getUpdateReqPage = async(req, res) => {
 
   // find All Users 
   const users = await User.find().select('_id username');
-
+  // find All consultant 
+  const consultants = await Consultant.find().select('_id consultantName psuedoName');
   const reqID = req.params.reqID;
 
   Unibase.findOne({ reqID: reqID }, (err, foundRecord) => {
@@ -426,6 +427,7 @@ exports.getUpdateReqPage = async(req, res) => {
         createdAt: foundRecord.createdAt,
         updatedAt: foundRecord.updatedAt,
         role: req.user.role,
+        consultants,
       });
     } else {
       console.log(err);

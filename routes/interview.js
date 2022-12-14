@@ -22,7 +22,8 @@ const { ensureAuthenticated } = require('../config/auth');
   router.get('/interviews/cancelled-interviews/:page',ensureAuthenticated,interviewController.getCancelledInterviews);
   router.get('/interviews/tentative-interviews/:page',ensureAuthenticated,interviewController.getTentativeInterviews);
   router.get('/interviews/all-interviews',ensureAuthenticated,interviewController.getAllInterviews);
-  router.post('/generate-script', ensureAuthenticated,interviewController.generateScript);
+  router.post('/generate-script/:id', ensureAuthenticated,interviewController.generateScript);
+  router.get('/downloadPDF',ensureAuthenticated, interviewController.downloadScriptPdf);
 
 
 module.exports = router;

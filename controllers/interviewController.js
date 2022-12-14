@@ -537,23 +537,45 @@ exports.postInterviewDeletePage = (req, res) => {
 
 exports.generateScript = async(req,res)=>{
     console.log("script--",req.body);
+    const projects = [];
     try {
         console.log("Entered")
         const interview = await Interview.findById(req.body.interviewId);
         const record = await Unibase.findById(req.body.recordId);
-        const consultant = await Consultant.findOne({consultantName: "Mina Youssuef"});
-        console.log("int--",interview);
-        console.log("record", record);
-        console.log("consultant", consultant);
+        const consultant = await Consultant.findOne({consultantName: req.body.consultantName});
 
-        return res.render('interviews/interview-script',{
+
+        for(i=0; i < consultant.projectName.length; i++){
+
+            projects.push({name:consultant.projectName[i],
+                          city:consultant.projectCity[i],
+                          state:consultant.projectState[i],
+                          startDate: consultant.projectStartDate[i],
+                          endDate: consultant.projectEndDate[i],
+                          description: consultant.projectDescription[i]});
+          }
+
+        
+        res.render('interviews/interview-script',{
             docTitle:"script",
             consultant,
             record,
-            interview
-        })
+            interview,
+            projects
+        });
+
+        
+         
     } catch (error) {
         console.log(error)
+        const interview = await Interview.findById(req.body.interviewId);
+        res.redirect('/interviews/view-interviews/'+ interview.intId); 
     }
     
+}
+
+exports.downloadScriptPdf = async(req,res) => {
+    console.log(req);
+
+    return res.download('./script.pdf');
 }

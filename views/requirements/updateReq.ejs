@@ -99,22 +99,9 @@
                             <label for="consultantName">1.3 Applied For</label>
                             <select class="form-select" name="appliedFor" id="exampleFormControlSelect1">
                                     <option value="<%= appliedFor %>"> <%= appliedFor %></option>
-                                    <option value="Alexandra">1. Alexandra</option>
-                                    <option value="Allan">2. Allan</option>
-                                    <option value="Harsh">3. Harsh</option>
-                                    <option value="Tayveer">4. Tayveer</option>
-                                    <option value="Basant">5. Basant</option>
-                                    <option value="Kevin">6. Kevin</option>
-                                    <option value="Yagyaveer">7. Yagyaveer</option>
-                                    <option value="Kuldeep">8. Kuldeep</option>
-                                    <option value="Mahsen">9. Mahsen</option>
-                                    <option value="Sonia">10. Sonia</option>
-                                    <option value="Mina">11. Mina</option>
-                                    <option value="Abby">12. Abby</option>
-                                    <option value="Bibek">13. Bibek</option>
-                                    <option value="Divyang">14. Divyang</option>
-                                    <option value="Kinnar">15. Kinnar</option>
-
+                                    <% consultants.forEach((consultant,i)=>{%>
+                                        <option value="<%=consultant.psuedoName%>"><%=i+1%>. <%=consultant.psuedoName%></option>
+                                    <%})%>
                             </select>
                         </div>    
                     </div>

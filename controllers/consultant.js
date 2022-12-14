@@ -8,7 +8,7 @@ const Consultant = require('../models/consultant');
 exports.getConsultantDetails = async(req,res)=>{
 
   try {
-    const consultants = await Consultant.find().sort({_id:-1});
+    const consultants = await Consultant.find()
     const username = req.user.username;
     res.render('consultant/consultant-list',{
         path:'/consultant',
