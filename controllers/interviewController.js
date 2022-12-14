@@ -539,8 +539,7 @@ exports.postInterviewDeletePage = (req, res) => {
 };
 
 exports.generateScript = async(req,res)=>{
-    console.log("script--",req.path);
-    ScriptPath = req.path;
+    // ScriptPath = req.path;
     const projects = [];
     try {
         const interview = await Interview.findById(req.body.interviewId);
@@ -579,19 +578,16 @@ exports.generateScript = async(req,res)=>{
 
 exports.downloadScriptPdf = async(req,res) => {
     
-    console.log("spot 1",projects);
 
-    const newPath = path.join(__dirname,'..','views','interviews/interview-script.ejs');
-    ejs.renderFile(newPath, {}, function(err, str) {
-    console.log("spot 2");
-        
-        if (err) return console.log(err);
+        // const newPath = path.join(__dirname,'..','views','interviews/interview-script.ejs');
+        // ejs.renderFile(newPath, {}, function(err, str) {
+            
+        //     if (err) return console.log(err);
 
-        pdf.create(str).toFile("script.pdf", function(err, data) {
-        console.log("spot 3");
+        //     pdf.create(str).toFile("script.pdf", function(err, data) {
 
-        if (err) return res.send(err);
-        console.log("File Created Successfully")
-        });    
-    });
+        //     if (err) return res.send(err);
+        //     console.log("File Created Successfully")
+        //     });    
+        // });
 }

@@ -1,8 +1,9 @@
 <%- include('../partials/header1.ejs') %>
 
 <div class="container">
-    
-    <div class="row script-container shadow rounded" >
+
+
+    <div class="row script-container rounded" >
         
         <div class="col-md-3 script-sidebar p-3 rounded-3 ">
             <h4 class="fw-bold d-flex justify-content-center">CONSULTANT DETAILS</h4>
@@ -42,18 +43,17 @@
 
         </div>
 
-        <div class="col-md-9 p-3">
+        <div class="col-md-9 p-3 script-interview">
 
-            <h4 class="fw-bold">INTERVIEW DETAILS  
-                <!-- <a class="btn btn-primary btn-sm float-end" href="/downloadPDF"> Download PDF</a> -->
+            <h4 class="fw-bold">INTERVIEW DETAILS FOR #ID <%=interview.intId%> 
+                <button class="btn btn-primary btn-sm float-end print-button" onclick="window.print()"> Print PDF</button>
             </h4>
             <hr style="border: 1px solid black ;">
-                
             
             <div class="row p-3 ">
                 <ul>
-                    <li class="pb-3"><strong class="pe-2">ABOUT INTERVIEW:</strong>  <%= interview.subjectLine.toUpperCase()%></li>
-                    <li class="pb-3" style="overflow-wrap:break-word"><strong class="pe-2">INTERVIEW LINK:</strong> <a href="<%= interview.interviewLink%>"> <%= interview.interviewLink%></a></li>
+                    <li class="pb-2" ><strong class="pe-2">ABOUT INTERVIEW:</strong>  <%= interview.subjectLine.toUpperCase()%></li>
+                    <li class="pb-3 interview-link" style="overflow-wrap:break-word;"><strong>INTERVIEW LINK:</strong> <a href="<%= interview.interviewLink%>"> <%= interview.interviewLink%></a></li>
                     <li class="pb-3"><strong class="pe-2">INTERVIEW FOCUS:</strong>  <%= interview.interviewFocus.toUpperCase()%></li>
                     <li class="pb-3"><strong class="pe-2">INTERVIEWER DETAILS:</strong>  <%= interview.interviewMode.toUpperCase()%></li>
                     <li class="pb-3"><strong class="pe-2">PRIME VENDOR NAME:</strong>  <%= record.primeVendorCompany.toUpperCase()%></li>

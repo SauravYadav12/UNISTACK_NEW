@@ -34,3 +34,19 @@
     margin: 10px 0;
     height: max-content;
 }
+
+@media print {
+    body * {
+      visibility: hidden;
+    }
+    .script-container, .script-container * {
+      visibility: visible;
+    }
+    .interview-link{
+        overflow-wrap: inherit;
+    }
+    .print-button{
+        display: none;
+    }
+    @page {size:  auto; margin: 50px;}
+  }
