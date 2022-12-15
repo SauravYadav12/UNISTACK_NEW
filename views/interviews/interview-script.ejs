@@ -43,7 +43,7 @@
 
         </div>
 
-        <div class="col-md-9 p-3 script-interview">
+        <div class="col-md-9 p-3 script-interview" >
 
             <h4 class="fw-bold">INTERVIEW DETAILS FOR #ID <%=interview.intId%> 
                 <button class="btn btn-primary btn-sm float-end print-button" onclick="window.print()"> Print PDF</button>
@@ -55,7 +55,7 @@
                     <li class="pb-2" ><strong class="pe-2">ABOUT INTERVIEW:</strong>  <%= interview.subjectLine.toUpperCase()%></li>
                     <li class="pb-3 interview-link" style="overflow-wrap:break-word;"><strong>INTERVIEW LINK:</strong> <a href="<%= interview.interviewLink%>"> <%= interview.interviewLink%></a></li>
                     <li class="pb-3"><strong class="pe-2">INTERVIEW FOCUS:</strong>  <%= interview.interviewFocus.toUpperCase()%></li>
-                    <li class="pb-3"><strong class="pe-2">INTERVIEWER DETAILS:</strong>  <%= interview.interviewMode.toUpperCase()%></li>
+                    <li class="pb-3" style="white-space: pre ;"><strong class="pe-2">INTERVIEWER DETAILS:</strong>  <%= interview.interviewMode.toUpperCase()%></li>
                     <li class="pb-3"><strong class="pe-2">PRIME VENDOR NAME:</strong>  <%= record.primeVendorCompany.toUpperCase()%></li>
                     <li class="pb-3"><strong class="pe-2">VENDOR NAME:</strong>  <%= record.vendorCompany%></li>
                     <li class="pb-3"><strong class="pe-2">CLIENT NAME:</strong>  <%= record.clientCompany%></li>
@@ -67,7 +67,7 @@
 
             <div class="row p-3">
                 <ul>
-                    <li class="pb-3"><strong class="pe-2">JOB ROLE:</strong>  <%= record.jobDescription%></li>
+                    <li class="pb-3" style="white-space: pre ;"><strong class="pe-2">JOB ROLE:</strong>  <%= record.jobDescription%></li>
                     <li class="pb-3"><strong class="pe-2">TECHNICAL SKILLS REQUIRED:</strong>  <%= record.reqKeywords%></li>
                 </ul>
             </div>

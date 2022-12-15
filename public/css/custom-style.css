@@ -48,5 +48,5 @@
     .print-button{
         display: none;
     }
-    @page {size:  auto; margin: 50px;}
+    @page {size:  auto; margin: 55px;}
   }
