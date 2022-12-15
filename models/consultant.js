@@ -71,6 +71,18 @@ const consultant = new mongoose.Schema({
     psuedoName:{
         type:String
     },
+    getVisa:{
+        type: String
+    },
+    cameToUsYear:{
+        type:String
+    },
+    originCountry:{
+        type: String
+    },
+    lookingToChange:{
+        type:String
+    },
     createdBy: {
         type: String,
     },

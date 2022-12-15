@@ -198,7 +198,37 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="SkypeID">1.16 SkypeId</label>
-                            <input type="text" name="skypeId" class="form-control" placeholder="Enter skypeId">
+                            <input type="text" name="skypeId" class="form-control" value="<%= consultant.skypeId%>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="SSN">1.17 How did you get the VISA?</label>
+                            <input type="text" name="getVisa" class="form-control" value="<%= consultant.getVisa%>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="dlno">1.18 In which year you came to US?</label>
+                            <input type="text" name="cameToUsYear" class="form-control" value="<%= consultant.cameToUsYear%>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="psuedoName">1.19 Basicly from which country?</label>
+                            <input type="text" name="originCountry" class="form-control" value="<%= consultant.originCountry%>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="SkypeID">1.20 Why are you looking for the change?</label>
+                            <input type="text" name="lookingToChange" class="form-control" value="<%= consultant.lookingToChange%>">
                         </div>
                     </div>
                 </div>
