@@ -7,8 +7,6 @@ const Consultant = require("../models/consultant");
 
 
 function formatDate(date) {
-  // var offset = -300; //Timezone offset for EST in minutes.
-  // var estDate = new Date(dt.getTime() + offset*60*1000)
   var d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),

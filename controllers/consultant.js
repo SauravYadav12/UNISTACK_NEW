@@ -4,6 +4,20 @@ const User = require('../models/userDB');
 const Interview = require('../models/interviewDB');
 const Consultant = require('../models/consultant');
 
+function formatDate(date) {
+  var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+  if (month.length < 2)
+      month = '0' + month;
+  if (day.length < 2)
+      day = '0' + day;
+
+  return [day, month, year].join('-');
+};
+
 
 exports.getConsultantDetails = async(req,res)=>{
 
@@ -67,6 +81,10 @@ exports.getConsultant = async(req,res) => {
   const timeZone = ['EST','CST','MST','PST'];
   try {
     const consultant = await Consultant.findById({_id:req.params.id});
+    const dateOfBirth = consultant.dob
+    const newDOB = formatDate(dateOfBirth);
+    consultant.dob = newDOB;
+    console.log("newDOB", newDOB);
     for(i=0; i < consultant.projectName.length; i++){
 
       projects.push({name:consultant.projectName[i],
