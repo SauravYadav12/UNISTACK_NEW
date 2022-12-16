@@ -7,7 +7,7 @@ const Consultant = require('../models/consultant');
 function formatDate(date) {
   var d = new Date(date),
       month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
+      day = '' + (d.getDate() + 1),
       year = d.getFullYear();
 
   if (month.length < 2)
