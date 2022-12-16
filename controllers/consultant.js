@@ -7,7 +7,7 @@ const Consultant = require('../models/consultant');
 function formatDate(date) {
   var d = new Date(date),
       month = '' + (d.getMonth() + 1),
-      day = '' + (d.getDate()),
+      day = '' + (d.getDate() + 1),
       year = d.getFullYear();
 
   if (month.length < 2)
@@ -83,7 +83,6 @@ exports.getConsultant = async(req,res) => {
     const consultant = await Consultant.findById({_id:req.params.id});
     const dateOfBirth = consultant.dob
     const newDOB = formatDate(dateOfBirth);
-    consultant.dob = newDOB;
     
     for(i=0; i < consultant.projectName.length; i++){
 
