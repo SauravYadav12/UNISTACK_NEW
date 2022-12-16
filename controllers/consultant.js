@@ -81,9 +81,9 @@ exports.getConsultant = async(req,res) => {
   const timeZone = ['EST','CST','MST','PST'];
   try {
     const consultant = await Consultant.findById({_id:req.params.id});
-    const dateOfBirth = consultant.dob
-    const newDOB = formatDate(dateOfBirth);
-    
+    // const newDob = consultant.dob.toLocaleDateString('en-US', {timeZone: 'UTC'});
+    // console.log("New Date ", newDob);
+
     for(i=0; i < consultant.projectName.length; i++){
 
       projects.push({name:consultant.projectName[i],
@@ -98,7 +98,6 @@ exports.getConsultant = async(req,res) => {
       return res.render('consultant/view-consultant',{
         consultant,
         projects,
-        newDOB,
         role: req.user.role,
       });
     }else{

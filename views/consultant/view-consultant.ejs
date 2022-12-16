@@ -98,9 +98,9 @@
                     <!-- column 2 -->
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="fw-bold" for="nextStep">1.4 Date of Birth</label>
+                            <label class="fw-bold" for="nextStep">1.4 Date of Birth (MM-DD-YYYY)</label>
                             <%if(consultant.dob){%>
-                            <p><%= newDOB %></p>
+                            <p><%= consultant.dob.toLocaleDateString('en-US', {timeZone: 'UTC'}) %></p>
                             <%}%>
                         </div>
                     </div>
