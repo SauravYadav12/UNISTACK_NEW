@@ -7,7 +7,7 @@ const Consultant = require('../models/consultant');
 function formatDate(date) {
   var d = new Date(date),
       month = '' + (d.getMonth() + 1),
-      day = '' + (d.getDate() + 1),
+      day = '' + (d.getDate()),
       year = d.getFullYear();
 
   if (month.length < 2)
@@ -84,7 +84,7 @@ exports.getConsultant = async(req,res) => {
     const dateOfBirth = consultant.dob
     const newDOB = formatDate(dateOfBirth);
     consultant.dob = newDOB;
-    console.log("newDOB", newDOB);
+    
     for(i=0; i < consultant.projectName.length; i++){
 
       projects.push({name:consultant.projectName[i],
@@ -99,6 +99,7 @@ exports.getConsultant = async(req,res) => {
       return res.render('consultant/view-consultant',{
         consultant,
         projects,
+        newDOB,
         role: req.user.role,
       });
     }else{
