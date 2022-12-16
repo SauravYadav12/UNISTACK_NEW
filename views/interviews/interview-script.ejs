@@ -33,7 +33,7 @@
                     <li class="pb-3"><strong class="pe-2">YEAR PASSING:</strong>  <%= consultant.yearPassing.toUpperCase()%></li>
                     <li class="pb-3"><strong class="pe-2">DEGREE:</strong>  <%= consultant.degree.toUpperCase()%></li>
                     <% if(consultant.dob){%>
-                        <li class="pb-3"><strong class="pe-2">DOB:</strong>  <%= consultant.dob.toDateString()%></li>
+                        <li class="pb-3"><strong class="pe-2">DOB(MM-DD-YYYY):</strong>  <%= consultant.dob.toDateString()%></li>
                     <%}%>
 
                     <li class="pb-3"><strong class="pe-2">SSN (Last 4 Digits):</strong>  <%= consultant.ssn%></li>
