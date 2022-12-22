@@ -1,11 +1,8 @@
-const mongoose = require('mongoose');
 const Unibase = require('../models/unibaseDB');
-const User = require('../models/userDB');
 const Interview = require('../models/interviewDB');
 const Consultant = require('../models/consultant');
-const path = require('path');
-const ejs = require('ejs');
-const pdf = require('html-pdf');
+const excelJS = require('exceljs');
+
 
 
 function formatDate(date) {
@@ -24,6 +21,55 @@ function formatDate(date) {
     return [year, month, day].join('-');
 };
 
+exports.exportData = async (req,res) => {
+    
+    // let userp = req.user.username
+    // const date = Date.now();
+  
+    const records = await Interview.find({}).sort({"_id":-1}).exec();
+    const workbook = new excelJS.Workbook();  // Create a new workbook
+    const worksheet = workbook.addWorksheet("Interviews"); // New Worksheet
+    // const desktopDir = path.join(os.homedir(), "Desktop");
+    // console.log("path",desktopDir);
+    // const newPath = `${desktopDir}`;  // Path to download excel
+      // Column for data in excel. key must match data key
+      worksheet.columns = [
+        { header: "Int ID", key: "intId" }, 
+        { header: "Int Status", key: "interviewStatus"},
+        { header: "Consultant", key: "consultant"},
+        { header: "Int date", key: "interviewDate"},
+        { header: "Int Time(EST)", key: "interviewTime"},
+        { header: "Int Result", key: "result"},
+        { header: "Subject Line", key: "subjectLine"},
+        { header: "Client Name", key: "clientName"},
+        { header: "Job Title", key: "jobTitle"},
+        { header: "Created by", key: "recordOwner"},
+        { header: "Created At", key: "createdAt"},
+    ];
+    // Looping through User data
+    // let counter = 1;
+    records.forEach((record) => {
+      // user.s_no = counter;
+      worksheet.addRow(record); // Add data in worksheet
+      // counter++;
+    });
+  
+    // Making first line in excel bold
+    worksheet.getRow(1).eachCell((cell) => {
+      cell.font = { bold: true };
+    });
+    try {
+      await workbook.xlsx.writeFile(`interviews.xlsx`)
+       .then(() => {
+          res.download(`interviews.xlsx`)
+       });
+    } catch (err) {
+        res.send({
+        status: "error",
+        message: "Something went wrong",
+      });
+      }
+  }
 
 exports.getDashboardPage = (req, res) => {
     const username = req.user.username;
