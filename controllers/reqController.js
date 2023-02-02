@@ -103,7 +103,7 @@ exports.getDashboard1 = async(req,res)=>{
 }
 
 
- exports.getAllwithPageNumber = async(req, res, next) => {
+ exports.getHomePage = async(req, res, next) => {
   let userp = req.user.username
   let d = new Date();
   let date = formatDate(d.toLocaleString('en-US',{timeZone: 'America/New_York'}));
@@ -114,7 +114,18 @@ exports.getDashboard1 = async(req,res)=>{
   const todaysInterview = await Interview.find({interviewDate:date});
   const totalInterviews = await Interview.countDocuments().exec();
 
-  await res.render('home', {
+  // console.log(new Date(2023,01,30))
+  const dateToday = formatDate(d);
+  const dateYesterday = formatDate(d.setDate(d.getDate() - 1));
+  const recYesterday = await Unibase.find({reqEnteredDate: dateYesterday});
+  const recToday = await Unibase.find({reqEnteredDate: dateToday});
+
+  // console.log(dateToday);
+  // console.log(dateYesterday);
+
+  // console.log(newRec.length);
+
+  return res.render('home', {
     path: "/home",
     docTitle: "UniStack || Home",
     username: userp,
@@ -125,7 +136,9 @@ exports.getDashboard1 = async(req,res)=>{
     totalProjects,
     dateNow: date,
     today:todaysInterview,
-    role: req.user.role
+    role: req.user.role,
+    recToday:recToday.length,
+    recYesterday:recYesterday.length
   });
 
 }
@@ -143,7 +156,6 @@ exports.getReqList = async(req, res, next) => {
     .sort({"_id":-1})
     .skip((perPage * page) - perPage)
     .limit(perPage), Unibase.countDocuments()])
-
 
     return res.render("requirements/reqlist",{
         path: "/requirements/reqlist/1",

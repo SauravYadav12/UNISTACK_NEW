@@ -7,7 +7,7 @@ const { ensureAuthenticated } = require('../config/auth');
 ////////////////////GET METHODS -  REQUIREMENT CREATION ///////////////////////
   router.get('/requirements/createReq',ensureAuthenticated,requirementController.getCreateReqPage);
   router.get('/all-records',ensureAuthenticated,requirementController.getSearchReq); // ADD THIS AS 2ND OPTION "ensureAuthenticated"
-  router.get('/home', ensureAuthenticated, requirementController.getAllwithPageNumber);
+  router.get('/home', ensureAuthenticated, requirementController.getHomePage);
   router.get('/requirements/reqlist/:page', ensureAuthenticated, requirementController.getReqList);
   router.get("/exportData/:page",ensureAuthenticated,requirementController.exportData );
 

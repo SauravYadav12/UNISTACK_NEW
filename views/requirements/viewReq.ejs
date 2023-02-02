@@ -48,15 +48,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
+                        
                         <label class="fw-bold" for="resume">Interviews (if Any)</label>
+                        
                         <%if(interviews){%>
-
-                        <div class="d-flex">
-                           <% interviews.forEach(interview=>{%>
-                            <a href="/interviews/view-interviews/<%= interview.intId %>" class="btn btn-primary"><%= interview.intId%> - <%= interview.round %></a>
+                            <div class="d-flex">
+                            <% interviews.forEach(interview=>{%>
+                                <a href="/interviews/view-interviews/<%= interview.intId %>" class="btn btn-primary me-2"><%= interview.intId%> - <%= interview.round %></a>
                             <%})%>
-                        </div>
+                            </div>
                         <%}%>
+
                     </div>
                 </div>
             </div>

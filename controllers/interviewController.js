@@ -501,25 +501,26 @@ exports.postInterviewUpdatePage = async(req, res) => {
     if(req.body.interviewWith === "Client"){
         req.body.subjectLine = `${req.body.interviewDuration}_${req.body.interviewType}_${req.body.interviewViaMode}_${req.body.meetingType}_Interview_With_Client_${req.body.clientName}`;
     } 
-    
+
     const record = await Interview.findOne({intId:intId});
-    Unibase.findOne({reqID:record.reqID}, (err, rec)=>{
+
+    await Unibase.findOne({reqID:record.reqID}, (err, rec)=>{
         req.body.clientName = rec.clientCompany;
     })
     if(role === "Admin" || role === "SuperAdmin"){
-        interviewee = req.body.candidateName;
+        req.body.interviewee = req.body.candidateName;
     } else {
-        interviewee = record.candidateName;
+        req.body.interviewee = record.candidateName;
     }
-    const updatedRec = await Interview.findByIdAndUpdate(record._id, req.body, {new:true});
+
+    await Interview.findByIdAndUpdate(record._id, req.body, {new:true});
     return res.redirect('/interviews/view-interviews/' + record.intId);
 };
 
 
-exports.getInterviewDeletePage = (req, res) => {
+exports.getInterviewDeletePage = async (req, res) => {
     const intId = req.params.intId;
     const username = req.user.username;
-
     Interview.findOne({
         intId: intId
     }, (err, foundInt) => {
@@ -570,9 +571,10 @@ exports.getInterviewDeletePage = (req, res) => {
 
 
 
-exports.postInterviewDeletePage = (req, res) => {
+exports.postInterviewDeletePage = async (req, res) => {
     const intId = req.body.intId;
-
+    await Unibase.findOneAndUpdate({"interviews":{$elemMatch: {intId:intId}}},{$pull:{"interviews":{intId:intId}}},{ safe: true, new:true });
+    // console.log("recordID", recordId);
     Interview.findOneAndRemove({
         intId: intId
     }, (err) => {
@@ -581,7 +583,7 @@ exports.postInterviewDeletePage = (req, res) => {
         }
     });
 
-    res.redirect('/interviews/dashboard/1');
+    res.redirect('/interviews/confirmed-interviews/1');
 };
 
 exports.generateScript = async(req,res)=>{
