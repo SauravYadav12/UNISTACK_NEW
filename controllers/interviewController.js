@@ -324,6 +324,7 @@ exports.postInterviewPage = async(req, res) => {
 
     try {
         console.log(req.body);
+        req.body.recordOwner = req.user.username;
         const lastRec = await Interview.find().sort({ createdAt: -1 }).limit(1);
     
         if(lastRec.length){
