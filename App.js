@@ -58,16 +58,11 @@ const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD
 );
-
+mongoose.set('strictQuery', false);
 mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true,
-  })
+  .connect(DB)
   .then(() => console.log('DB Connections successfull'))
-  .catch(()=>console.log("Could not establish database connection"));
+  .catch((err)=>console.log("Could not establish database connection",err));
 
 
 // ===================================================================================

@@ -117,11 +117,18 @@ exports.getDashboard1 = async(req,res)=>{
   // console.log(new Date(2023,01,30))
   const dateToday = formatDate(d);
   const dateYesterday = formatDate(d.setDate(d.getDate() - 1));
-  const recYesterday = await Unibase.find({reqEnteredDate: dateYesterday});
-  const recToday = await Unibase.find({reqEnteredDate: dateToday});
+  const recYesterday = await Unibase.find({reqEnteredDate: dateYesterday}).countDocuments();
+  const recToday = await Unibase.find({reqEnteredDate: dateToday}).countDocuments();
+  const newWorkings = await Unibase.find({reqEnteredDate:dateToday, reqStatus:"New Working"}).countDocuments();
+  const submittedToday = await Unibase.find({reqEnteredDate:dateToday, reqStatus:"Submitted"}).countDocuments();
+  const newWorkingsYesterday = await Unibase.find({reqEnteredDate:dateYesterday, reqStatus:"New Working"}).countDocuments();
+  const submittedYesterday = await Unibase.find({reqEnteredDate:dateYesterday, reqStatus:"Submitted"}).countDocuments();
 
-  // console.log(dateToday);
-  // console.log(dateYesterday);
+  // console.log(newWorkings);
+  // console.log(submittedToday);
+
+  // console.log(recToday);
+  // console.log(recYesterday);
 
   // console.log(newRec.length);
 
@@ -137,8 +144,12 @@ exports.getDashboard1 = async(req,res)=>{
     dateNow: date,
     today:todaysInterview,
     role: req.user.role,
-    recToday:recToday.length,
-    recYesterday:recYesterday.length
+    recToday,
+    recYesterday,
+    newWorkings,
+    submittedToday,
+    newWorkingsYesterday,
+    submittedYesterday
   });
 
 }

@@ -114,19 +114,39 @@
                                 Status Summary
                               </h4>
                               <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                   <p class="status-summary-ight-white mb-1">
-                                    Closed Value
+                                    New-Working Today
                                   </p>
-                                  <h2 class="text-info">357</h2>
+                                  <h2 class="text-info"><%= newWorkings %></h2>
                                 </div>
-                                <div class="col-sm-8">
-                                  <div
+                                <div class="col-sm-6">
+                                  <p class="status-summary-ight-white mb-1">
+                                    Submitted Today
+                                  </p>
+                                  <h2 class="text-info"><%= submittedToday %></h2>
+                                  <!-- <div
                                     class="status-summary-chart-wrapper pb-4"
                                   >
-                                    <canvas id="status-summary"></canvas>
+                                    <canvas id="status-summary"></canvas> -->
                                   </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <p class="status-summary-ight-white mb-1">
+                                    New-Working Yesterday
+                                  </p>
+                                  <h2 class="text-info"><%= newWorkingsYesterday %></h2>
                                 </div>
+                                <div class="col-sm-6">
+                                  <p class="status-summary-ight-white mb-1">
+                                    Submitted Yesterday
+                                  </p>
+                                  <h2 class="text-info"><%= submittedYesterday %></h2>
+                                </div>
+                              </div>
+
                               </div>
                             </div>
                           </div>
