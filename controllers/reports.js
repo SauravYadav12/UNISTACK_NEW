@@ -13,3 +13,13 @@ exports.getSupportDashboard = async(req,res) =>{
         role: req.user.role
     })
 }
+
+exports.getMarketingDashboard = async(req,res) =>{
+    res.render('reports/marketing',{
+        path: "/reports",
+        docTitle: "UniStack || Reports",
+        username: req.user.username,
+        email: req.user.email,
+        role: req.user.role
+    })
+}
