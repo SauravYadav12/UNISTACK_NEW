@@ -12,6 +12,7 @@ const consultants = require('./routes/consultant');
 const requirements = require('./routes/requirements');
 const interviews = require('./routes/interview');
 const tests = require('./routes/test');
+const reports = require('./routes/reports');
 const morgan = require('morgan');
 //passport config
 
@@ -78,6 +79,9 @@ app.use('/',tests);
 
 //Consultant Routes
 app.use('/',consultants);
+
+//reports
+app.use('/reports',reports)
 
 // ===================================================================================
 

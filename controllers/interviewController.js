@@ -503,11 +503,12 @@ exports.postInterviewUpdatePage = async(req, res) => {
         req.body.subjectLine = `${req.body.interviewDuration}_${req.body.interviewType}_${req.body.interviewViaMode}_${req.body.meetingType}_Interview_With_Client_${req.body.clientName}`;
     } 
 
-    const record = await Interview.findOne({intId:intId});
+    const record = await Interview.findOne({intId:intId}).clone();
 
     await Unibase.findOne({reqID:record.reqID}, (err, rec)=>{
         req.body.clientName = rec.clientCompany;
-    })
+    }).clone()
+    
     if(role === "Admin" || role === "SuperAdmin"){
         req.body.interviewee = req.body.candidateName;
     } else {
