@@ -20,24 +20,32 @@ function formatDate(date) {
 function countPositions(arr) {
     let chars = {};
     let newArr = [];
+    let status = {}
     for (let name of arr){
         chars[name.recordOwner] = chars[name.recordOwner] + 1 || 1
+        status[name.reqStatus] = status[name.reqStatus] + 1 || 1;
     }
-    
+
+    console.log("Chars", chars, status);
     newArr = Object.entries(chars).map((e) => ( {name:e[0],positionCount:e[1]}));
-    // console.log("newArr--", newArr)
+    // console.log(newArr)
     return newArr
+}
+
+function checkStatus(positionStatus){
+    
 }
 
 exports.getSupportDashboard = async(req,res) =>{
     const d = new Date();
-    const dateToday = formatDate(d);
+    const dateToday = formatDate(d.setDate(d.getDate() - 1));
     
-    const positionsToday = await Unibase.find({reqEnteredDate:dateToday}).select('_id recordOwner');
-    // console.log(positionsToday);   
+    const positionsToday = await Unibase.find({reqEnteredDate:dateToday}).select('_id recordOwner reqStatus');
+    // const positionStatus = await Unibase.find({reqEnteredDate:dateToday}).select('_id recordOwner reqStatus');
+
     const support = countPositions(positionsToday);
 
-    
+    // console.log(positionStatus);
     return res.render('reports/support',{
         path: "/reports",
         docTitle: "UniStack || Reports",
