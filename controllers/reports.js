@@ -38,7 +38,7 @@ function checkStatus(positionStatus){
 
 exports.getSupportDashboard = async(req,res) =>{
     const d = new Date();
-    const dateToday = formatDate(d.setDate(d.getDate() - 1));
+    const dateToday = formatDate(d);
     
     const positionsToday = await Unibase.find({reqEnteredDate:dateToday}).select('_id recordOwner reqStatus');
     // const positionStatus = await Unibase.find({reqEnteredDate:dateToday}).select('_id recordOwner reqStatus');
