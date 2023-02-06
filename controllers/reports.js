@@ -35,7 +35,7 @@ function formatDate(date) {
 
 exports.getSupportDashboard = async (req, res) => {
   const d = new Date();
-  const dateToday = formatDate(d.setDate(d.getDate()-1));
+  const dateToday = formatDate(d);
   const positionSorted = [];
 
   const positionsToday = await Unibase.find({
