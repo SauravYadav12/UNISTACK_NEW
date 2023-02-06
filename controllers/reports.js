@@ -15,36 +15,79 @@ function formatDate(date) {
   return [year, month, day].join("-");
 }
 
-function countPositions(arr) {
-  let chars = {};
-  let newArr = [];
-  let status = {};
-  for (let name of arr) {
-    chars[name.recordOwner] = chars[name.recordOwner] + 1 || 1;
-    status[name.reqStatus] = status[name.reqStatus] + 1 || 1;
-  }
+// function countPositions(arr) {
+//   let chars = {};
+//   let newArr = [];
+//   let status = {};
+//   for (let name of arr) {
+//     chars[name.recordOwner] = chars[name.recordOwner] + 1 || 1;
+//     status[name.reqStatus] = status[name.reqStatus] + 1 || 1;
+//   }
 
-  console.log("Chars", chars, status);
-  newArr = Object.entries(chars).map((e) => ({
-    name: e[0],
-    positionCount: e[1],
-  }));
-  // console.log(newArr)
-  return newArr;
-}
+//   console.log("Chars", chars, status);
+//   newArr = Object.entries(chars).map((e) => ({
+//     name: e[0],
+//     positionCount: e[1],
+//   }));
+//   // console.log(newArr)
+//   return newArr;
+// }
 
 exports.getSupportDashboard = async (req, res) => {
   const d = new Date();
-  const dateToday = formatDate(d);
+  const dateToday = formatDate(d.setDate(d.getDate()-1));
+  const positionSorted = [];
 
   const positionsToday = await Unibase.find({
-    reqEnteredDate: dateToday,
-  }).select("_id recordOwner reqStatus");
-  // const positionStatus = await Unibase.find({reqEnteredDate:dateToday}).select('_id recordOwner reqStatus');
+    reqEnteredDate: dateToday
+  });
 
-  const support = countPositions(positionsToday);
 
-  // console.log(positionStatus);
+  for(let req of positionsToday){
+    if(positionSorted.length){
+        const i = positionSorted.findIndex(e => e.name === req.recordOwner);
+        
+        if (i > -1) {
+          /* vendors contains the element we're looking for, at index "i" */
+          positionSorted[i].totalPositions = positionSorted[i].totalPositions + 1 || 1;
+          if(req.reqStatus === "Submitted"){
+            positionSorted[i].submitted = positionSorted[i].submitted + 1 || 1;
+          } else if(req.reqStatus === "Cancelled"){
+            positionSorted[i].cancelled = positionSorted[i].cancelled + 1 || 1;
+          } else if(req.reqStatus = "Called But No Response"){
+            positionSorted[i].cbnr = positionSorted[i].cbnr + 1 || 1;
+          }
+        }
+         else {
+            const info = {}
+            info.name = req.recordOwner;
+            info.totalPositions = info.totalPositions + 1 || 1;
+
+            if(req.reqStatus === "Submitted"){
+                info.submitted = info.submitted + 1 || 1;
+            } else if(req.reqStatus === "Cancelled"){
+                info.cancelled = info.cancelled + 1 || 1;
+            } else if(req.reqStatus = "Called But No Response"){
+                info.cbnr = info.cbnr + 1 || 1;
+            }
+            positionSorted.push(info);
+         }
+
+    } else {
+        const info = {}
+        info.name = req.recordOwner;
+        info.totalPositions = info.totalPositions + 1 || 1;
+        if(req.reqStatus === "Submitted"){
+            info.submitted = info.submitted + 1 || 1;
+        } else if(req.reqStatus === "Cancelled"){
+            info.cancelled = info.cancelled + 1 || 1;
+        } else if(req.reqStatus = "Called But No Response"){
+            info.cbnr = info.cbnr + 1 || 1;
+        }
+        positionSorted.push(info)
+    }
+  }
+
   return res.render("reports/support", {
     path: "/reports",
     docTitle: "UniStack || Reports",
@@ -52,7 +95,8 @@ exports.getSupportDashboard = async (req, res) => {
     email: req.user.email,
     role: req.user.role,
     dateToday,
-    support,
+    positionSorted,
+    positionsToday
   });
 };
 
@@ -81,6 +125,8 @@ exports.getMarketingDashboard = async (req, res) => {
             sortedRecords[i].submitted = sortedRecords[i].submitted + 1 || 1 ;
           } else if (req.reqStatus === "Cancelled") {
             sortedRecords[i].cancelled = sortedRecords[i].cancelled + 1 || 1;
+          } else if(req.reqStatus = "Called But No Response"){
+            sortedRecords[i].cbnr = sortedRecords[i].cbnr + 1 || 1;
           }
 
         } else {
@@ -93,6 +139,8 @@ exports.getMarketingDashboard = async (req, res) => {
               info.submitted = info.submitted + 1 || 1;
             } else if (req.reqStatus === "Cancelled") {
               info.cancelled = info.cancelled + 1 || 1;
+            } else if(req.reqStatus = "Called But No Response"){
+                info.cbnr = info.cbnr + 1 || 1;
             }
             sortedRecords.push(info);
         }         
@@ -108,6 +156,8 @@ exports.getMarketingDashboard = async (req, res) => {
           info.submitted = info.submitted + 1 || 1;
         } else if (req.reqStatus === "Cancelled") {
           info.cancelled = info.cancelled + 1 || 1;
+        } else if(req.reqStatus = "Called But No Response"){
+            info.cbnr = info.cbnr + 1 || 1;
         }
         sortedRecords.push(info);
       }
