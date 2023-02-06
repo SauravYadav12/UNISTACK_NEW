@@ -25,9 +25,12 @@ exports.get404Page = (req, res) => {
 };
 
 exports.getLogoutPage = (req, res) => {
-  req.logout();
-  req.flash("success_msg", "You are logged out!");
-  res.redirect("/");
+  req.logout(()=>{
+    console.log("logging out");
+    req.flash("success_msg", "You are logged out!");
+    res.redirect("/");
+  });
+  
 };
 
 // =========================================================
