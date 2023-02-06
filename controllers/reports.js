@@ -35,7 +35,7 @@ function formatDate(date) {
 
 exports.getSupportDashboard = async (req, res) => {
   const d = new Date();
-  const dateToday = formatDate(d);
+  const dateToday = formatDate(d.setDate(d.getDate()-1));
   const positionSorted = [];
 
   const positionsToday = await Unibase.find({
@@ -177,3 +177,34 @@ exports.getMarketingDashboard = async (req, res) => {
     sortedRecords
   });
 };
+
+
+exports.getSupportDetailsByQuery = async (req,res) =>{
+    console.log(req.query);
+    let records;
+    if(req.query.type === 'totalPositions'){
+        records = await Unibase.find({reqEnteredDate:req.query.reqEnteredDate,recordOwner:req.query.name });
+    }
+    if(req.query.type === "Submitted"){
+        records = await Unibase.find({reqEnteredDate:req.query.reqEnteredDate,recordOwner:req.query.name,reqStatus:req.query.type });
+    }
+    if(req.query.type === "Cancelled"){
+        records = await Unibase.find({reqEnteredDate:req.query.reqEnteredDate,recordOwner:req.query.name,reqStatus:req.query.type });
+    }
+    if(req.query.type === "Call But No Response" ){
+        records = await Unibase.find({reqStatus:req.query.type,reqEnteredDate:req.query.reqEnteredDate,recordOwner:req.query.name });
+    }
+
+    return res.render('reports/report-list', {
+        path: "/reports/report-list",
+        docTitle: "UniStack || Reports",
+        username: req.user.username,
+        email: req.user.email,
+        role: req.user.role,
+        supportName: req.query.name,
+        type:req.query.type,
+        dateToday: req.query.reqEnteredDate,
+        records
+    })
+
+}

@@ -37,10 +37,10 @@
                 </h2>
                 <div id="flush-collapseOne<%=index%>" class="accordion-collapse collapse mt-2 mb-2" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                   <div class="accordion-body">
-                    <h5>Total Position Entered: <strong><%= user.totalPositions %></strong> </h5>
-                    <h5>Total Position Submitted: <strong><%= user.submitted %></strong> </h5>
-                    <h5>Total Position Cancelled: <strong><%= user.cancelled %></strong> </h5>
-                    <h5>Called But No Response: <strong><%= user.cbnr %></strong> </h5>
+                    <h5>Total Position Entered: <strong><a href="/reports/query/?name=<%=user.name%>&reqEnteredDate=<%=dateToday%>&type=totalPositions"><%= user.totalPositions %></a></strong> </h5>
+                    <h5>Total Position Submitted: <strong><a href="/reports/query/?name=<%=user.name%>&reqEnteredDate=<%=dateToday%>&type=Submitted"><%= user.submitted %></a></strong> </h5>
+                    <h5>Total Position Cancelled: <strong><a href="/reports/query/?name=<%=user.name%>&reqEnteredDate=<%=dateToday%>&type=Cancelled"><%= user.cancelled %></a></strong> </h5>
+                    <h5>Called But No Response: <strong><a href="/reports/query/?name=<%=user.name%>&reqEnteredDate=<%=dateToday%>&type=Call But No Response"><%= user.cbnr %></a></strong> </h5>
                   </div>
                 </div>
               </div>
