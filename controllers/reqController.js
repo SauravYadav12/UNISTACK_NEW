@@ -124,7 +124,7 @@ exports.getDashboard1 = async(req,res)=>{
   const newWorkingsYesterday = await Unibase.find({reqEnteredDate:dateYesterday, reqStatus:"New Working"}).countDocuments();
   const submittedYesterday = await Unibase.find({reqEnteredDate:dateYesterday, reqStatus:"Submitted"}).countDocuments();
 
-  // console.log(submittedToday);
+  console.log(newWorkings);
 
   // console.log(recToday);
   // console.log(recYesterday);
