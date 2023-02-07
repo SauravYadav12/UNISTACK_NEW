@@ -47,10 +47,10 @@
                 </h2>
                 <div id="flush-collapseOne<%=index%>" class="accordion-collapse collapse mt-2 mb-2" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                   <div class="accordion-body">
-                    <h5>Total Position Entered: <strong><a href="/reports/query/?name=<%=user.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=totalPositions" target="_blank"><%= user.totalPositions %></a></strong> </h5>
-                    <h5>Total Position Submitted: <strong><a href="/reports/query/?name=<%=user.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=Submitted" target="_blank"><%= user.submitted %></a></strong> </h5>
-                    <h5>Total Position Cancelled: <strong><a href="/reports/query/?name=<%=user.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=Cancelled" target="_blank"><%= user.cancelled %></a></strong> </h5>
-                    <h5>Called But No Response: <strong><a href="/reports/query/?name=<%=user.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=Call But No Response" target="_blank"><%= user.cbnr %></a></strong> </h5>
+                    <h5>Total Position Entered: <strong><a href="/reports/squery/?name=<%=user.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=totalPositions" target="_blank"><%= user.totalPositions %></a></strong> </h5>
+                    <h5>Total Position Submitted: <strong><a href="/reports/squery/?name=<%=user.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=Submitted" target="_blank"><%= user.submitted %></a></strong> </h5>
+                    <h5>Total Position Cancelled: <strong><a href="/reports/squery/?name=<%=user.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=Cancelled" target="_blank"><%= user.cancelled %></a></strong> </h5>
+                    <h5>Called But No Response: <strong><a href="/reports/squery/?name=<%=user.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=Call But No Response" target="_blank"><%= user.cbnr %></a></strong> </h5>
                   </div>
                 </div>
               </div>

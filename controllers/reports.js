@@ -293,6 +293,30 @@ exports.getSupportDetailsByQuery = async (req,res) =>{
         records = await getSupportRecordsByQuery(req.query);
     }
 
+    return res.render('reports/report-list', {
+        path: "/reports/report-list",
+        docTitle: "UniStack || Reports",
+        username: req.user.username,
+        email: req.user.email,
+        role: req.user.role,
+        name: req.query.name,
+        type:req.query.type,
+        dateToday,
+        dateFrom: req.query.fromDate,
+        dateTo: req.query.toDate,
+        totalRecords:records.length,
+        records,
+        reportFor
+    })
+
+}
+
+exports.getMarketingDetailsByQuery = async(req,res) => {
+    const d = new Date();
+    const dateToday = formatDate(d);
+    let reportFor = '';
+    let records;
+
     if(req.query.type === "totalAssigned"){
         reportFor = "marketing";
         records = await Unibase.aggregate([
@@ -361,5 +385,4 @@ exports.getSupportDetailsByQuery = async (req,res) =>{
         records,
         reportFor
     })
-
 }
