@@ -87,8 +87,8 @@ exports.getMarketingDashboard = async (req, res) => {
     allPositions:[],
     sortedRecords:[],
     totalPositions:0,
-    dateFrom:'',
-    dateTo:""
+    dateFrom: dateToday,
+    dateTo:dateToday
   });
 };
 
