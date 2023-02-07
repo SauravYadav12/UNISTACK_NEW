@@ -7,5 +7,8 @@ const { ensureAuthenticated } = require('../config/auth');
 router.get('/support',ensureAuthenticated ,reports.getSupportDashboard );
 router.get('/marketing',ensureAuthenticated,reports.getMarketingDashboard );
 router.get('/query',ensureAuthenticated,reports.getSupportDetailsByQuery);
+router.post('/getSupportReport',ensureAuthenticated,reports.getSupportHistoricalReports);
+router.post('/getMarketingReport',ensureAuthenticated,reports.getMarketingHistoricalReport);
+
 
 module.exports = router

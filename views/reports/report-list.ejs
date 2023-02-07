@@ -17,11 +17,11 @@
         <div class="card-body">
           <div class="d-sm-flex justify-content-between align-items-start">
             <div>
-              <h4 class="card-title card-title-dash">Report for <%=supportName%>'s <%=type%> - <%=records.length%> </h4>
-              <p class="card-subtitle card-subtitle-dash">Page</p>
+              <h4 class="card-title card-title-dash">Report for <%=name%>'s <%=type%> - <%=totalRecords%> </h4>
+              <p class="card-subtitle card-subtitle-dash">Date: <span class="text-primary"> From </span> <%=dateFrom%> <span class="text-primary"> To </span> <%=dateTo%></p>
             </div>
             <div>
-                <a href="/reports/support" class="btn btn-info btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-table"></i>Go back</a>
+                <a href="/reports/<%=reportFor%>" class="btn btn-info btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-table"></i>Go back</a>
               </div>
           </div>
           <div class="table-responsive  mt-1">
@@ -49,7 +49,7 @@
                 <tr onclick="window.location='/requirements/viewReq/<%= record.reqID %>';" class="row-style">
                   <td> 
                     <a class="btn btn-primary text-white"
-                      href="/requirements/viewReq/<%= record.reqID %>">View</a>
+                      href="/requirements/viewReq/<%= record.reqID %>" target="_blank">View</a>
                   </td>
                   <td>
                     <%= record.reqID %>

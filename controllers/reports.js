@@ -15,35 +15,101 @@ function formatDate(date) {
   return [year, month, day].join("-");
 }
 
-// function countPositions(arr) {
-//   let chars = {};
-//   let newArr = [];
-//   let status = {};
-//   for (let name of arr) {
-//     chars[name.recordOwner] = chars[name.recordOwner] + 1 || 1;
-//     status[name.reqStatus] = status[name.reqStatus] + 1 || 1;
-//   }
+const getSupportRecordsByQuery =  (query)=>{
+    return  Unibase.aggregate([
+        {
+            $match:{
+                reqEnteredDate:{
+                    $gte:query.fromDate,
+                    $lte:query.toDate
+                },
+                recordOwner: {
+                    $eq:query.name
+                },
+                reqStatus:{
+                    $eq: query.type
+                }
+            }
+        }
+    ]);
 
-//   console.log("Chars", chars, status);
-//   newArr = Object.entries(chars).map((e) => ({
-//     name: e[0],
-//     positionCount: e[1],
-//   }));
-//   // console.log(newArr)
-//   return newArr;
-// }
+}
+
+const getMarketingRecordsByQuery = (query)=>{
+    return  Unibase.aggregate([
+        {
+            $match:{
+                reqEnteredDate:{
+                    $gte:query.fromDate,
+                    $lte:query.toDate
+                },
+                assignedTo: {
+                    $eq:query.name
+                },
+                reqStatus:{
+                    $eq: query.type
+                }
+            }
+        }
+    ]);
+}
 
 exports.getSupportDashboard = async (req, res) => {
+    const d = new Date();
+    const dateToday = formatDate(d);
+
+  return res.render("reports/support", {
+    path: "/reports",
+    docTitle: "UniStack || Reports",
+    username: req.user.username,
+    email: req.user.email,
+    role: req.user.role,
+    dateFrom:"",
+    dateTo:"",
+    dateToday,
+    positionSorted:[],
+    totalPositions: 0
+  });
+};
+
+exports.getMarketingDashboard = async (req, res) => {
   const d = new Date();
   const dateToday = formatDate(d);
-  const positionSorted = [];
 
-  const positionsToday = await Unibase.find({
-    reqEnteredDate: dateToday
+  return res.render("reports/marketing", {
+    path: "/reports",
+    docTitle: "UniStack || Reports",
+    username: req.user.username,
+    email: req.user.email,
+    role: req.user.role,
+    dateToday,
+    unassigned:[],
+    allPositions:[],
+    sortedRecords:[],
+    totalPositions:0,
+    dateFrom:'',
+    dateTo:""
   });
+};
+
+exports.getSupportHistoricalReports = async(req,res)=>{
+    const positionSorted = [];
+    const d = new Date();
+    const dateToday = formatDate(d);
+
+    const positions = await Unibase.aggregate([
+        {
+            $match:{
+                reqEnteredDate:{
+                    $gte:req.body.fromDate,
+                    $lte:req.body.toDate
+                }
+            }
+        }
+    ]);
 
 
-  for(let req of positionsToday){
+  for(let req of positions){
     if(positionSorted.length){
         const i = positionSorted.findIndex(e => e.name === req.recordOwner);
         
@@ -94,105 +160,190 @@ exports.getSupportDashboard = async (req, res) => {
     username: req.user.username,
     email: req.user.email,
     role: req.user.role,
+    dateFrom:req.body.fromDate,
+    dateTo:req.body.toDate,
     dateToday,
     positionSorted,
-    positionsToday
+    totalPositions: positions.length
   });
-};
+}
 
-exports.getMarketingDashboard = async (req, res) => {
-  const d = new Date();
-  const dateToday = formatDate(d);
-  const sortedRecords = [];
-  let unassigned = [];
-  const allPositions = await Unibase.find({ reqEnteredDate: dateToday });
-
-  for (let req of allPositions) {
-    if(req.assignedTo === ""){
-        unassigned.push(req);
-    }
-
-    if (req.assignedTo !== "") {
-      if (sortedRecords.length) {           
-        const i = sortedRecords.findIndex(e => e.marketingPerson === req.assignedTo);
-        
-        if (i > -1) {
-          /* vendors contains the element we're looking for, at index "i" */
-          sortedRecords[i].totalAssigned = sortedRecords[i].totalAssigned + 1 || 1
-          if (req.reqStatus === "New Working") {
-            sortedRecords[i].newWorking = sortedRecords[i].newWorking + 1 || 1;
-          } else if (req.reqStatus === "Submitted") {
-            sortedRecords[i].submitted = sortedRecords[i].submitted + 1 || 1 ;
-          } else if (req.reqStatus === "Cancelled") {
-            sortedRecords[i].cancelled = sortedRecords[i].cancelled + 1 || 1;
-          } else if(req.reqStatus = "Called But No Response"){
-            sortedRecords[i].cbnr = sortedRecords[i].cbnr + 1 || 1;
-          }
-
-        } else {
-            const info = {};
-            info.marketingPerson = req.assignedTo;
-            info.totalAssigned = info.totalAssigned + 1 || 1
-            if (req.reqStatus === "New Working") {
-              info.newWorking = info.newWorking + 1 || 1;
-            } else if (req.reqStatus === "Submitted") {
-              info.submitted = info.submitted + 1 || 1;
-            } else if (req.reqStatus === "Cancelled") {
-              info.cancelled = info.cancelled + 1 || 1;
-            } else if(req.reqStatus = "Called But No Response"){
-                info.cbnr = info.cbnr + 1 || 1;
+exports.getMarketingHistoricalReport = async(req,res)=>{
+    const d = new Date();
+    const dateToday = formatDate(d);
+    const sortedRecords = [];
+    let unassigned = [];
+    const allPositions = await Unibase.aggregate([
+        {
+            $match:{
+                reqEnteredDate:{
+                    $gte:req.body.fromDate,
+                    $lte:req.body.toDate
+                }
             }
-            sortedRecords.push(info);
-        }         
-      }
-
-      if (!sortedRecords.length) {
-        const info = {};
-        info.marketingPerson = req.assignedTo;
-        info.totalAssigned = info.totalAssigned + 1 || 1
-        if (req.reqStatus === "New Working") {
-          info.newWorking = info.newWorking + 1 || 1;
-        } else if (req.reqStatus === "Submitted") {
-          info.submitted = info.submitted + 1 || 1;
-        } else if (req.reqStatus === "Cancelled") {
-          info.cancelled = info.cancelled + 1 || 1;
-        } else if(req.reqStatus = "Called But No Response"){
-            info.cbnr = info.cbnr + 1 || 1;
         }
-        sortedRecords.push(info);
+    ]);
+  
+    for (let req of allPositions) {
+      if(req.assignedTo === ""){
+          unassigned.push(req);
+      }
+  
+      if (req.assignedTo !== "") {
+        if (sortedRecords.length) {           
+          const i = sortedRecords.findIndex(e => e.marketingPerson === req.assignedTo);
+          
+          if (i > -1) {
+            /* vendors contains the element we're looking for, at index "i" */
+            sortedRecords[i].totalAssigned = sortedRecords[i].totalAssigned + 1 || 1
+            if (req.reqStatus === "New Working") {
+              sortedRecords[i].newWorking = sortedRecords[i].newWorking + 1 || 1;
+            } else if (req.reqStatus === "Submitted") {
+              sortedRecords[i].submitted = sortedRecords[i].submitted + 1 || 1 ;
+            } else if (req.reqStatus === "Cancelled") {
+              sortedRecords[i].cancelled = sortedRecords[i].cancelled + 1 || 1;
+            } else if(req.reqStatus = "Called But No Response"){
+              sortedRecords[i].cbnr = sortedRecords[i].cbnr + 1 || 1;
+            }
+  
+          } else {
+              const info = {};
+              info.marketingPerson = req.assignedTo;
+              info.totalAssigned = info.totalAssigned + 1 || 1
+              if (req.reqStatus === "New Working") {
+                info.newWorking = info.newWorking + 1 || 1;
+              } else if (req.reqStatus === "Submitted") {
+                info.submitted = info.submitted + 1 || 1;
+              } else if (req.reqStatus === "Cancelled") {
+                info.cancelled = info.cancelled + 1 || 1;
+              } else if(req.reqStatus = "Called But No Response"){
+                  info.cbnr = info.cbnr + 1 || 1;
+              }
+              sortedRecords.push(info);
+          }         
+        }
+  
+        if (!sortedRecords.length) {
+          const info = {};
+          info.marketingPerson = req.assignedTo;
+          info.totalAssigned = info.totalAssigned + 1 || 1
+          if (req.reqStatus === "New Working") {
+            info.newWorking = info.newWorking + 1 || 1;
+          } else if (req.reqStatus === "Submitted") {
+            info.submitted = info.submitted + 1 || 1;
+          } else if (req.reqStatus === "Cancelled") {
+            info.cancelled = info.cancelled + 1 || 1;
+          } else if(req.reqStatus = "Called But No Response"){
+              info.cbnr = info.cbnr + 1 || 1;
+          }
+          sortedRecords.push(info);
+        }
       }
     }
-  }
 
-
-  return res.render("reports/marketing", {
-    path: "/reports",
-    docTitle: "UniStack || Reports",
-    username: req.user.username,
-    email: req.user.email,
-    role: req.user.role,
-    dateToday,
-    unassigned,
-    allPositions,
-    sortedRecords
-  });
-};
-
+    return res.render("reports/marketing", {
+        path: "/reports",
+        docTitle: "UniStack || Reports",
+        username: req.user.username,
+        email: req.user.email,
+        role: req.user.role,
+        dateFrom: req.body.fromDate,
+        dateTo: req.body.toDate,
+        dateToday,
+        unassigned:unassigned.length,
+        totalPositions:allPositions.length,
+        sortedRecords
+      });
+}
 
 exports.getSupportDetailsByQuery = async (req,res) =>{
     console.log(req.query);
+    const d = new Date();
+    const dateToday = formatDate(d);
+    let reportFor = '';
     let records;
+
     if(req.query.type === 'totalPositions'){
-        records = await Unibase.find({reqEnteredDate:req.query.reqEnteredDate,recordOwner:req.query.name });
+        reportFor = "support";
+         records = await Unibase.aggregate([
+            {
+                $match:{
+                    reqEnteredDate:{
+                        $gte:req.query.fromDate,
+                        $lte:req.query.toDate
+                    },
+                    recordOwner: {
+                        $eq:req.query.name
+                    },
+                }
+            }
+        ]);
     }
     if(req.query.type === "Submitted"){
-        records = await Unibase.find({reqEnteredDate:req.query.reqEnteredDate,recordOwner:req.query.name,reqStatus:req.query.type });
+        reportFor = "support";
+        records = await getSupportRecordsByQuery(req.query);
+
     }
     if(req.query.type === "Cancelled"){
-        records = await Unibase.find({reqEnteredDate:req.query.reqEnteredDate,recordOwner:req.query.name,reqStatus:req.query.type });
+        reportFor = "support";
+        records = await getSupportRecordsByQuery(req.query);
     }
     if(req.query.type === "Call But No Response" ){
-        records = await Unibase.find({reqStatus:req.query.type,reqEnteredDate:req.query.reqEnteredDate,recordOwner:req.query.name });
+        reportFor = "support";
+        records = await getSupportRecordsByQuery(req.query);
+    }
+
+    if(req.query.type === "totalAssigned"){
+        reportFor = "marketing";
+        records = await Unibase.aggregate([
+            {
+                $match:{
+                    reqEnteredDate:{
+                        $gte:req.query.fromDate,
+                        $lte:req.query.toDate
+                    },
+                    assignedTo: {
+                        $eq:req.query.name
+                    },
+                }
+            }
+        ]);
+    }
+
+    if(req.query.type === "unassigned"){
+        reportFor = "marketing";
+        records = await Unibase.aggregate([
+            {
+                $match:{
+                    reqEnteredDate:{
+                        $gte:req.query.fromDate,
+                        $lte:req.query.toDate
+                    },
+                    assignedTo: {
+                        $eq:req.query.name
+                    },
+                }
+            }
+        ]);
+    }
+
+    if(req.query.type === "New Working"){
+        reportFor = "marketing";
+        records = await getMarketingRecordsByQuery(req.query);
+    }
+
+    if(req.query.type === "Submitted"){
+        reportFor = "marketing";
+        records = await getMarketingRecordsByQuery(req.query);
+    }
+
+    if(req.query.type === "Cancelled"){
+        reportFor = "marketing";
+        records = await getMarketingRecordsByQuery(req.query);
+    }
+    if(req.query.type === "Call But No Response" ){
+        reportFor = "marketing";
+        records = await getMarketingRecordsByQuery(req.query);
     }
 
     return res.render('reports/report-list', {
@@ -201,10 +352,14 @@ exports.getSupportDetailsByQuery = async (req,res) =>{
         username: req.user.username,
         email: req.user.email,
         role: req.user.role,
-        supportName: req.query.name,
+        name: req.query.name,
         type:req.query.type,
-        dateToday: req.query.reqEnteredDate,
-        records
+        dateToday,
+        dateFrom: req.query.fromDate,
+        dateTo: req.query.toDate,
+        totalRecords:records.length,
+        records,
+        reportFor
     })
 
 }
