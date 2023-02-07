@@ -120,9 +120,9 @@ exports.getSupportHistoricalReports = async(req,res)=>{
             positionSorted[i].submitted = positionSorted[i].submitted + 1 || 1;
           } else if(req.reqStatus === "Cancelled"){
             positionSorted[i].cancelled = positionSorted[i].cancelled + 1 || 1;
-          } else if(req.reqStatus = "Called But No Response"){
+          } else if(req.reqStatus === "Call But No Response"){
             positionSorted[i].cbnr = positionSorted[i].cbnr + 1 || 1;
-          }
+          } 
         }
          else {
             const info = {}
@@ -133,7 +133,7 @@ exports.getSupportHistoricalReports = async(req,res)=>{
                 info.submitted = info.submitted + 1 || 1;
             } else if(req.reqStatus === "Cancelled"){
                 info.cancelled = info.cancelled + 1 || 1;
-            } else if(req.reqStatus = "Called But No Response"){
+            } else if(req.reqStatus === "Call But No Response"){
                 info.cbnr = info.cbnr + 1 || 1;
             }
             positionSorted.push(info);
@@ -147,12 +147,15 @@ exports.getSupportHistoricalReports = async(req,res)=>{
             info.submitted = info.submitted + 1 || 1;
         } else if(req.reqStatus === "Cancelled"){
             info.cancelled = info.cancelled + 1 || 1;
-        } else if(req.reqStatus = "Called But No Response"){
+        } else if(req.reqStatus === "Call But No Response"){
             info.cbnr = info.cbnr + 1 || 1;
+        }else if(req.reqStatus === "New Working"){
+            info.newWorking = info.newWorking + 1 || 1;
         }
         positionSorted.push(info)
     }
   }
+  console.log("--",positionSorted);
 
   return res.render("reports/support", {
     path: "/reports",
@@ -202,7 +205,7 @@ exports.getMarketingHistoricalReport = async(req,res)=>{
               sortedRecords[i].submitted = sortedRecords[i].submitted + 1 || 1 ;
             } else if (req.reqStatus === "Cancelled") {
               sortedRecords[i].cancelled = sortedRecords[i].cancelled + 1 || 1;
-            } else if(req.reqStatus = "Called But No Response"){
+            } else if(req.reqStatus === "Called But No Response"){
               sortedRecords[i].cbnr = sortedRecords[i].cbnr + 1 || 1;
             }
   
@@ -216,7 +219,7 @@ exports.getMarketingHistoricalReport = async(req,res)=>{
                 info.submitted = info.submitted + 1 || 1;
               } else if (req.reqStatus === "Cancelled") {
                 info.cancelled = info.cancelled + 1 || 1;
-              } else if(req.reqStatus = "Called But No Response"){
+              } else if(req.reqStatus === "Called But No Response"){
                   info.cbnr = info.cbnr + 1 || 1;
               }
               sortedRecords.push(info);
@@ -233,7 +236,7 @@ exports.getMarketingHistoricalReport = async(req,res)=>{
             info.submitted = info.submitted + 1 || 1;
           } else if (req.reqStatus === "Cancelled") {
             info.cancelled = info.cancelled + 1 || 1;
-          } else if(req.reqStatus = "Called But No Response"){
+          } else if(req.reqStatus === "Called But No Response"){
               info.cbnr = info.cbnr + 1 || 1;
           }
           sortedRecords.push(info);
