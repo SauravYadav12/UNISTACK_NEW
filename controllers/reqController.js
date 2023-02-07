@@ -107,6 +107,15 @@ exports.getDashboard1 = async(req,res)=>{
   let userp = req.user.username
   let d = new Date();
   let date = formatDate(d.toLocaleString('en-US',{timeZone: 'America/New_York'}));
+  const dateToday = formatDate(d);
+  const dateYesterday = formatDate(d.setDate(d.getDate() - 1));
+
+  let positionsToday = 0;
+  let positionsYesterday = 0;
+  let newWorkingToday = 0;
+  let newWorkingYesterday = 0;
+  let submittedToday = 0;
+  let submittedYesterday = 0;
 
   const recordCount = await Unibase.countDocuments().exec();
   const completedIntCount = await Interview.find({interviewStatus:"Interview Completed"}).countDocuments().exec();
@@ -115,22 +124,43 @@ exports.getDashboard1 = async(req,res)=>{
   const totalInterviews = await Interview.countDocuments().exec();
 
   // console.log(new Date(2023,01,30))
-  const dateToday = formatDate(d);
-  const dateYesterday = formatDate(d.setDate(d.getDate() - 1));
-  const recYesterday = await Unibase.find({reqEnteredDate: dateYesterday}).countDocuments();
-  const recToday = await Unibase.find({reqEnteredDate: dateToday}).countDocuments();
-  const newWorkings = await Unibase.find({reqEnteredDate:dateToday, reqStatus:"New Working"}).countDocuments();
-  const submittedToday = await Unibase.find({reqEnteredDate:dateToday, reqStatus:"Submitted"}).countDocuments();
-  const newWorkingsYesterday = await Unibase.find({reqEnteredDate:dateYesterday, reqStatus:"New Working"}).countDocuments();
-  const submittedYesterday = await Unibase.find({reqEnteredDate:dateYesterday, reqStatus:"Submitted"}).countDocuments();
+  
+  // const recYesterday = await Unibase.find({reqEnteredDate: dateYesterday}).countDocuments();
+  // const recToday = await Unibase.find({reqEnteredDate: dateToday}).countDocuments();
+  // const newWorkings = await Unibase.find({reqEnteredDate:dateToday, reqStatus:"New Working"}).countDocuments();
+  // const submittedToday = await Unibase.find({reqEnteredDate:dateToday, reqStatus:"Submitted"}).countDocuments();
+  // const newWorkingsYesterday = await Unibase.find({reqEnteredDate:dateYesterday, reqStatus:"New Working"}).countDocuments();
+  // const submittedYesterday = await Unibase.find({reqEnteredDate:dateYesterday, reqStatus:"Submitted"}).countDocuments();
 
-  console.log(newWorkings);
+  const allRecords = await Unibase.aggregate([{
+    $match:{
+      reqEnteredDate:{
+        $gte:dateYesterday,
+        $lte:dateToday
+      }
+    }
+  }]);
 
-  // console.log(recToday);
-  // console.log(recYesterday);
-
-  // console.log(newRec.length);
-
+  for(let req of allRecords){
+    if(req.reqEnteredDate === dateToday){
+        positionsToday++;
+        if(req.reqStatus === "New Working"){
+          newWorkingToday++;
+        } 
+        if(req.reqStatus === "Submitted"){
+          submittedToday++;
+        } 
+    } else if(req.reqEnteredDate === dateYesterday){
+      positionsYesterday++;
+      if(req.reqStatus === "New Working"){
+        newWorkingYesterday++;
+      }
+      if(req.reqStatus === "Submitted"){
+        submittedYesterday++;
+      } 
+    }
+  }
+  
   return res.render('home', {
     path: "/home",
     docTitle: "UniStack || Home",
@@ -143,11 +173,11 @@ exports.getDashboard1 = async(req,res)=>{
     dateNow: date,
     today:todaysInterview,
     role: req.user.role,
-    recToday,
-    recYesterday,
-    newWorkings,
+    positionsToday,
+    positionsYesterday,
+    newWorkingToday,
     submittedToday,
-    newWorkingsYesterday,
+    newWorkingYesterday,
     submittedYesterday
   });
 
