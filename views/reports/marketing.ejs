@@ -15,29 +15,32 @@
     
 
         <div class="card-body">
-          <div class="d-sm-flex justify-content-between align-items-start">
-            <div class="float-start">
-              <h4 class="card-title card-title-dash">Marketing Reports: <span class="text-primary"> From </span> <%=dateFrom%> <span class="text-primary"> To </span> <%=dateTo%> </h4>
-              <p class="card-subtitle card-subtitle-dash ">Total Positions :<span class="text-danger"> <%=totalPositions%></span></p>
-              <p class="card-subtitle card-subtitle-dash">Total Unassigned : <a class="text-primary" href="/reports/mquery/?name=&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=unassigned" target="_blank"><%= unassigned %></strong></a></p>
-              
+          <!-- <div class="d-sm-flex justify-content-between align-items-start"> -->
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12 float-start">
+                <h4 class="card-title card-title-dash">Marketing Reports: <span class="text-primary"> From </span> <%=dateFrom%> <span class="text-primary"> To </span> <%=dateTo%> </h4>
+                <p class="card-subtitle card-subtitle-dash ">Total Positions :<span class="text-danger"> <%=totalPositions%></span></p>
+                <p class="card-subtitle card-subtitle-dash">Total Unassigned : <a class="text-primary" href="/reports/mquery/?name=&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=unassigned" target="_blank"><%= unassigned %></strong></a></p>  
+              </div>
+
+              <div class="col-md-6 col-sm-12 float-end">
+                <form action="/reports/getMarketingReport" method="POST">
+                  <div class="d-flex align-items-center justify-content-center">
+                    <label for="from" class="me-2">From</label>
+                    <input type="date" name="fromDate" class="form-control" max="<%=dateToday%>" value="<%=dateFrom%>">
+  
+                    <label for="to" class="ms-2 me-2">To</label>
+                    <input type="date" name="toDate" class="form-control" max="<%=dateToday%>" value="<%=dateTo%>">
+  
+                    <button class="btn btn-primary text-white mb-0 me-0 ms-2" type="submit" >Generate</button>
+                  </div>
+                </form>
+              </div>
+
             </div>
 
-            <div class="float-End">
-              <form action="/reports/getMarketingReport" method="POST">
-                <div class="d-flex align-items-center justify-content-center">
-                  <label for="from" class="me-2">From</label>
-                  <input type="date" name="fromDate" class="form-control" max="<%=dateToday%>" value="<%=dateFrom%>">
-
-                  <label for="to" class="ms-2 me-2">To</label>
-                  <input type="date" name="toDate" class="form-control" max="<%=dateToday%>" value="<%=dateTo%>">
-
-                  <button class="btn btn-primary text-white mb-0 me-0 ms-2" type="submit" >Generate</button>
-                </div>
-              </form>
-            </div>
-
-          </div>
+          <!-- </div> -->
 
           <hr>
 
