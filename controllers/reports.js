@@ -54,9 +54,137 @@ const getMarketingRecordsByQuery = (query)=>{
     ]);
 }
 
+const sortSupportRecords = (positions)=>{
+    let positionSorted = []
+    for(let req of positions){
+        if(positionSorted.length){
+            const i = positionSorted.findIndex(e => e.name === req.recordOwner);
+            
+            if (i > -1) {
+              /* vendors contains the element we're looking for, at index "i" */
+              positionSorted[i].totalPositions = positionSorted[i].totalPositions + 1 || 1;
+              if(req.reqStatus === "Submitted"){
+                positionSorted[i].submitted = positionSorted[i].submitted + 1 || 1;
+              } else if(req.reqStatus === "Cancelled"){
+                positionSorted[i].cancelled = positionSorted[i].cancelled + 1 || 1;
+              } else if(req.reqStatus === "Call But No Response"){
+                positionSorted[i].cbnr = positionSorted[i].cbnr + 1 || 1;
+              } 
+            }
+             else {
+                const info = {}
+                info.name = req.recordOwner;
+                info.totalPositions = info.totalPositions + 1 || 1;
+    
+                if(req.reqStatus === "Submitted"){
+                    info.submitted = info.submitted + 1 || 1;
+                } else if(req.reqStatus === "Cancelled"){
+                    info.cancelled = info.cancelled + 1 || 1;
+                } else if(req.reqStatus === "Call But No Response"){
+                    info.cbnr = info.cbnr + 1 || 1;
+                }
+                positionSorted.push(info);
+             }
+    
+        } else {
+            const info = {}
+            info.name = req.recordOwner;
+            info.totalPositions = info.totalPositions + 1 || 1;
+            if(req.reqStatus === "Submitted"){
+                info.submitted = info.submitted + 1 || 1;
+            } else if(req.reqStatus === "Cancelled"){
+                info.cancelled = info.cancelled + 1 || 1;
+            } else if(req.reqStatus === "Call But No Response"){
+                info.cbnr = info.cbnr + 1 || 1;
+            }
+            positionSorted.push(info)
+        }
+      }
+
+      return positionSorted;
+}
+
+const sortMarketingRecords = (allPositions)=>{
+    let sortedRecords = [];
+    let unassigned = [];
+
+    for (let req of allPositions) {
+        if(req.assignedTo === ""){
+            unassigned.push(req);
+        }
+    
+        if (req.assignedTo !== "") {
+          if (sortedRecords.length) {           
+            const i = sortedRecords.findIndex(e => e.marketingPerson === req.assignedTo);
+            
+            if (i > -1) {
+              /* vendors contains the element we're looking for, at index "i" */
+              sortedRecords[i].totalAssigned = sortedRecords[i].totalAssigned + 1 || 1
+              if (req.reqStatus === "New Working") {
+                sortedRecords[i].newWorking = sortedRecords[i].newWorking + 1 || 1;
+              } else if (req.reqStatus === "Submitted") {
+                sortedRecords[i].submitted = sortedRecords[i].submitted + 1 || 1 ;
+              } else if (req.reqStatus === "Cancelled") {
+                sortedRecords[i].cancelled = sortedRecords[i].cancelled + 1 || 1;
+              } else if(req.reqStatus === "Call But No Response"){
+                sortedRecords[i].cbnr = sortedRecords[i].cbnr + 1 || 1;
+              }
+    
+            } else {
+                const info = {};
+                info.marketingPerson = req.assignedTo;
+                info.totalAssigned = info.totalAssigned + 1 || 1
+                if (req.reqStatus === "New Working") {
+                  info.newWorking = info.newWorking + 1 || 1;
+                } else if (req.reqStatus === "Submitted") {
+                  info.submitted = info.submitted + 1 || 1;
+                } else if (req.reqStatus === "Cancelled") {
+                  info.cancelled = info.cancelled + 1 || 1;
+                } else if(req.reqStatus === "Call But No Response"){
+                    info.cbnr = info.cbnr + 1 || 1;
+                }
+                sortedRecords.push(info);
+            }         
+          }
+    
+          if (!sortedRecords.length) {
+            const info = {};
+            info.marketingPerson = req.assignedTo;
+            info.totalAssigned = info.totalAssigned + 1 || 1
+            if (req.reqStatus === "New Working") {
+              info.newWorking = info.newWorking + 1 || 1;
+            } else if (req.reqStatus === "Submitted") {
+              info.submitted = info.submitted + 1 || 1;
+            } else if (req.reqStatus === "Cancelled") {
+              info.cancelled = info.cancelled + 1 || 1;
+            } else if(req.reqStatus === "Call But No Response"){
+                info.cbnr = info.cbnr + 1 || 1;
+            }
+            sortedRecords.push(info);
+          }
+        }
+      }
+
+      return [sortedRecords, unassigned];
+}
+
 exports.getSupportDashboard = async (req, res) => {
     const d = new Date();
     const dateToday = formatDate(d);
+
+    const positions = await Unibase.aggregate([
+        {
+            $match:{
+                reqEnteredDate:{
+                    $gte:dateToday,
+                    $lte:dateToday
+                }
+            }
+        }
+    ]);
+
+  const positionSorted = sortSupportRecords(positions);
+  
 
   return res.render("reports/support", {
     path: "/reports",
@@ -67,14 +195,29 @@ exports.getSupportDashboard = async (req, res) => {
     dateFrom:dateToday,
     dateTo:dateToday,
     dateToday,
-    positionSorted:[],
-    totalPositions: 0
+    positionSorted,
+    totalPositions: positions.length
   });
 };
 
 exports.getMarketingDashboard = async (req, res) => {
   const d = new Date();
   const dateToday = formatDate(d);
+
+  const allPositions = await Unibase.aggregate([
+    {
+        $match:{
+            reqEnteredDate:{
+                $gte:dateToday,
+                $lte:dateToday
+            }
+        }
+    }
+]);
+
+const newRecords = sortMarketingRecords(allPositions);
+const sortedRecords = newRecords[0];
+const unassigned = newRecords[1];
 
   return res.render("reports/marketing", {
     path: "/reports",
@@ -83,17 +226,17 @@ exports.getMarketingDashboard = async (req, res) => {
     email: req.user.email,
     role: req.user.role,
     dateToday,
-    unassigned:[],
-    allPositions:[],
-    sortedRecords:[],
-    totalPositions:0,
+    unassigned:unassigned,
+    allPositions:allPositions.length,
+    sortedRecords:sortedRecords,
+    totalPositions:allPositions.length,
     dateFrom: dateToday,
     dateTo:dateToday
   });
 };
 
 exports.getSupportHistoricalReports = async(req,res)=>{
-    const positionSorted = [];
+    
     const d = new Date();
     const dateToday = formatDate(d);
 
@@ -108,55 +251,8 @@ exports.getSupportHistoricalReports = async(req,res)=>{
         }
     ]);
 
-
-  for(let req of positions){
-    if(positionSorted.length){
-        const i = positionSorted.findIndex(e => e.name === req.recordOwner);
-        
-        if (i > -1) {
-          /* vendors contains the element we're looking for, at index "i" */
-          positionSorted[i].totalPositions = positionSorted[i].totalPositions + 1 || 1;
-          if(req.reqStatus === "Submitted"){
-            positionSorted[i].submitted = positionSorted[i].submitted + 1 || 1;
-          } else if(req.reqStatus === "Cancelled"){
-            positionSorted[i].cancelled = positionSorted[i].cancelled + 1 || 1;
-          } else if(req.reqStatus === "Call But No Response"){
-            positionSorted[i].cbnr = positionSorted[i].cbnr + 1 || 1;
-          } 
-        }
-         else {
-            const info = {}
-            info.name = req.recordOwner;
-            info.totalPositions = info.totalPositions + 1 || 1;
-
-            if(req.reqStatus === "Submitted"){
-                info.submitted = info.submitted + 1 || 1;
-            } else if(req.reqStatus === "Cancelled"){
-                info.cancelled = info.cancelled + 1 || 1;
-            } else if(req.reqStatus === "Call But No Response"){
-                info.cbnr = info.cbnr + 1 || 1;
-            }
-            positionSorted.push(info);
-         }
-
-    } else {
-        const info = {}
-        info.name = req.recordOwner;
-        info.totalPositions = info.totalPositions + 1 || 1;
-        if(req.reqStatus === "Submitted"){
-            info.submitted = info.submitted + 1 || 1;
-        } else if(req.reqStatus === "Cancelled"){
-            info.cancelled = info.cancelled + 1 || 1;
-        } else if(req.reqStatus === "Call But No Response"){
-            info.cbnr = info.cbnr + 1 || 1;
-        }else if(req.reqStatus === "New Working"){
-            info.newWorking = info.newWorking + 1 || 1;
-        }
-        positionSorted.push(info)
-    }
-  }
-  console.log("--",positionSorted);
-
+  const positionSorted = sortSupportRecords(positions);
+  
   return res.render("reports/support", {
     path: "/reports",
     docTitle: "UniStack || Reports",
@@ -174,8 +270,6 @@ exports.getSupportHistoricalReports = async(req,res)=>{
 exports.getMarketingHistoricalReport = async(req,res)=>{
     const d = new Date();
     const dateToday = formatDate(d);
-    const sortedRecords = [];
-    let unassigned = [];
     const allPositions = await Unibase.aggregate([
         {
             $match:{
@@ -187,62 +281,9 @@ exports.getMarketingHistoricalReport = async(req,res)=>{
         }
     ]);
   
-    for (let req of allPositions) {
-      if(req.assignedTo === ""){
-          unassigned.push(req);
-      }
-  
-      if (req.assignedTo !== "") {
-        if (sortedRecords.length) {           
-          const i = sortedRecords.findIndex(e => e.marketingPerson === req.assignedTo);
-          
-          if (i > -1) {
-            /* vendors contains the element we're looking for, at index "i" */
-            sortedRecords[i].totalAssigned = sortedRecords[i].totalAssigned + 1 || 1
-            if (req.reqStatus === "New Working") {
-              sortedRecords[i].newWorking = sortedRecords[i].newWorking + 1 || 1;
-            } else if (req.reqStatus === "Submitted") {
-              sortedRecords[i].submitted = sortedRecords[i].submitted + 1 || 1 ;
-            } else if (req.reqStatus === "Cancelled") {
-              sortedRecords[i].cancelled = sortedRecords[i].cancelled + 1 || 1;
-            } else if(req.reqStatus === "Called But No Response"){
-              sortedRecords[i].cbnr = sortedRecords[i].cbnr + 1 || 1;
-            }
-  
-          } else {
-              const info = {};
-              info.marketingPerson = req.assignedTo;
-              info.totalAssigned = info.totalAssigned + 1 || 1
-              if (req.reqStatus === "New Working") {
-                info.newWorking = info.newWorking + 1 || 1;
-              } else if (req.reqStatus === "Submitted") {
-                info.submitted = info.submitted + 1 || 1;
-              } else if (req.reqStatus === "Cancelled") {
-                info.cancelled = info.cancelled + 1 || 1;
-              } else if(req.reqStatus === "Called But No Response"){
-                  info.cbnr = info.cbnr + 1 || 1;
-              }
-              sortedRecords.push(info);
-          }         
-        }
-  
-        if (!sortedRecords.length) {
-          const info = {};
-          info.marketingPerson = req.assignedTo;
-          info.totalAssigned = info.totalAssigned + 1 || 1
-          if (req.reqStatus === "New Working") {
-            info.newWorking = info.newWorking + 1 || 1;
-          } else if (req.reqStatus === "Submitted") {
-            info.submitted = info.submitted + 1 || 1;
-          } else if (req.reqStatus === "Cancelled") {
-            info.cancelled = info.cancelled + 1 || 1;
-          } else if(req.reqStatus === "Called But No Response"){
-              info.cbnr = info.cbnr + 1 || 1;
-          }
-          sortedRecords.push(info);
-        }
-      }
-    }
+    const newRecords = sortMarketingRecords(allPositions);
+    const sortedRecords = newRecords[0];
+    const unassigned = newRecords[1];
 
     return res.render("reports/marketing", {
         path: "/reports",

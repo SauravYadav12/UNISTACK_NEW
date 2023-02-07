@@ -136,7 +136,6 @@ exports.getConfirmedInterviews = (req,res,next)=>{
   let userp = req.user.username
   let d = new Date();
   let date = formatDate(d)
-    console.log("date", date);
   Interview
       .find({interviewStatus:"Interview Confirm"})
       .sort({"_id":-1})
@@ -157,8 +156,8 @@ exports.getConfirmedInterviews = (req,res,next)=>{
                 dateNow: date,
                 pages: Math.ceil(count / perPage),
                 role:req.user.role
-              })
-        })
+              });
+        });
       })
 }
 
