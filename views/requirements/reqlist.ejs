@@ -65,9 +65,48 @@
                       <%= record.clientCompany.slice(0,20) %>
                     </strong></td>
                   <td class="status" style="font-weight: 600;">
-                    <label class="badge badge-dark">
+
+                    <%if(record.reqStatus === "Submitted"){%>
+                    <label class="badge badge-success">
                       <%= record.reqStatus %>
                     </label>
+                    <%}%>
+
+                    <%if(record.reqStatus === "New Working"){%>
+                      <label class="badge badge-primary">
+                        <%= record.reqStatus %>
+                      </label>
+                    <%}%>
+
+                    <%if(record.reqStatus === "Cancelled"){%>
+                      <label class="badge badge-danger">
+                        <%= record.reqStatus %>
+                      </label>
+                    <%}%>
+
+                    <%if(record.reqStatus === "Call But No Response"){%>
+                      <label class="badge badge-dark">
+                        <%= record.reqStatus %>
+                      </label>
+                    <%}%>
+
+                    <%if(record.reqStatus === "Spoke to vendor"){%>
+                      <label class="badge badge-info">
+                        <%= record.reqStatus %>
+                      </label>
+                    <%}%>
+
+                    <%if(record.reqStatus === "Rejected by vendor"){%>
+                      <label class="badge badge-secondary">
+                        <%= record.reqStatus %>
+                      </label>
+                    <%}%>
+
+                    <%if(record.reqStatus === "Interviewed"){%>
+                      <label class="badge badge-warning">
+                        <%= record.reqStatus %>
+                      </label>
+                    <%}%>
                   </td>
                   <td>
                     <%= record.nextStep.slice(0,15) %>

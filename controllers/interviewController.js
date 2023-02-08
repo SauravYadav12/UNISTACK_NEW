@@ -282,7 +282,7 @@ exports.getInterviewDetailsPage = async(req, res) => {
 
 
 exports.getCreateInterviewpage = async(req, res) => {
-
+    console.log(req.body);
     try {
         const lastRec = await Interview.find().sort({ createdAt: -1 }).limit(1);
         const foundRecord = await Unibase.findById(req.body.recordID);

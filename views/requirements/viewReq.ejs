@@ -45,8 +45,8 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
+                <div class="col-md-6">
+                    <div class="form-group float-start">
                         
                         <label class="fw-bold" for="resume">Interviews (if Any)</label>
                         
@@ -60,6 +60,20 @@
 
                     </div>
                 </div>
+
+                <%if(reqStatus === "Submitted"){%>
+                    
+                    <div class="col-md-6">
+                        <form action="/interviews/create-interview/" method="POST">
+                            <input type="text" name="recordID" value="<%= recordID %>" style="display: none;">
+                            <div class="form-group float-end">
+                                <button
+                                    class="btn btn-success text-white mb-0 me-0" type="submit">Create Interview</button>
+                            </div>
+                        </form>
+                    </div>
+                <%}%>
+
             </div>
             <hr style="border: 1px solid #007BFF">
         </div>

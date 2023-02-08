@@ -373,6 +373,7 @@ exports.getViewRecordPage = (req, res) => {
       res.render("requirements/viewReq", {
         docTitle: "View Requirement",
         path: "/home",
+        recordID :foundRecord._id,
         reqID: foundRecord.reqID,
         reqStatus: foundRecord.reqStatus,
         nextStep: foundRecord.nextStep,
