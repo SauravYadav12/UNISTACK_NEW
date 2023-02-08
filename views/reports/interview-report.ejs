@@ -1,0 +1,79 @@
+<%- include('../partials/header1.ejs') %>
+
+<div class="container-scroller">
+    
+<%- include('../partials/nav.ejs') %>
+  
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+  
+
+  <%- include('../partials/sidebar1.ejs') %>
+    
+    <!-- partial -->
+    <%- include('../partials/main-panel-start.ejs') %>
+    
+
+        <div class="card-body">
+          <!-- <div class="d-sm-flex justify-content-between align-items-start"> -->
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12 float-start">
+                <h4 class="card-title card-title-dash">Interview Reports: <span class="text-primary"> From </span> <%=dateFrom%> <span class="text-primary"> To </span> <%=dateTo%> </h4>
+                <p class="card-subtitle card-subtitle-dash ">Total Interviews :<span class="text-danger"> <%=totalInterviews%></span></p>
+              </div>
+
+              <div class="col-md-6 col-sm-12 float-end">
+                <form action="/reports/getInterviewReport" method="POST">
+                  <div class="d-flex align-items-center justify-content-center">
+                    <label for="from" class="me-2">From</label>
+                    <input type="date" name="fromDate" class="form-control" max="<%=dateToday%>" value="<%=dateFrom%>">
+  
+                    <label for="to" class="ms-2 me-2">To</label>
+                    <input type="date" name="toDate" class="form-control" max="<%=dateToday%>" value="<%=dateTo%>">
+  
+                    <button class="btn btn-primary text-white mb-0 me-0 ms-2" type="submit" >Generate</button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+
+          <!-- </div> -->
+
+          <hr>
+
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+             <% sortedInterviews.forEach((int,index)=>{%>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne<%index%>">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne<%=index%>" aria-expanded="false" aria-controls="flush-collapseOne<%=index%>">
+                    <%= int.name %>
+                  </button>
+                </h2>
+                <div id="flush-collapseOne<%=index%>" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <h5>Total Interviews: <strong><a href="/reports/iquery/?name=<%=int.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=totalInterviews" target="_blank"><%= int.totalInterviews %></strong></a> </h5> 
+                    <h5>Total Completed : <strong><a href="/reports/iquery/?name=<%=int.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=Interview Completed" target="_blank"><%= int.completed %></strong> </a></h5> 
+                    <h5>Total Cancelled : <strong><a href="/reports/iquery/?name=<%=int.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=Interview Cancelled" target="_blank"><%= int.cancelled %></strong></a> </h5> 
+                    <h5>Total Tentative : <strong><a href="/reports/iquery/?name=<%=int.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=Interview Tentative" target="_blank"><%= int.tentative %></strong></a> </h5> 
+                    <h5>Total Confirm   : <strong><a href="/reports/iquery/?name=<%=int.name%>&fromDate=<%=dateFrom%>&toDate=<%=dateTo%>&type=Interview Confirm" target="_blank"><%= int.confirm %></strong></a> </h5> 
+                  </div>
+                </div>
+              </div>
+              <%})%>
+            </div>
+
+        </div>
+
+    <%- include('../partials/main-panel-end.ejs') %>
+                          
+      </div>
+   
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+<%- include('../partials/footer1.ejs')%>

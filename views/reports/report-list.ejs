@@ -25,6 +25,129 @@
               </div>
           </div>
           <div class="table-responsive  mt-1">
+
+            <%if(reportFor === "interview-report"){%>
+            <table id="order-listing" class="table dataTable no-footer table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>View</th>
+                  <th>Int ID</th>
+                  <th>Int Status</th>
+                  <th>Consultant</th>
+                  <th>Int date</th>
+                  <th>Int Time (EST)</th>
+                  <th>Int Result </th>
+                  <th>Subject Line</th>
+                  <th>Client Name</th>
+                  <th>Job Title</th>
+                  <% if(role === "Admin" || role === "SuperAdmin"){ %>
+                  <th>Interviewee</th>
+                  <%}%>
+                    <th>Created by</th>
+                    <th>Created At</th>
+                  </tr>
+                </thead>
+    
+                
+                <tbody class="table-body">
+                  
+                <% records.forEach(interview=>{ %>
+                <tr onclick="window.location='/interviews/view-interviews/<%= interview.intId %>'" class="row-style">
+                  <td>
+                    <a class="btn btn-primary text-white" href="/interviews/view-interviews/<%= interview.intId %>">View</a>
+                  </td>
+                  <td>
+                    <%= interview.intId %>
+                  </td>
+                  <td class="changeColor">
+
+                    <%if(interview.interviewStatus === "Interview Confirm"){%>
+                    <label class="badge badge-success">
+                      <strong>
+                        <%= interview.interviewStatus %>
+                      </strong>
+                    </label>
+                    <%}%>
+
+                    <%if(interview.interviewStatus === "Interview Completed"){%>
+                      <label class="badge badge-primary">
+                        <strong>
+                          <%= interview.interviewStatus %>
+                        </strong>
+                      </label>
+                    <%}%>
+
+                    <%if(interview.interviewStatus === "Interview Tentative"){%>
+                      <label class="badge badge-warning">
+                        <strong>
+                          <%= interview.interviewStatus %>
+                        </strong>
+                      </label>
+                      <%}%>
+
+                      <%if(interview.interviewStatus === "Interview Cancelled"){%>
+                        <label class="badge badge-danger">
+                          <strong>
+                            <%= interview.interviewStatus %>
+                          </strong>
+                        </label>
+                      <%}%>
+
+
+                  </td>
+                  <td style="color: red;"> <strong>
+                      <%= interview.consultant %>
+                    </strong> </td>
+                  <td>
+                    <%= interview.interviewDate %>
+                  </td>
+                  <td> <strong>
+                      <%= interview.interviewTime.slice(0,12) %>
+                    </strong></td>
+                  <td> <strong>
+                      <%= interview.result %>
+                    </strong> </td>
+                  <td>
+                    <div style="width: 300px; white-space:normal;">
+                      <%= interview.subjectLine.slice(0,20) %>
+                    </div>
+                  </td>
+                  <td>
+                    <%= interview.clientName.slice(0,20) %>
+                  </td>
+                  <% if(interview.jobTitle == undefined) {%>
+                  <td> <strong>
+                      <%= interview.jobTitle %>
+                    </strong> </td>
+                  <%} else {%>
+                  <td> <strong>
+                      <%= interview.jobTitle.slice(0,20) %>
+                    </strong> </td>
+                  <%}%>
+                  <% if(role === "Admin" || role === "SuperAdmin"){ %>
+                  <td style="color:#fc6c85;">
+                    <label class="badge badge-danger">
+    
+                      <strong>
+                        <%= interview.candidateName %>
+                      </strong>
+                    </label>
+                  </td>
+                  <%}%>
+                  <td>
+                    <%= interview.recordOwner %>
+                  </td>
+                  <td id="date-field">
+                    <%= interview.createdAt.toLocaleString(); %>
+                  </td>
+                </tr>
+                <%});%>
+                          
+               </tbody>
+  
+            </table>
+            
+            <%} else { %>
             <table id="order-listing" class="table dataTable no-footer table-striped table-hover">
               <thead>
                 <tr>
@@ -101,6 +224,8 @@
                 <% }); %>
               </tbody>
             </table>
+            <%}%>
+
           </div>
         </div>
 

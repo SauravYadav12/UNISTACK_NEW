@@ -3,6 +3,8 @@ const User = require("../models/userDB");
 const Interview = require("../models/interviewDB");
 const Consultant = require("../models/consultant");
 
+
+// Helper Functions
 function formatDate(date) {
   var d = new Date(date),
     month = "" + (d.getMonth() + 1),
@@ -168,6 +170,82 @@ const sortMarketingRecords = (allPositions)=>{
       return [sortedRecords, unassigned];
 }
 
+const sortInterviewsRecords = (allInterviews)=>{
+    let sortedInterviews = []
+    for(let req of allInterviews){
+        if(sortedInterviews.length){
+            const i = sortedInterviews.findIndex(e => e.name === req.marketingPerson);
+            
+            if (i > -1) {
+              /* vendors contains the element we're looking for, at index "i" */
+              sortedInterviews[i].totalInterviews = sortedInterviews[i].totalInterviews + 1 || 1;
+              if(req.interviewStatus === "Interview Confirm"){
+                sortedInterviews[i].confirm = sortedInterviews[i].confirm + 1 || 1;
+              } else if(req.interviewStatus === "Interview Cancelled"){
+                sortedInterviews[i].cancelled = sortedInterviews[i].cancelled + 1 || 1;
+              } else if(req.interviewStatus === "Interview Tentative"){
+                sortedInterviews[i].tentative = sortedInterviews[i].tentative + 1 || 1;
+              } else if(req.interviewStatus === "Interview Completed"){
+                sortedInterviews[i].completed = sortedInterviews[i].completed + 1 || 1;
+              } 
+            }
+             else {
+                const info = {}
+                info.name = req.marketingPerson;
+                info.totalInterviews = info.totalInterviews + 1 || 1;
+                if(req.interviewStatus === "Interview Confirm"){
+                    info.confirm = info.confirm + 1 || 1;
+                } else if(req.interviewStatus === "Interview Tentative"){
+                    info.tentative = info.tentative + 1 || 1;
+                } else if(req.interviewStatus === "Interview Completed"){
+                    info.completed = info.completed + 1 || 1;
+                }else if(req.interviewStatus === "Interview Cancelled"){
+                    info.cancelled = info.cancelled + 1 || 1;
+                }
+                sortedInterviews.push(info);
+             }
+    
+        } else {
+            const info = {}
+            info.name = req.marketingPerson;
+            info.totalInterviews = info.totalInterviews + 1 || 1;
+            if(req.interviewStatus === "Interview Confirm"){
+                info.confirm = info.confirm + 1 || 1;
+            } else if(req.interviewStatus === "Interview Tentative"){
+                info.tentative = info.tentative + 1 || 1;
+            } else if(req.interviewStatus === "Interview Completed"){
+                info.completed = info.completed + 1 || 1;
+            }else if(req.interviewStatus === "Interview Cancelled"){
+                info.cancelled = info.cancelled + 1 || 1;
+            }
+            sortedInterviews.push(info)
+        }
+    }
+
+    return sortedInterviews;
+}
+
+const getInterviewsByQuery = (query) =>{
+    return Interview.aggregate([
+        {
+            $match:{
+                interviewDate:{
+                    $gte:query.fromDate,
+                    $lte:query.toDate
+                },
+                marketingPerson: {
+                    $eq:query.name
+                },
+                interviewStatus:{
+                    $eq:query.type
+                }
+            }
+        }
+    ]);
+
+}
+
+//Controllers --
 exports.getSupportDashboard = async (req, res) => {
     const d = new Date();
     const dateToday = formatDate(d);
@@ -236,6 +314,40 @@ const unassigned = newRecords[1];
   });
 };
 
+exports.getInterviewStatus = async(req,res) => {
+    const d = new Date();
+    const dateToday = formatDate(d);
+
+    const allInterviews = await Interview.aggregate([
+        {
+            $match:{
+                interviewDate:{
+                    $gte:dateToday,
+                    $lte:dateToday
+                }
+            }
+        }
+    ]);
+
+  const sortedInterviews = sortInterviewsRecords(allInterviews);
+  
+
+  return res.render("reports/interview-report", {
+    path: "/reports/interview-report",
+    docTitle: "UniStack || Reports",
+    username: req.user.username,
+    email: req.user.email,
+    role: req.user.role,
+    dateFrom:dateToday,
+    dateTo:dateToday,
+    dateToday,
+    sortedInterviews,
+    totalInterviews: allInterviews.length
+  });
+}
+
+
+// Historic data by Date
 exports.getSupportHistoricalReports = async(req,res)=>{
     
     const d = new Date();
@@ -301,6 +413,39 @@ exports.getMarketingHistoricalReport = async(req,res)=>{
       });
 }
 
+exports.getInterviewHistoricReport = async(req,res) => {
+    const d = new Date();
+    const dateToday = formatDate(d);
+
+    const allInterviews = await Interview.aggregate([
+        {
+            $match:{
+                interviewDate:{
+                    $gte:req.body.fromDate,
+                    $lte:req.body.toDate
+                }
+            }
+        }
+    ]);
+
+    const sortedInterviews = sortInterviewsRecords(allInterviews);
+  
+    return res.render("reports/interview-report", {
+        path: "/reports/interview-report",
+        docTitle: "UniStack || Reports",
+        username: req.user.username,
+        email: req.user.email,
+        role: req.user.role,
+        dateFrom:req.body.fromDate,
+        dateTo:req.body.toDate,
+        dateToday,
+        sortedInterviews,
+        totalInterviews: allInterviews.length
+    });
+}
+
+
+//Details By query
 exports.getSupportDetailsByQuery = async (req,res) =>{
     console.log(req.query);
     const d = new Date();
@@ -360,7 +505,7 @@ exports.getMarketingDetailsByQuery = async(req,res) => {
     const d = new Date();
     const dateToday = formatDate(d);
     let reportFor = '';
-    let records;
+    let records = [];
 
     if(req.query.type === "totalAssigned"){
         reportFor = "marketing";
@@ -431,3 +576,67 @@ exports.getMarketingDetailsByQuery = async(req,res) => {
         reportFor
     })
 }
+
+exports.getInterviewDetailsByQuery = async(req,res) =>{
+    const d = new Date();
+    const dateToday = formatDate(d);
+    let reportFor = '';
+    let records = [];
+
+    if(req.query.type === "totalInterviews"){
+        reportFor = "interview-report";
+        records = await Interview.aggregate([
+            {
+                $match:{
+                    interviewDate:{
+                        $gte:req.query.fromDate,
+                        $lte:req.query.toDate
+                    },
+                    marketingPerson: {
+                        $eq:req.query.name
+                    },
+                }
+            }
+        ]);
+    } 
+
+    if(req.query.type === "Interview Confirm"){
+        reportFor = "interview-report";
+        records = await getInterviewsByQuery(req.query);
+    }
+
+    if(req.query.type === "Interview Completed"){
+        reportFor = "interview-report";
+        records = await getInterviewsByQuery(req.query);
+    }
+
+    if(req.query.type === "Interview Cancelled"){
+        reportFor = "interview-report";
+        records = await getInterviewsByQuery(req.query);
+    }
+
+    if(req.query.type === "Interview Tentative"){
+        reportFor = "interview-report";
+        records = await getInterviewsByQuery(req.query);
+    }
+
+   
+    return res.render('reports/report-list', {
+        path: "/reports/report-list",
+        docTitle: "UniStack || Reports",
+        username: req.user.username,
+        email: req.user.email,
+        role: req.user.role,
+        name: req.query.name,
+        type:req.query.type,
+        dateToday,
+        dateFrom: req.query.fromDate,
+        dateTo: req.query.toDate,
+        totalRecords:records.length,
+        records,
+        reportFor
+    })
+}
+
+
+
