@@ -219,6 +219,7 @@ const newRecords = sortMarketingRecords(allPositions);
 const sortedRecords = newRecords[0];
 const unassigned = newRecords[1];
 
+
   return res.render("reports/marketing", {
     path: "/reports",
     docTitle: "UniStack || Reports",
@@ -226,7 +227,7 @@ const unassigned = newRecords[1];
     email: req.user.email,
     role: req.user.role,
     dateToday,
-    unassigned:unassigned,
+    unassigned:unassigned.length,
     allPositions:allPositions.length,
     sortedRecords:sortedRecords,
     totalPositions:allPositions.length,
