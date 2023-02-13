@@ -130,6 +130,11 @@ const sortMarketingRecords = (allPositions)=>{
                 sortedRecords[i].cancelled = sortedRecords[i].cancelled + 1 || 1;
               } else if(req.reqStatus === "Call But No Response"){
                 sortedRecords[i].cbnr = sortedRecords[i].cbnr + 1 || 1;
+                if(req.mComment.length){
+                    sortedRecords[i].cbnrwc = sortedRecords[i].cbnrwc + 1 || 1;
+                } else {
+                    sortedRecords[i].cbnrnc = sortedRecords[i].cbnrnc + 1 || 1;
+                }
               }
     
             } else {
@@ -144,6 +149,11 @@ const sortMarketingRecords = (allPositions)=>{
                   info.cancelled = info.cancelled + 1 || 1;
                 } else if(req.reqStatus === "Call But No Response"){
                     info.cbnr = info.cbnr + 1 || 1;
+                    if(req.mComment.length){
+                        info.cbnrwc = info.cbnrwc + 1 || 1;
+                    } else {
+                        info.cbnrnc = info.cbnrnc + 1 || 1;
+                    }
                 }
                 sortedRecords.push(info);
             }         
@@ -161,6 +171,11 @@ const sortMarketingRecords = (allPositions)=>{
               info.cancelled = info.cancelled + 1 || 1;
             } else if(req.reqStatus === "Call But No Response"){
                 info.cbnr = info.cbnr + 1 || 1;
+                if(req.mComment.length){
+                    info.cbnrwc = info.cbnrwc + 1 || 1;
+                } else {
+                    info.cbnrnc = info.cbnrnc + 1 || 1;
+                }
             }
             sortedRecords.push(info);
           }
@@ -560,6 +575,47 @@ exports.getMarketingDetailsByQuery = async(req,res) => {
         records = await getMarketingRecordsByQuery(req.query);
     }
 
+    if(req.query.type === "cbnrwc"){
+        reportFor = "marketing";
+        records = await Unibase.aggregate([
+            {
+                $match:{
+                    reqEnteredDate:{
+                        $gte:req.query.fromDate,
+                        $lte:req.query.toDate
+                    },
+                    assignedTo: {
+                        $eq:req.query.name
+                    },
+                    reqStatus:{
+                        $eq: "Call But No Response"
+                    },
+                    'mComment.0': {$exists: true},
+                }
+            }
+        ]);
+    }
+
+    if(req.query.type === "cbnrnc"){
+        reportFor = "marketing";
+        records = await Unibase.aggregate([
+            {
+                $match:{
+                    reqEnteredDate:{
+                        $gte:req.query.fromDate,
+                        $lte:req.query.toDate
+                    },
+                    assignedTo: {
+                        $eq:req.query.name
+                    },
+                    reqStatus:{
+                        $eq: "Call But No Response"
+                    },
+                    'mComment.0': {$exists: false},
+                }
+            }
+        ]);
+    }
     return res.render('reports/report-list', {
         path: "/reports/report-list",
         docTitle: "UniStack || Reports",
