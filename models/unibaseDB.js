@@ -51,6 +51,9 @@ const unibaseSchema = new mongoose.Schema({
   recordOwner: String,
   updatedBy:String,
   interviews:[],
+  primaryTechStack:String,
+  isDuplicate:String,
+  duplicateWith:String,
 }, {
   timestamps:true
 });

@@ -1,5 +1,6 @@
 <%- include('../partials/header1.ejs') %>
 
+<%- include ('../partials/messages.ejs') %>
 
     <!-- Form Section Starts here -->
     <form action="/postUpdateReq" method="POST">
@@ -396,7 +397,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="requirement-Type">5.2 Got Requirement from</label>
-                                <select name="gotReqFrom" id="" class="form-control">
+                                <select name="gotReqFrom" id="" class="form-select">
                                     <option value="<%= gotReqFrom %>"> <%= gotReqFrom %> </option>
                                     <option value="1. Got from online Resume">1. Got from online Resume</option>
                                     <option value="2. Received on consultant's Email">2. Received on consultant's Email</option>
@@ -407,8 +408,17 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="got-from">5.3 Got on Resume</label>
-                                <input type="text" name="gotOnResume" class="form-control" placeholder="Enter resume name" value="<%= gotOnResume %>">
+                                <label for="got-from">5.3 Primary Tech Stak</label>
+                                <select name="primaryTechStack" id="" class="form-select">
+                                    <option value="<%= primaryTechStack %>"> <%= primaryTechStack %> </option>
+                                    <option value="Java">Java</option>
+                                    <option value="Ruby">Ruby</option>
+                                    <option value="React">React</option>
+                                    <option value="Angular">Angular</option>
+                                    <option value="Node">Node</option>
+                                    <option value="PHP">PHP</option>
+                                    <option value="Python">Python</option>
+                                </select>
                             </div>
                         </div>
 
@@ -435,7 +445,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="portal-link">5.6 Job Portal Link</label>
-                                <input type="text" name="jobPortalLink" placeholder="Enter job Portal link" class="form-control" value="<%= jobPortalLink %>">
+                                <input type="url" name="jobPortalLink" placeholder="Enter job Portal link" class="form-control" value="<%= jobPortalLink %>">
                             </div>
                         </div>
 

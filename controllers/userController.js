@@ -9,12 +9,15 @@ const nodemailer = require("nodemailer");
 exports.getLoginPage = (req, res) => {
   res.render("login/login", {
     docTitle: "Unistack Login",
+    status: undefined,
+    message: undefined
   });
 };
 
 exports.getCreateUserPage = (req, res) => {
   res.render("create-unistack-users", {
     docTitle: "Create User Admin",
+    message: "Page Loaded Successfully"
   });
 };
 
@@ -58,7 +61,6 @@ exports.postCreateUserPage = (req, res) => {
   if (password.length < 6) {
     errors.push({ msg: "Password should be of 6 characters" });
   }
-
   if (errors.length > 0) {
     res.render("create-unistack-users", {
       errors,
@@ -114,75 +116,12 @@ exports.postCreateUserPage = (req, res) => {
 // Login Post
 
 exports.postLoginPage = (req, res, next) => {
-
-  const login = passport.authenticate("local", {
-    successRedirect: "/home",
-    failureRedirect: "/",
-    failureFlash: true,
-  })(req, res, next);
-
-  const loginTime = new Date();
-  const userEmail = req.body.email;
-
-  if (userEmail == "") {
-    login; 
-    // return res.status(400).json({status:"fail", message:"Please Enter EmailID"})
-  } else {
-    User.findOne({ email: userEmail }, (err, userFound) => {
-      if (!userFound) {
-        login;
-        // return res.status(400).json({status:"fail", message:"No user Found"});
-      } 
-      else {
-        const newLog = new Logs({
-          username: userFound.username,
-          loginTime: loginTime,
-        });
-        newLog.save((err) => {
-          if (!err) {
-            console.log("logs saved successfully");
-          } else {
-            console.log(err);
-          }
-      });
-        //Logic to send emails as notification//
-        // var transporter = nodemailer.createTransport({
-        //   service: "gmail",
-        //   auth: {
-        //     user: "unicodersmarketing@gmail.com",
-        //     pass: "Unicoders@123",
-        //   },
-        // });
-
-        // const mailOptions = {
-        //   from: userFound.username + "<" + userEmail + ">", 
-        //   to: "unicodersmarketing@gmail.com, unicoders.int@gmail.com", 
-        //   subject:
-        //     "Unibase Login-Notification: " +
-        //     userFound.username +
-        //     " Logged-In at: " +
-        //     loginTime.toLocaleDateString(), 
-        //   html:
-        //     '<body style="background-color: #fdfdff; margin: 0; padding: 0;font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;"><div style="width: 600px; margin: 5em auto; padding: 2em; background-color: #444447; border-radius: 0.5em; box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);"><h1 style="color: white;">Unibase Login Alert</h1> <p style = "color:white;">' +
-        //     userFound.username +
-        //     " has logged in to Unibase on " +
-        //     loginTime.toLocaleDateString() +
-        //     " at: " +
-        //     loginTime.toLocaleTimeString() +
-        //     "</p></div></body>", 
-        // };
-
-        // transporter.sendMail(mailOptions, function (err, info) {
-        //     if(err)
-        //     console.log(err)
-        //     else
-        //     console.log(info);
-        // });
-
-        // login;
-      }
-    });
-  }
+  
+  passport.authenticate('local',{
+      successRedirect: '/home',
+      failureRedirect: '/',
+      failureFlash: true
+  })(req,res,next);
 };
 
 exports.getLoginLogs = (req, res) => {

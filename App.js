@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const flash = require('connect-flash');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const { ensureAuthenticated } = require('./config/auth');
 const mongoose = require('mongoose');
@@ -25,11 +26,22 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(morgan('combined',{
   skip: function (req, res) { return res.statusCode < 400 }
 }));
+
+
 app.use(session({
     secret:'secret',
     resave: true,
     saveUninitialized: true
 }));
+app.use(flash());
+
+//Global Variables
+app.use((req,res,next)=>{
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
 
 //Passport Middleware
 app.use(passport.initialize());
@@ -37,18 +49,8 @@ app.use(passport.session());
 
 
 //////////////////////
-app.use(flash());
 app.set('view engine','ejs');
 app.use(express.static('public'));
-
-//Global Variables
-
-app.use((req,res,next)=>{
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
-    next();
-});
 
 const dotenv = require('dotenv');
 

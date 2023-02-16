@@ -271,7 +271,11 @@ exports.getSupportDashboard = async (req, res) => {
                 reqEnteredDate:{
                     $gte:dateToday,
                     $lte:dateToday
+                },
+                isDuplicate:{
+                    $eq:'false'
                 }
+                
             }
         }
     ]);
@@ -380,7 +384,6 @@ exports.getSupportHistoricalReports = async(req,res)=>{
     ]);
 
   const positionSorted = sortSupportRecords(positions);
-  
   return res.render("reports/support", {
     path: "/reports",
     docTitle: "UniStack || Reports",
@@ -391,7 +394,8 @@ exports.getSupportHistoricalReports = async(req,res)=>{
     dateTo:req.body.toDate,
     dateToday,
     positionSorted,
-    totalPositions: positions.length
+    totalPositions: positions.length,
+    success_msg: "Report Generated Successfully"
   });
 }
 
@@ -693,6 +697,3 @@ exports.getInterviewDetailsByQuery = async(req,res) =>{
         reportFor
     })
 }
-
-
-

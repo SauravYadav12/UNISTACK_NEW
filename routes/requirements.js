@@ -21,6 +21,7 @@ const { ensureAuthenticated } = require('../config/auth');
   router.post('/postCreateReq',ensureAuthenticated,requirementController.postCreatePage);
   router.post('/postUpdateReq',ensureAuthenticated,requirementController.postUpdateRecordPage);
   router.post('/postDeletePage',ensureAuthenticated,requirementController.postDeletePage);
+  router.post('/copy-record',ensureAuthenticated,requirementController.getCreateReqPage);
 
   router.get("/reports-dashboard",ensureAuthenticated,requirementController.getDashboard1)
 

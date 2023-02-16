@@ -14,6 +14,7 @@ module.exports = function(passport){
             User.findOne({email:email})
                 .then(user=>{
                     if(!user){
+                        
                         return done(null, false, {message:'User Not Registered to use the Portal'})
                     }
                     // Match Password

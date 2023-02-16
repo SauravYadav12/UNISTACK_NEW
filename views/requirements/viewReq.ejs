@@ -1,7 +1,30 @@
 <%- include('../partials/header1.ejs') %>
 
-   
+<%- include ('../partials/messages.ejs') %>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form action="/copy-record" method="POST">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title text-white" id="exampleModalLabel"> <strong>Warning: Copy Record ?</strong> </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="recordID" value="<%= recordID %>" style="display: none;">
+                <input type="text" name="isDuplicate" value="true" style="display: none;">
+                Do you want to create a copy?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Yes</button>
+            </div>
+        </div>
+        </div>
+    </form>
+  </div>
+<!-- Modal -->
 
     <!-- Requirement ID Section -->
     <section class="heading mt-4 mb-4">
@@ -60,19 +83,32 @@
 
                     </div>
                 </div>
-
-                <%if(reqStatus === "Submitted"){%>
-                    
-                    <div class="col-md-6">
+                <div class="col-md-6 col-sm-12">
+                    <div class="d-flex float-end">
+                        
+                        <%if(reqStatus === "Submitted"){%>
+                        <div class="form-group me-2">
                         <form action="/interviews/create-interview/" method="POST">
                             <input type="text" name="recordID" value="<%= recordID %>" style="display: none;">
-                            <div class="form-group float-end">
+                            <div class="">
                                 <button
                                     class="btn btn-success text-white mb-0 me-0" type="submit">Create Interview</button>
                             </div>
                         </form>
+                        </div>
+                        <%}%>
+                    
+
+                        <div class="form-group">
+                                <div class="">
+                                    <button
+                                    type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">Copy Record</button>
+                                </div>
+                            
+                        </div>
                     </div>
-                <%}%>
+
+                </div>
 
             </div>
             <hr style="border: 1px solid #007BFF">
@@ -476,9 +512,9 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="got-from"> <strong>5.3 Got on Resume</strong> </label>
+                        <label for="got-from"> <strong>5.3 Primary Tech Stack</strong> </label>
                         <p class=" ">
-                            <%= gotOnResume %>
+                            <%= primaryTechStack %>
                         </p>
                     </div>
                 </div>

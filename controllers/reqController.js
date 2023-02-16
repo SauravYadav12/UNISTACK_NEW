@@ -4,7 +4,24 @@ const Interview = require('../models/interviewDB');
 const excelJS = require('exceljs');
 const Consultant = require("../models/consultant");
 
-
+function checkDuplicate(str1, str2){
+  str1 = str1.split(" ").join('').toLowerCase();
+  str2 = str2.split(" ").join('').toLowerCase()
+  let maxStr, minStr;
+  if(str1.length > str2.length){
+    maxStr = str1;
+    minStr = str2;
+  } else {
+    maxStr = str2;
+    minStr = str1;
+  }
+  
+  if(maxStr.includes(minStr)){
+    return true
+  } else {
+    return false
+  }
+}
 
 function formatDate(date) {
   var d = new Date(date),
@@ -210,7 +227,7 @@ exports.getReqList = async(req, res, next) => {
   } catch (error) {
       return res.status(400).json({
         sucess:"fail",
-        message:error
+        message:"error"
       })
   }
   
@@ -232,22 +249,57 @@ exports.getCreateReqPage = async(req, res) => {
   const newReqId = parseInt(lastRec[0].reqID) + 1
   // console.log("Last rec",newReqId);
 
-  return res.render('requirements/createReq', {
-    path: '/home',
-    docTitle: 'Create Requirement',
-    username: username,
-    role: req.user.role,
-    error_create_record,
-    reqNumber: newReqId,
-    appliedFor:'',
-    assignedTo:'',
-    reqStatus:'',
-    taxType:'',
-    mComment:'',
-    jobDescription:'',
-    users,
-    consultants
-});
+  if(req.body.isDuplicate === 'true'){
+    const record = await Unibase.findById(req.body.recordID);
+    const {reqID,remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,
+      jobTitle,jobPortalLink,jobDescription, reqKeywords, employementType, primaryTechStack,gotReqFrom} = record
+  
+    const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
+    const newReqId = parseInt(lastRec[0].reqID) + 1
+
+    return res.render('requirements/createReq', {
+      path: '/home',
+      docTitle: 'Create Requirement',
+      username: req.user.username,
+      reqNumber:newReqId,
+      status:"error",
+      message:"Record Id already exists. Please create a new one",
+      role: req.user.role,
+      isDuplicate:req.body.isDuplicate,
+      users,
+      consultants,
+      reqStatus:"New Working",
+      assignedTo:'',
+      appliedFor:'',
+      taxType:'',
+      mComment:'',
+      duplicateWith: reqID,
+      remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,
+      jobTitle,jobPortalLink,jobDescription,reqKeywords,employementType,primaryTechStack,gotReqFrom
+    });
+
+  } else {
+    return res.render('requirements/createReq', {
+      path: '/home',
+      docTitle: 'Create Requirement',
+      username: username,
+      role: req.user.role,
+      error_create_record,
+      reqNumber: newReqId,
+      appliedFor:'',
+      assignedTo:'',
+      reqStatus:'',
+      taxType:'',
+      mComment:'',
+      jobDescription:'',
+      users,
+      consultants,
+      isDuplicate: 'false',
+      duplicateWith:''
+    });
+
+  }
+
 };
 
 exports.postCreatePage = async(req, res) => {
@@ -258,111 +310,158 @@ exports.postCreatePage = async(req, res) => {
   let remote;
   let duration;
   let error_create_record;
+  let companyMatch;
+  let personMatch;
+  let stackMatch;
+  let duplicateRecords = [];
 
-  const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
-  const newReqId = parseInt(lastRec[0].reqID) + 1
+  let newDate = new Date();
+  let today = formatDate(newDate);
+  console.log("Duplicate-",req.body.isDuplicate);
 
-  req.body.reqID = newReqId;
-
-  if (req.body.mComment != "") {
-      mComment = [{
-          comment: req.body.mComment,
-          created_at: new Date(),
-          user: author
-      }]
-  }
-
-  if (req.body.rate !== "") {
-      rate = req.body.rate;
-  }
-
-  if (req.body.taxType !== "") {
-      taxType = req.body.taxType;
-  }
-
-  if (req.body.remote !== "") {
-      remote = req.body.remote;
-  }
-
-  if (req.body.duration !== "") {
-      duration = req.body.duration;
-  }
-
-
-  const newReq = new Unibase({
-
-      reqID: req.body.reqID,
-      reqStatus: req.body.reqStatus,
-      nextStep: req.body.nextStep,
-      appliedFor: req.body.appliedFor,
-      assignedTo: req.body.assignedTo,
-      resume: req.body.resume,
-      mComment: mComment,
-      rate: rate,
-      taxType: taxType,
-      remote: remote,
-      duration: duration,
-      clientCompany: req.body.clientCompany,
-      clientWebsite: req.body.clientWebsite,
-      clientAddress: req.body.clientAddress,
-      clientPerson: req.body.clientPerson,
-      clientPhone: req.body.clientPhone,
-      clientEmail: req.body.clientEmail,
-      primeVendorCompany: req.body.primeVendorCompany,
-      primeVendorWebsite: req.body.primeVendorWebsite,
-      primeVendorName: req.body.primeVendorName,
-      primeVendorPhone: req.body.primeVendorPhone,
-      primeVendorEmail: req.body.primeVendorEmail,
-      vendorCompany: req.body.vendorCompany,
-      vendorWebsite: req.body.vendorWebsite,
-      vendorPersonName: req.body.vendorPersonName,
-      vendorPhone: req.body.vendorPhone,
-      vendorEmail: req.body.vendorEmail,
-      reqEnteredDate: req.body.reqEnteredDate,
-      gotReqFrom: req.body.gotReqFrom,
-      gotOnResume: req.body.gotOnResume,
-      jobTitle: req.body.jobTitle,
-      employementType: req.body.employementType,
-      jobPortalLink: req.body.jobPortalLink,
-      reqEnteredBy: req.body.reqEnteredBy,
-      reqKeywords: req.body.reqKeywords,
-      jobDescription: req.body.jobDescription,
-      recordOwner: author,
-  });
-  
-
-  newReq.save(async(err) => {
-    
-    if (!err) {
-          console.log("Record Created Successfully");
-          res.redirect('/requirements/reqlist/1');
-      } else {
-
-          error_create_record = 'Record ID already exists. New ID updated For you, Proceed to Save'
-          const {reqStatus,nextStep,appliedFor,assignedTo,resume,mComment,rate,taxType,
-                remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,reqEnteredDate,
-                jobTitle,jobPortalLink,jobDescription, reqKeywords, employementType} = req.body;
-
-          const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
-          const newReqId = parseInt(lastRec[0].reqID) + 1
-
-          return res.render('requirements/createReq', {
-            error_create_record,
-            path: '/home',
-            docTitle: 'Create Requirement',
-            username: author,
-            reqNumber:newReqId,
-            role: req.user.role,
-            reqStatus,nextStep,appliedFor,assignedTo,resume,mComment,rate,taxType,
-            remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,reqEnteredDate,
-            jobTitle,jobPortalLink,jobDescription,reqKeywords,employementType,
-        });
-          
+  if(req.body.isDuplicate === 'false'){
+    console.log("notDuplicate");
+    const TodaysRecord = await Unibase.aggregate([{
+      $match:{
+        reqEnteredDate:{
+          $gte: today,
+          $lte: today
+        }
       }
-  });
+    }]);
+
+    TodaysRecord.forEach( record => {
+      companyMatch = checkDuplicate(record.vendorCompany, req.body.vendorCompany);
+      personMatch = checkDuplicate(record.vendorPersonName, req.body.vendorPersonName);
+      if(record.primaryTechStack){
+        stackMatch = checkDuplicate(record.primaryTechStack, req.body.primaryTechStack);
+      } else {
+        record.primaryTechStack = "No option"
+        stackMatch = checkDuplicate(record.primaryTechStack, req.body.primaryTechStack);
+      }
+
+      if((companyMatch && personMatch && stackMatch) || (companyMatch && personMatch)){
+        console.log("Match Found", record.reqID);
+        duplicateRecords.push(record.reqID);
+      }
+    });
+  }
+
+  if(duplicateRecords.length){
+    req.flash('error', `Duplicate Record Exists With ID - ${duplicateRecords[0]}.`);
+    res.redirect('/requirements/createReq');
+  } else {
+    console.log("creating fresh record")
+    const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
+    const newReqId = parseInt(lastRec[0].reqID) + 1
+
+    req.body.reqID = newReqId;
+
+    if (req.body.mComment != "") {
+        mComment = [{
+            comment: req.body.mComment,
+            created_at: new Date(),
+            user: author
+        }]
+    }
+
+    if (req.body.rate !== "") {
+        rate = req.body.rate;
+    }
+
+    if (req.body.taxType !== "") {
+        taxType = req.body.taxType;
+    }
+
+    if (req.body.remote !== "") {
+        remote = req.body.remote;
+    }
+
+    if (req.body.duration !== "") {
+        duration = req.body.duration;
+    }
+
+
+    const newReq = new Unibase({
+
+        reqID: req.body.reqID,
+        reqStatus: req.body.reqStatus,
+        nextStep: req.body.nextStep,
+        appliedFor: req.body.appliedFor,
+        assignedTo: req.body.assignedTo,
+        resume: req.body.resume,
+        mComment: mComment,
+        rate: rate,
+        taxType: taxType,
+        remote: remote,
+        duration: duration,
+        clientCompany: req.body.clientCompany,
+        clientWebsite: req.body.clientWebsite,
+        clientAddress: req.body.clientAddress,
+        clientPerson: req.body.clientPerson,
+        clientPhone: req.body.clientPhone,
+        clientEmail: req.body.clientEmail,
+        primeVendorCompany: req.body.primeVendorCompany,
+        primeVendorWebsite: req.body.primeVendorWebsite,
+        primeVendorName: req.body.primeVendorName,
+        primeVendorPhone: req.body.primeVendorPhone,
+        primeVendorEmail: req.body.primeVendorEmail,
+        vendorCompany: req.body.vendorCompany,
+        vendorWebsite: req.body.vendorWebsite,
+        vendorPersonName: req.body.vendorPersonName,
+        vendorPhone: req.body.vendorPhone,
+        vendorEmail: req.body.vendorEmail,
+        reqEnteredDate: req.body.reqEnteredDate,
+        gotReqFrom: req.body.gotReqFrom,
+        gotOnResume: req.body.gotOnResume,
+        jobTitle: req.body.jobTitle,
+        employementType: req.body.employementType,
+        jobPortalLink: req.body.jobPortalLink,
+        reqEnteredBy: req.body.reqEnteredBy,
+        reqKeywords: req.body.reqKeywords,
+        jobDescription: req.body.jobDescription,
+        recordOwner: author,
+        primaryTechStack:req.body.primaryTechStack,
+        isDuplicate:req.body.isDuplicate,
+        duplicateWith: req.body.duplicateWith
+    });
+
+    newReq.save(async(err) => {
+      
+      if (!err) {
+            req.flash('success_msg', "Record Created Successfully")
+            console.log("Record Created Successfully");
+            res.redirect('/requirements/reqlist/1');
+        } else {
+
+            error_create_record = 'Record ID already exists. New ID updated For you, Proceed to Save'
+            req.flash('error_msg', error_create_record);
+            const {reqStatus,nextStep,appliedFor,assignedTo,resume,mComment,rate,taxType,
+                  remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,reqEnteredDate,
+                  jobTitle,jobPortalLink,jobDescription, reqKeywords, employementType, primaryTechStack} = req.body;
+
+            const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
+            const newReqId = parseInt(lastRec[0].reqID) + 1
+            
+            return res.render('requirements/createReq', {
+              error_create_record,
+              path: '/home',
+              docTitle: 'Create Requirement',
+              username: author,
+              reqNumber:newReqId,
+              status:"error",
+              message:"Record Id already exists. Please create a new one",
+              role: req.user.role,
+              reqStatus,nextStep,appliedFor,assignedTo,resume,mComment,rate,taxType,
+              remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,reqEnteredDate,
+              jobTitle,jobPortalLink,jobDescription,reqKeywords,employementType,primaryTechStack
+          });
+            
+        }
+    });
+  }
+
 };
-
-
 
 exports.getViewRecordPage = (req, res) => {
   const reqID = req.params.reqID;
@@ -418,6 +517,7 @@ exports.getViewRecordPage = (req, res) => {
         username: user,
         email:req.user.email,
         role: req.user.role,
+        primaryTechStack: foundRecord.primaryTechStack,
       });
     } else {
       console.log(err);
@@ -479,6 +579,7 @@ exports.getUpdateReqPage = async(req, res) => {
         updatedAt: foundRecord.updatedAt,
         role: req.user.role,
         consultants,
+        primaryTechStack: foundRecord.primaryTechStack
       });
     } else {
       console.log(err);
@@ -619,9 +720,11 @@ exports.postUpdateRecordPage = async(req, res) => {
       jobDescription: req.body.jobDescription,
       updatedBy: whoUpdateIt,
       role: req.user.role,
+      primaryTechStack:req.body.primaryTechStack,
     },
     (err, record) => {
       if (!err) {
+        req.flash('success_msg', "Record Updated Successfully");
         record.save();
         console.log("Record Updated Successfully");
       }
@@ -679,6 +782,7 @@ exports.getDeletePage = (req, res) => {
         updatedAt: foundRecord.updatedAt,
         username: user,
         role: req.user.role,
+        primaryTechStack:req.body.primaryTechStack
       });
     } else {
       console.log(err);
@@ -691,9 +795,11 @@ exports.postDeletePage = (req, res) => {
 
   Unibase.findOneAndRemove({ reqID: reqID }, (err) => {
     if (!err) {
+      req.flash('success_msg', "Record Deleted Successfully")
       console.log("Record Deleted Successfully!");
+      res.redirect("/requirements/reqList/1");
+
     }
   });
 
-  res.redirect("/home/1");
 };
