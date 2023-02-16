@@ -417,7 +417,7 @@ exports.postCreatePage = async(req, res) => {
         jobTitle: req.body.jobTitle,
         employementType: req.body.employementType,
         jobPortalLink: req.body.jobPortalLink,
-        reqEnteredBy: req.body.reqEnteredBy,
+        reqEnteredBy: req.user.username,
         reqKeywords: req.body.reqKeywords,
         jobDescription: req.body.jobDescription,
         recordOwner: author,
