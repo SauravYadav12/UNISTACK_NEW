@@ -264,7 +264,6 @@ const getInterviewsByQuery = (query) =>{
 exports.getSupportDashboard = async (req, res) => {
     const d = new Date();
     const dateToday = formatDate(d);
-
     const positions = await Unibase.aggregate([
         {
             $match:{
@@ -435,7 +434,7 @@ exports.getMarketingHistoricalReport = async(req,res)=>{
 exports.getInterviewHistoricReport = async(req,res) => {
     const d = new Date();
     const dateToday = formatDate(d);
-
+ 
     const allInterviews = await Interview.aggregate([
         {
             $match:{
