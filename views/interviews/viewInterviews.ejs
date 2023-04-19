@@ -88,7 +88,7 @@
              <div class="form-group">
                   <label class="fw-bold" for="interviewTime">1.2 Interview Time</label>
                  <p class="  ">
-                        <%= interviewTime %>
+                    <%= interviewTime %> <% if(timeShift){%> <%=timeShift %> <%= timeZone %> <%} %>
                  </p>
              </div>    
          </div>
@@ -237,8 +237,20 @@
             </div>
         </div>
         <%}%>
-
     </div>
+
+    <% if(remarks){%>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="fw-bold">Remarks/Comments (if negative / if on hold / If anything else? Why?) - || <%if(remarks) {%> updated At - <%=updatedAt.toLocaleString()%> || updated By - <%=updatedBy%> <%}%></label>
+                <p class="  ">
+                    <%= remarks %>
+                </p>
+            </div>
+        </div>
+    </div>
+    <%}%>
 
  </div>
 </section>

@@ -15,6 +15,7 @@ const interviews = require('./routes/interview');
 const tests = require('./routes/test');
 const reports = require('./routes/reports');
 const morgan = require('morgan');
+const cors = require('cors');
 //passport config
 
 require('./config/passport')(passport);
@@ -22,6 +23,7 @@ require('./config/passport')(passport);
 const userController = require('./controllers/userController');
 
 // app.use(express.json());
+app.use(cors());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(morgan('combined',{
   skip: function (req, res) { return res.statusCode < 400 }

@@ -1,5 +1,7 @@
+
 (function($) {
   'use strict';
+
   $(function() {
     if ($("#performaneLine").length) {
       var graphGradient = document.getElementById("performaneLine").getContext('2d');
@@ -10,6 +12,12 @@
       var saleGradientBg2 = graphGradient2.createLinearGradient(100, 0, 50, 150);
       saleGradientBg2.addColorStop(0, 'rgba(0, 208, 255, 0.19)');
       saleGradientBg2.addColorStop(1, 'rgba(0, 208, 255, 0.03)');
+     
+      const getData = async ()=>{
+        return await fetch('/weeklydata',{mode: 'no-cors'});
+      }
+      console.log(new Promise((resolve,reject) =>{ resolve(getData())}));
+
       var salesTopData = {
           labels: ["SUN","sun", "MON", "mon", "TUE","tue", "WED", "wed", "THU", "thu", "FRI", "fri", "SAT"],
           datasets: [{
@@ -27,18 +35,18 @@
               pointBackgroundColor: ['#1F3BB3)', '#1F3BB3', '#1F3BB3', '#1F3BB3','#1F3BB3)', '#1F3BB3', '#1F3BB3', '#1F3BB3','#1F3BB3)', '#1F3BB3', '#1F3BB3', '#1F3BB3','#1F3BB3)'],
               pointBorderColor: ['#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff',],
           },{
-            label: 'Last week',
-            data: [30, 150, 190, 250, 120, 150, 130, 20, 30, 15, 40, 95, 180],
-            backgroundColor: saleGradientBg2,
-            borderColor: [
-                '#52CDFF',
-            ],
-            borderWidth: 1.5,
-            fill: true, // 3: no fill
-            pointBorderWidth: 1,
-            pointRadius: [0, 0, 0, 4, 0],
-            pointHoverRadius: [0, 0, 0, 2, 0],
-            pointBackgroundColor: ['#52CDFF)', '#52CDFF', '#52CDFF', '#52CDFF','#52CDFF)', '#52CDFF', '#52CDFF', '#52CDFF','#52CDFF)', '#52CDFF', '#52CDFF', '#52CDFF','#52CDFF)'],
+              label: 'Last week',
+              data: [30, 150, 190, 250, 120, 150, 130, 20, 30, 15, 40, 95, 180],  
+              backgroundColor: saleGradientBg2,
+              borderColor: [
+                  '#52CDFF',
+              ],
+              borderWidth: 1.5,
+              fill: true, // 3: no fill
+              pointBorderWidth: 1,
+              pointRadius: [0, 0, 0, 4, 0],
+              pointHoverRadius: [0, 0, 0, 2, 0],
+              pointBackgroundColor: ['#52CDFF)', '#52CDFF', '#52CDFF', '#52CDFF','#52CDFF)', '#52CDFF', '#52CDFF', '#52CDFF','#52CDFF)', '#52CDFF', '#52CDFF', '#52CDFF','#52CDFF)'],
               pointBorderColor: ['#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff',],
         }]
       };
@@ -81,7 +89,7 @@
             var text = [];
             text.push('<div class="chartjs-legend"><ul>');
             for (var i = 0; i < chart.data.datasets.length; i++) {
-              console.log(chart.data.datasets[i]); // see what's inside the obj.
+              console.log(chart.data.datasets); // see what's inside the obj.
               text.push('<li>');
               text.push('<span style="background-color:' + chart.data.datasets[i].borderColor + '">' + '</span>');
               text.push(chart.data.datasets[i].label);
@@ -291,6 +299,9 @@
       });
     }
     if ($('#totalVisitors').length) {
+      var today = $('#today').html();
+      var yesterday = $('#yesterday').html();
+      console.log(today, yesterday);
       var bar = new ProgressBar.Circle(totalVisitors, {
         color: '#fff',
         // This has to be the same size as the maximum width to
@@ -326,7 +337,7 @@
       });
   
       bar.text.style.fontSize = '0rem';
-      bar.animate(.64); // Number from 0.0 to 1.0
+      bar.animate(today/100); // Number from 0.0 to 1.0
     }
     if ($('#visitperday').length) {
       var bar = new ProgressBar.Circle(visitperday, {
@@ -364,7 +375,7 @@
       });
   
       bar.text.style.fontSize = '0rem';
-      bar.animate(.34); // Number from 0.0 to 1.0
+      bar.animate(yesterday/100); // Number from 0.0 to 1.0
     }
     if ($("#marketingOverview").length) {
       var marketingOverviewChart = document.getElementById("marketingOverview").getContext('2d');

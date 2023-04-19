@@ -10,6 +10,10 @@ router.get('/interview-report',ensureAuthenticated,reports.getInterviewStatus );
 router.get('/squery',ensureAuthenticated,reports.getSupportDetailsByQuery);
 router.get('/mquery',ensureAuthenticated,reports.getMarketingDetailsByQuery);
 router.get('/iquery',ensureAuthenticated,reports.getInterviewDetailsByQuery);
+router.get('/dquery',ensureAuthenticated,reports.getDashboardDetailsByQuery);
+router.get('/dpquery',ensureAuthenticated,reports.getDashboardPositionsByQuery);
+
+
 
 router.post('/getSupportReport',ensureAuthenticated,reports.getSupportHistoricalReports);
 router.post('/getMarketingReport',ensureAuthenticated,reports.getMarketingHistoricalReport);

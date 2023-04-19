@@ -56,21 +56,42 @@
         <!-- Row 1 - Contains status and next Step -->
         <div class="row">
             <!-- column 1 -->
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                    <label for="InterviewDate">1.1 Interview Date</label>
                     <input type="date" class="form-control" name="interviewDate" value="<%= interviewDate %>" required>
                 </div>
             </div>
             <!-- column 2 -->
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="interview Time">1.2 Interview Time</label>
-                    <input type="text" class="form-control" value="<%= interviewTime %>" name="interviewTime" required>
-                </div>    
+            <div class="col-md-5">
+                <div class="flex row">
+                    <div class="form-group col-md-6">
+                        <label for="nextStep">1.2 Interview Time</label>
+                        <input type="time" class="form-control" value="<%=interviewTime %>" name="interviewTime"
+                            required>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="">1.2.1 Time Shift</label>
+                        <select name="timeShift" class="form-select">
+                            <option value="<%=timeShift%>" selected><%= timeShift %></option>
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="">1.2.2 Time Zone</label>
+                        <select name="timeZone" class="form-select" >
+                            <option value="<%=timeZone%>" selected><%= timeZone %></option>
+                            <option value="EST">EST</option>
+                            <option value="CST">CST</option>
+                            <option value="MST">MST</option>
+                            <option value="PST">PST</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="rate">1.3 Interview Type </label>
                     <select name="interviewType" class="form-select" required>
@@ -167,6 +188,8 @@
                         <option value="Offer">Offer</option>
                         <option value="Negative">Negative</option>
                         <option value="Positive">Positive</option>
+                        <option value="On Hold">On Hold</option>
+                        <option value="Closed">Closed</option>
                         <option value="No Feedback Yet">No Feedback Yet</option>
                     </select>
                 </div>
@@ -246,6 +269,16 @@
             <%}%>
         </div>
 
+        
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                    <label for="Remarks">Remarks/Comments (if negative / if on hold / If anything else? Why?)</label>
+                    <input type="text" name="remarks" class="form-control" value="<%=remarks%>">
+                </div>
+            </div>
+        </div>
+        
     </div>
 </section>
 

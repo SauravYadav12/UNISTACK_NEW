@@ -54,15 +54,15 @@
                           </p>
                         </div>
                         <div class="d-none d-md-block">
-                          <p class="statistics-title">New Sessions</p>
-                          <h3 class="rate-percentage">68.8</h3>
+                          <p class="statistics-title">Active Projects</p>
+                          <h3 class="rate-percentage">0</h3>
                           <p class="text-danger d-flex">
                             <i class="mdi mdi-menu-down"></i><span>68.8</span>
                           </p>
                         </div>
                         <div class="d-none d-md-block">
-                          <p class="statistics-title">Avg. Time on Site</p>
-                          <h3 class="rate-percentage">2m:35s</h3>
+                          <p class="statistics-title">Inactive projects</p>
+                          <h3 class="rate-percentage">0</h3>
                           <p class="text-success d-flex">
                             <i class="mdi mdi-menu-down"></i><span>+0.8%</span>
                           </p>
@@ -87,8 +87,7 @@
                                     Performance Line Chart
                                   </h4>
                                   <h5 class="card-subtitle card-subtitle-dash">
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing
+                                    Week by Week positions Chart
                                   </h5>
                                 </div>
                                 <div id="performance-line-legend"></div>
@@ -118,17 +117,22 @@
                                   <p class="status-summary-ight-white mb-1">
                                     New-Working Today
                                   </p>
-                                  <h2 class="text-info"><%= newWorkingToday %></h2>
+                                  <h2 class="text-info">
+                                    <a class="dStatus-text" href="/reports/dquery/?date=<%=dateToday%>&type=New Working">
+                                      <%= newWorkingToday %>
+                                    </a>
+                                  </h2>
                                 </div>
                                 <div class="col-sm-6">
                                   <p class="status-summary-ight-white mb-1">
                                     Submitted Today
                                   </p>
-                                  <h2 class="text-info"><%= submittedToday %></h2>
-                                  <!-- <div
-                                    class="status-summary-chart-wrapper pb-4"
-                                  >
-                                    <canvas id="status-summary"></canvas> -->
+                                  <h2 class="text-info">
+                                    <a class="dStatus-text" href="/reports/dquery/?date=<%=dateToday%>&type=Submitted">
+                                      <%= submittedToday %>
+                                    </a>
+                                  </h2>
+                                  
                                   </div>
                               </div>
 
@@ -137,13 +141,21 @@
                                   <p class="status-summary-ight-white mb-1">
                                     New-Working Yesterday
                                   </p>
-                                  <h2 class="text-info"><%= newWorkingYesterday %></h2>
+                                  <h2 class="text-info">
+                                    <a class="dStatus-text" href="/reports/dquery/?date=<%=dateYesterday%>&type=New Working">
+                                      <%= newWorkingYesterday %>
+                                    </a>
+                                  </h2>
                                 </div>
                                 <div class="col-sm-6">
                                   <p class="status-summary-ight-white mb-1">
                                     Submitted Yesterday
                                   </p>
-                                  <h2 class="text-info"><%= submittedYesterday %></h2>
+                                  <h2 class="text-info">
+                                    <a class="dStatus-text" href="/reports/dquery/?date=<%=dateYesterday%>&type=Submitted">
+                                      <%= submittedYesterday %>
+                                    </a>
+                                  </h2>
                                 </div>
                               </div>
 
@@ -174,7 +186,11 @@
                                       <p class="text-small mb-2">
                                         Today
                                       </p>
-                                      <h4 class="mb-0 fw-bold"><%= positionsToday%></h4>
+                                      <h4 class="mb-0 fw-bold" >
+                                        <a id="today" class="text-black" href="/reports/dpquery/?date=<%=dateToday%>&type=Positions Today">
+                                          <%= positionsToday%>
+                                        </a>
+                                      </h4>
                                     </div>
                                   </div>
                                 </div>
@@ -192,7 +208,11 @@
                                       <p class="text-small mb-2">
                                         Yesterday
                                       </p>
-                                      <h4 class="mb-0 fw-bold"><%= positionsYesterday%></h4>
+                                      <h4 class="mb-0 fw-bold" >
+                                        <a id="yesterday" class="text-black" href="/reports/dpquery/?date=<%=dateYesterday%>&type=Positions Yesterday">
+                                          <%= positionsYesterday%>
+                                        </a>
+                                      </h4>
                                     </div>
                                   </div>
                                 </div>
@@ -288,8 +308,7 @@
                                       <td><%= interview.interviewDate %></td>
                                       <td>
                                         <strong>
-                                          <%=
-                                          interview.interviewTime.slice(0,10) %>
+                                          <%=interview.interviewTime %> <%= interview.timeShift%> <%= interview.timeZone%> 
                                         </strong>
                                       </td>
                                       <td>

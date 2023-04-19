@@ -43,7 +43,10 @@ const interviewSchema = new mongoose.Schema({
   interviewDuration: String,
   interviewWith:String,
   jobTitle: String,
+  timeShift: String,
+  timeZone: String,
   updatedBy: String,
+  remarks: String,
 },{
   timestamps: true
 });

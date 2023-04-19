@@ -1,25 +1,29 @@
 $(document).ready(function(){
 
+    $('.req-modal').click(function(){
+        $('.viewReq').toggle();
+    });
+
+    $('.hideReq').click(function(){
+        $('.viewReq').hide()
+    });
+
     //Login Service
-    $('#login').on('submit', function(event){
-        const date = Date.now();
+    $('#getWeeklyData').click(function(event){
         event.stopPropagation();
         event.preventDefault()
         console.log("Login clicked");
-        const email = $('#email').val();
-        const password = $('#password').val();
-        console.log({email,password});
+        
         $.ajax({
-            url:"/login/login",
-            type:"POST",
-            data: {email,password},
+            url:"/weeklydata",
+            type:"GET",
+            async: false,
             contentType:"application/json",
             success: function(res){
-                // console.log("Res", res);
-                console.log(Date.now()-date);
+                console.log("Res", res);
             }
         })
-    })/
+    })
 
     //Requirement Service
     $("#requirements").on('click', function(event){

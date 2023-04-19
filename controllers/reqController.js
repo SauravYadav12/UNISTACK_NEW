@@ -137,23 +137,17 @@ exports.getDashboard1 = async(req,res)=>{
   const recordCount = await Unibase.countDocuments().exec();
   const completedIntCount = await Interview.find({interviewStatus:"Interview Completed"}).countDocuments().exec();
   const totalProjects = await Interview.find({result: "Offer"}).countDocuments().exec();
-  const todaysInterview = await Interview.find({interviewDate:date});
   const totalInterviews = await Interview.countDocuments().exec();
-
-  // console.log(new Date(2023,01,30))
-  
-  // const recYesterday = await Unibase.find({reqEnteredDate: dateYesterday}).countDocuments();
-  // const recToday = await Unibase.find({reqEnteredDate: dateToday}).countDocuments();
-  // const newWorkings = await Unibase.find({reqEnteredDate:dateToday, reqStatus:"New Working"}).countDocuments();
-  // const submittedToday = await Unibase.find({reqEnteredDate:dateToday, reqStatus:"Submitted"}).countDocuments();
-  // const newWorkingsYesterday = await Unibase.find({reqEnteredDate:dateYesterday, reqStatus:"New Working"}).countDocuments();
-  // const submittedYesterday = await Unibase.find({reqEnteredDate:dateYesterday, reqStatus:"Submitted"}).countDocuments();
+  const todaysInterview = await Interview.aggregate([{$match:{interviewDate:{$eq:dateToday}}},{$sort:{"interviewTime": 1}}]);
 
   const allRecords = await Unibase.aggregate([{
     $match:{
       reqEnteredDate:{
         $gte:dateYesterday,
         $lte:dateToday
+      },
+      isDuplicate:{ 
+        $eq:"false"
       }
     }
   }]);
@@ -177,7 +171,7 @@ exports.getDashboard1 = async(req,res)=>{
       } 
     }
   }
-  
+
   return res.render('home', {
     path: "/home",
     docTitle: "UniStack || Home",
@@ -195,7 +189,9 @@ exports.getDashboard1 = async(req,res)=>{
     newWorkingToday,
     submittedToday,
     newWorkingYesterday,
-    submittedYesterday
+    submittedYesterday,
+    dateToday,
+    dateYesterday
   });
 
 }
@@ -203,7 +199,7 @@ exports.getDashboard1 = async(req,res)=>{
 exports.getReqList = async(req, res, next) => {
 
   try {
-    let perPage = 300
+    let perPage = 500
     let page = req.params.page || 1
     let userp = req.user.username
     const date = Date.now();
@@ -222,7 +218,7 @@ exports.getReqList = async(req, res, next) => {
         email: req.user.email,
         current: page,
         pages: Math.ceil(count / perPage),
-        role: req.user.role
+        role: req.user.role,
       })
   } catch (error) {
       return res.status(400).json({
@@ -518,6 +514,8 @@ exports.getViewRecordPage = (req, res) => {
         email:req.user.email,
         role: req.user.role,
         primaryTechStack: foundRecord.primaryTechStack,
+        isDuplicate:foundRecord.isDuplicate,
+        duplicateWith:foundRecord.duplicateWith
       });
     } else {
       console.log(err);
@@ -803,3 +801,55 @@ exports.postDeletePage = (req, res) => {
   });
 
 };
+
+exports.getWeeklydataForchart = async(req,res)=>{
+
+  const lastWeek = [];
+  function getLastWeek() {
+    let today = new Date();  
+    let day = today.getDay();
+    let t = day-1;    
+    let monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - t - 7); //monday from last week
+    let friday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - t - 3); //friday from ast week
+    return [monday, friday];
+  }
+  const [monday,friday] = getLastWeek();
+
+  const lastWeekRecord = await Unibase.aggregate([{
+    $match:{
+      reqEnteredDate:{
+        $gte: formatDate(monday),
+        $lte: formatDate(friday)
+      }
+    }
+  }])
+  
+  for(let record of lastWeekRecord){
+    if(lastWeek.length){
+      const i = lastWeek.findIndex( e => e.date === record.reqEnteredDate);
+      if(i > -1){
+        lastWeek[i].positions = lastWeek[i].positions + 1 || 1
+      } else {
+        const data = {};
+        data.date = record.reqEnteredDate
+        data.positions = data.positions + 1 || 1
+        lastWeek.push(data);
+      }
+    } else {
+      const data = {};
+      data.date = record.reqEnteredDate
+      data.positions = data.positions + 1 || 1
+      lastWeek.push(data);
+    }
+  }
+
+  lastWeek.sort(function(a,b){
+    return new Date(a.date) - new Date(b.date);
+  });
+  
+
+  console.log(lastWeek);
+
+  return lastWeek;
+  
+}

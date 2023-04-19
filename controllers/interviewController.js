@@ -71,39 +71,33 @@ exports.exportData = async (req,res) => {
       }
   }
 
-exports.getDashboardPage = (req, res) => {
+exports.getDashboardPage = async (req, res) => {
     const username = req.user.username;
-    let perPage = 100
+    let perPage = 20
     let page = req.params.page || 1
     let d = new Date();
     let date = formatDate(d)
-  
-    Interview
-        .find()
-        .sort({"_id":-1})
-        .skip((perPage * page) - perPage)
-        .limit(perPage)
-        .exec({}, (err, interview) => {
-        let interviewToday = [];
-        for (i = 0; i < interview.length; i++) {
-            if(interview[i].interviewDate == date){
-                interviewToday.push(interview[i]);
-            }
-        };
-
-        if (!err) {
-
-            res.render('interviews/dashboard', {
-                path: '/interviews/dashboard',
-                docTitle: "Interview DashBoard",
-                current: page,
-                dateNow: date,
-                pages: Math.ceil(interviewToday.length / perPage),
-                today: interviewToday.slice().reverse(),
-                username: username,
-                role:req.user.role
-            });
+    let skip = (perPage * page) - perPage
+    console.log(date);
+    let records = await Interview.aggregate([{
+    $match:{
+        interviewDate:{
+            $eq:date,
+         }
         }
+    },
+    {$sort:{"interviewDate": 1}},
+    ]);
+
+    res.render('interviews/dashboard', {
+        path: '/interviews/dashboard',
+        docTitle: "Interview DashBoard",
+        current: page,
+        dateNow: date,
+        pages: Math.ceil(records.length / perPage),
+        today: records,
+        username: username,
+        role:req.user.role
     });
 };
 
@@ -130,67 +124,76 @@ exports.getAllInterviews = async(req,res,next)=>{
 }
 
 
-exports.getConfirmedInterviews = (req,res,next)=>{
+exports.getConfirmedInterviews = async(req,res,next)=>{
   let perPage = 10
   let page = req.params.page || 1
   let userp = req.user.username
   let d = new Date();
   let date = formatDate(d)
-  Interview
-      .find({interviewStatus:"Interview Confirm"})
-      .sort({"_id":-1})
-      .skip((perPage * page) - perPage)
-      .limit(perPage)
-      .exec(function(err, records) {
-            
-            Interview.where({interviewStatus:"Interview Confirm"}).countDocuments(function(err, count) {
+  let skip = (perPage * page) - perPage
+  let total = await Interview.find({interviewStatus:"Interview Confirm"}).count();
 
-              if (err) return next(err)
-              res.render('interviews/confirmed-interviews', {
-                path: "/interviews/confirmed-interviews",
-                confirm: records,
-                docTitle: "UniStack || interviews",
-                username: userp,
-                email: req.user.email,
-                current: page,
-                dateNow: date,
-                pages: Math.ceil(count / perPage),
-                role:req.user.role
-              });
-        });
-      })
+
+    let records = await Interview.aggregate([{
+    $match:{
+        interviewStatus:{
+            $eq: "Interview Confirm"
+            }
+        }
+    },
+    {$sort:{"interviewDate": 1}},
+    {$skip: skip},
+    {$limit: perPage},
+    ]);
+
+      return res.render('interviews/confirmed-interviews', {
+        path: "/interviews/confirmed-interviews",
+        confirm: records,
+        docTitle: "UniStack || interviews",
+        username: userp,
+        email: req.user.email,
+        current: page,
+        dateNow: date,
+        pages: Math.ceil(total / perPage),
+        role:req.user.role
+      });
 }
 
 
-exports.getCompletedInterviews = (req,res,next)=>{
+exports.getCompletedInterviews = async(req,res,next)=>{
 
   let perPage = 20
   let page = req.params.page || 1
   let userp = req.user.username
   let d = new Date();
   let date = formatDate(d);
+  let skip = (perPage * page) - perPage
+  let total = await Interview.find({interviewStatus:"Interview Completed"}).count();
 
-  Interview
-      .find({interviewStatus:"Interview Completed"})
-      .sort({"_id":-1})
-      .skip((perPage * page) - perPage)
-      .limit(perPage)
-      .exec(function(err, records) {
-        Interview.where({interviewStatus:"Interview Completed"}).countDocuments(function(err, count) {
-              if (err) return next(err)
-              res.render('interviews/completed-interviews', {
-                path: "/interviews/completed-interviews",
-                completed: records,
-                docTitle: "UniStack || interviews",
-                username: userp,
-                email: req.user.email,
-                current: page,
-                dateNow: date,
-                pages: Math.ceil(count / perPage),
-                role:req.user.role
-              })
-           })
-      })
+
+    let records = await Interview.aggregate([{
+    $match:{
+        interviewStatus:{
+            $eq: "Interview Completed"
+            }
+        }
+    },
+    {$sort:{"interviewDate": -1}},
+    {$skip: skip},
+    {$limit: perPage},
+    ]);
+
+      return res.render('interviews/completed-interviews', {
+        path: "/interviews/completed-interviews",
+        completed: records,
+        docTitle: "UniStack || interviews",
+        username: userp,
+        email: req.user.email,
+        current: page,
+        dateNow: date,
+        pages: Math.ceil(total / perPage),
+        role:req.user.role
+      });
 }
 
 exports.getCancelledInterviews = (req,res,next)=>{
@@ -225,35 +228,39 @@ exports.getCancelledInterviews = (req,res,next)=>{
 }
 
   
-exports.getTentativeInterviews = (req,res,next)=>{
+exports.getTentativeInterviews = async(req,res,next)=>{
 
     let perPage = 10
     let page = req.params.page || 1
     let userp = req.user.username
     let d = new Date();
     let date = formatDate(d);
+    let skip = (perPage * page) - perPage
+    let total = await Interview.find({interviewStatus:"Interview Tentative"}).count();
+    let records = await Interview.aggregate([{
+        $match:{
+            interviewStatus:{
+                $eq: "Interview Tentative"
+                }
+            }
+        },
+        {$sort:{"interviewDate": -1}},
+        {$skip: skip},
+        {$limit: perPage},
+      ]);
+
   
-    Interview
-        .find({interviewStatus:"Interview Tentative"})
-        .sort({"_id":-1})
-        .skip((perPage * page) - perPage)
-        .limit(perPage)
-        .exec(function(err, records) {
-          Interview.where({interviewStatus:"Interview Tentative"}).countDocuments(function(err, count) {
-                if (err) return next(err);
-                res.render('interviews/tentative-interviews', {
-                  path: "/interviews/tentative-interviews",
-                  tentative: records,
-                  docTitle: "UniStack || interviews",
-                  username: userp,
-                  email: req.user.email,
-                  current: page,
-                  dateNow: date,
-                  pages: Math.ceil(count / perPage),
-                  role:req.user.role
-                })
-             })
-        })
+     return res.render('interviews/tentative-interviews', {
+        path: "/interviews/tentative-interviews",
+        tentative: records,
+        docTitle: "UniStack || interviews",
+        username: userp,
+        email: req.user.email,
+        current: page,
+        dateNow: date,
+        pages: Math.ceil(total / perPage),
+        role:req.user.role
+      })
 }
   
 
@@ -282,7 +289,6 @@ exports.getInterviewDetailsPage = async(req, res) => {
 
 
 exports.getCreateInterviewpage = async(req, res) => {
-    console.log(req.body);
     try {
         const lastRec = await Interview.find().sort({ createdAt: -1 }).limit(1);
         const foundRecord = await Unibase.findById(req.body.recordID);
@@ -322,7 +328,6 @@ exports.getCreateInterviewpage = async(req, res) => {
 exports.postInterviewPage = async(req, res) => {
 
     try {
-        console.log(req.body);
         req.body.recordOwner = req.user.username;
         const lastRec = await Interview.find().sort({ createdAt: -1 }).limit(1);
     
@@ -418,7 +423,10 @@ exports.getInterviewViewPage = (req, res) => {
                     interviewViaMode:foundInt.interviewViaMode,
                     interviewWith:foundInt.interviewWith,
                     meetingType:foundInt.meetingType,
-                    interviewDuration: foundInt.interviewDuration
+                    interviewDuration: foundInt.interviewDuration,
+                    timeShift:foundInt.timeShift,
+                    timeZone:foundInt.timeZone,
+                    remarks:foundInt.remarks || '',
                 });
             }
         });
@@ -478,6 +486,9 @@ exports.getInterviewUpdatePage = (req, res) => {
                     interviewWith:foundInt.interviewWith,
                     meetingType:foundInt.meetingType,
                     interviewDuration: foundInt.interviewDuration,
+                    timeShift:foundInt.timeShift,
+                    timeZone:foundInt.timeZone,
+                    remarks: foundInt.remarks || '',
                     username: username,
                     role:req.user.role,
                 });
@@ -564,7 +575,10 @@ exports.getInterviewDeletePage = async (req, res) => {
                 interviewViaMode:foundInt.interviewViaMode,
                 interviewWith:foundInt.interviewWith,
                 meetingType:foundInt.meetingType,
-                interviewDuration: foundInt.interviewDuration
+                interviewDuration: foundInt.interviewDuration,
+                timeShift:foundInt.timeShift,
+                timeZone:foundInt.timeZone,
+                remarks:foundInt.remarks
             });
         }
     });

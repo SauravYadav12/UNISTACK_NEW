@@ -17,7 +17,7 @@
                     <li class="pb-3"><strong class="pe-2">EMAIL:</strong>  <%= consultant.email%></li>
                     <li class="pb-3"><strong class="pe-2">PHONE:</strong>  <%= consultant.phone%></li>
                     <li class="pb-3"><strong class="pe-2">SKYPE:</strong>  <%= consultant.skypeId%></li>
-                    <li class="pb-3"><strong class="pe-2">INT. SCHEDULE:</strong>  Time - <%= interview.interviewTime.toUpperCase()%>, Date - <%= interview.interviewDate%></li>
+                    <li class="pb-3"><strong class="pe-2">INT. SCHEDULE:</strong>  Time - <%= interview.interviewTime %> <%= interview.timeShift%> <%= interview.timeZone %> , Date - <%= interview.interviewDate%></li>
                 </ul>
             </div>
 

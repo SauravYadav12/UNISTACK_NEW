@@ -465,7 +465,6 @@ exports.getInterviewHistoricReport = async(req,res) => {
 
 //Details By query
 exports.getSupportDetailsByQuery = async (req,res) =>{
-    console.log(req.query);
     const d = new Date();
     const dateToday = formatDate(d);
     let reportFor = '';
@@ -691,6 +690,66 @@ exports.getInterviewDetailsByQuery = async(req,res) =>{
         dateToday,
         dateFrom: req.query.fromDate,
         dateTo: req.query.toDate,
+        totalRecords:records.length,
+        records,
+        reportFor
+    })
+}
+
+
+exports.getDashboardDetailsByQuery = async(req,res)=>{
+    const reportFor = "marketing";
+    const records  = await Unibase.aggregate([
+        {
+            $match:{
+                reqEnteredDate:{
+                    $eq:req.query.date,
+                },
+                reqStatus: {
+                    $eq:req.query.type
+                }
+            }
+        }
+    ]);
+
+    return res.render('reports/report-list', {
+        path: "/reports/report-list",
+        docTitle: "UniStack || Reports",
+        username: req.user.username,
+        email: req.user.email,
+        name:'',
+        role: req.user.role,
+        type:req.query.type,
+        dateFrom: req.query.date,
+        dateTo: req.query.date,
+        totalRecords:records.length,
+        records,
+        reportFor
+    })
+}
+
+exports.getDashboardPositionsByQuery = async(req,res) =>{
+    const reportFor = "marketing";
+    const records  = await Unibase.aggregate([
+        {
+            $match:{
+                reqEnteredDate:{
+                    $eq:req.query.date,
+                },
+            }
+        }
+    ]);
+
+    return res.render('reports/report-list', {
+        path: "/reports/report-list",
+        docTitle: "UniStack || Reports",
+        username: req.user.username,
+        email: req.user.email,
+        name:'',
+        role: req.user.role,
+        type:req.query.type,
+        dateFrom: req.query.date,
+        dateTo: req.query.date,
         totalRecords:records.length,
         records,
         reportFor

@@ -1,7 +1,5 @@
-<%- include('../partials/header1.ejs') %>
 
-<%- include ('../partials/messages.ejs') %>
-
+<% if(record) {%>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <form action="/copy-record" method="POST">
@@ -12,7 +10,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <input type="text" name="recordID" value="<%= recordID %>" style="display: none;">
+                <input type="text" name="recordID" value="<%= record.recordID %>" style="display: none;">
                 <input type="text" name="isDuplicate" value="true" style="display: none;">
                 Do you want to create a copy?
             </div>
@@ -31,11 +29,11 @@
 
         <div class="container mx-auto" style="width: 500px; text-align: center">
             <h3>Requirement ID # <em style="font-size: 25px;">
-                    <%= reqID %>
+                    <%= record.reqID %>
                 </em> </h3>
-            <% if(isDuplicate === "true"){%>
+            <% if(record.isDuplicate === "true"){%>
             <h6>Duplicate ID #
-                <a href="/requirements/viewReq/<%= duplicateWith %>"><%= duplicateWith %></a> 
+                <a href="/requirements/viewReq/<%= record.duplicateWith %>"><%= record.duplicateWith %></a> 
             </h6>
             <%} else {%>
                 <p></p>
@@ -54,20 +52,20 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="resume">** Resume **</label>
-                        <p class=" "> <a href="<%= resume %>" target="_blank">
-                                <%= resume %>
+                        <p class=" "> <a href="<%= record.resume %>" target="_blank">
+                                <%= record.resume %>
                             </a> </p>
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group float-end">
-                        <a href="/requirements/updateReq/<%= reqID %>"
+                        <a href="/requirements/updateReq/<%= record.reqID %>"
                             class="btn btn-primary text-white mb-0 me-0" style="width: 100px">Edit</a>
                         <a href="/requirements/reqList/1" class="btn btn-danger text-white mb-0 me-0"
                             style="width: 100px">Cancel</a>
                         <% if(username==="Sam" || username==="Anmol" ){%>
-                        <a href="/requirements/deleteReq/<%= reqID %>"
+                        <a href="/requirements/deleteReq/<%= record.reqID %>"
                             class="btn btn-warning text-white mb-0 me-0" style="width: 100px">Delete</a>
                         <%}%>
                     </div>
@@ -80,9 +78,9 @@
                         
                         <label class="fw-bold" for="resume">Interviews (if Any)</label>
                         
-                        <%if(interviews){%>
+                        <%if(record.interviews){%>
                             <div class="d-flex">
-                            <% interviews.forEach(interview=>{%>
+                            <% record.interviews.forEach(interview=>{%>
                                 <a href="/interviews/view-interviews/<%= interview.intId %>" class="btn btn-primary me-2"><%= interview.intId%> - <%= interview.round %></a>
                             <%})%>
                             </div>
@@ -93,10 +91,10 @@
                 <div class="col-md-6 col-sm-12">
                     <div class="d-flex float-end">
                         
-                        <%if(reqStatus === "Submitted"){%>
+                        <%if(record.reqStatus === "Submitted"){%>
                         <div class="form-group me-2">
                         <form action="/interviews/create-interview/" method="POST">
-                            <input type="text" name="recordID" value="<%= recordID %>" style="display: none;">
+                            <input type="text" name="recordID" value="<%= record.recordID %>" style="display: none;">
                             <div class="">
                                 <button
                                     class="btn btn-success text-white mb-0 me-0" type="submit">Create Interview</button>
@@ -105,7 +103,7 @@
                         </div>
                         <%}%>
                     
-                        <% if(isDuplicate === 'false'){%>
+                        <% if(record.isDuplicate === 'false'){%>
                         <div class="form-group">
                             <div class="">
                                 <button
@@ -144,7 +142,7 @@
                     <div class="form-group">
                         <label for="status"> <strong>1.1 Req Status</strong></label>
                         <p>
-                            <%= reqStatus %>
+                            <%= record.reqStatus %>
                         </p>
                     </div>
                 </div>
@@ -153,7 +151,7 @@
                     <div class="form-group">
                         <label for="Assigned"> <strong>1.2 Assigned To</strong></label>
                         <p>
-                            <%= assignedTo %>
+                            <%= record.assignedTo %>
                         </p>
                     </div>
                 </div>
@@ -163,7 +161,7 @@
                     <div class="form-group">
                         <label for="nextStep"> <strong>1.3 Next Step</strong></label>
                         <p>
-                            <%= nextStep %>
+                            <%= record.nextStep %>
                         </p>
                     </div>
                 </div>
@@ -172,7 +170,7 @@
                     <div class="form-group">
                         <label for="consultantName"><strong> 1.4 Applied For </strong></label>
                         <p>
-                            <%= appliedFor %>
+                            <%= record.appliedFor %>
                         </p>
                     </div>
                 </div>
@@ -186,7 +184,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="rate"> <strong>1.5 Rate</strong></label>
-                        <% rate.slice().reverse().forEach( r=> {%><p>
+                        <% record.rate.slice().reverse().forEach( r=> {%><p>
                                 <%= r %>
                             </p>
                             <%});%>
@@ -196,7 +194,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="taxType"> <strong>1.6 Tax Type</strong> </label>
-                        <% taxType.slice().reverse().forEach( tax=> {%><p>
+                        <% record.taxType.slice().reverse().forEach( tax=> {%><p>
                                 <%= tax %>
                             </p>
                             <%});%>
@@ -206,7 +204,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="remote"> <strong>1.7 Remote %</strong> </label>
-                        <% remote.slice().reverse().forEach( rem=> {%><p>
+                        <% record.remote.slice().reverse().forEach( rem=> {%><p>
                                 <%= rem %>
                             </p>
                             <%});%>
@@ -216,7 +214,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="duration"> <strong>1.8 Duration</strong> </label>
-                        <% duration.slice().reverse().forEach( d=> {%><p>
+                        <% record.duration.slice().reverse().forEach( d=> {%><p>
                                 <%= d %>
                             </p>
                             <%});%>
@@ -232,7 +230,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="mComment"> <strong>1.9 Marketing Person's Comment</strong> </label>
-                        <%mComment.slice().reverse().forEach((comment)=>{%> <p class="text-area-commentview" style="background-color: #F0F0F0;">
+                        <%record.mComment.slice().reverse().forEach((comment)=>{%> <p class="text-area-commentview" style="background-color: #F0F0F0;">
                             <span style="font-weight: bold ;">[<%=comment.created_at.toLocaleString()%><%= comment.user%>]</span> <%= comment.comment %>
                                 </p>
                             <%});%>
@@ -266,7 +264,7 @@
                     <div class="form-group">
                         <label for="client-name"> <strong>2.1 Client Company</strong> </label>
                         <p class=" ">
-                            <%= clientCompany %>
+                            <%= record.clientCompany %>
                         </p>
                     </div>
                 </div>
@@ -275,8 +273,8 @@
                     <div class="form-group">
                         <label for="client-website"> <strong>2.2 Client Website</strong> </label>
                         <p class=" ">
-                            <a href="<%= clientWebsite %>" target="_blank">
-                                <%= clientWebsite %>
+                            <a href="<%= record.clientWebsite %>" target="_blank">
+                                <%= record.clientWebsite %>
                             </a>
                         </p>
                     </div>
@@ -286,7 +284,7 @@
                     <div class="form-group">
                         <label for="client-address"> <strong>2.3 Client Address</strong> </label>
                         <p class=" ">
-                            <%= clientAddress %>
+                            <%= record.clientAddress %>
                         </p>
                     </div>
                 </div>
@@ -300,7 +298,7 @@
                     <div class="form-group">
                         <label for="client-person"> <strong>2.4 Client Person Name</strong> </label>
                         <p class=" ">
-                            <%= clientPerson %>
+                            <%= record.clientPerson %>
                         </p>
                     </div>
                 </div>
@@ -309,7 +307,7 @@
                     <div class="form-group">
                         <label for="client-phone"> <strong>2.5 Client Phone number</strong> </label>
                         <p class=" ">
-                            <%= clientPhone %>
+                            <%= record.clientPhone %>
                         </p>
                     </div>
                 </div>
@@ -318,7 +316,7 @@
                     <div class="form-group">
                         <label for="client-email"> <strong>2.6 Client Email</strong> </label>
                         <p class=" ">
-                            <%= clientEmail %>
+                            <%= record.clientEmail %>
                         </p>
                     </div>
                 </div>
@@ -349,7 +347,7 @@
                     <div class="form-group">
                         <label for="primeVendor-name"> <strong>3.1 Prime Vendor Company</strong> </label>
                         <p class=" ">
-                            <%= primeVendorCompany %>
+                            <%= record.primeVendorCompany %>
                         </p>
                     </div>
                 </div>
@@ -358,8 +356,8 @@
                     <div class="form-group">
                         <label for="primeVendor-website"> <strong>3.2 Prime Vendor Website</strong> </label>
                         <p class=" ">
-                            <a href="<%= primeVendorWebsite %>" target="_blank">
-                                <%= primeVendorWebsite %>
+                            <a href="<%= record.primeVendorWebsite %>" target="_blank">
+                                <%= record.primeVendorWebsite %>
                             </a>
                         </p>
                     </div>
@@ -375,7 +373,7 @@
                     <div class="form-group">
                         <label for="primeVendor-person"> <strong>3.3 Prime Vendor Person Name</strong> </label>
                         <p class=" ">
-                            <%= primeVendorName%>
+                            <%= record.primeVendorName%>
                         </p>
                     </div>
                 </div>
@@ -384,7 +382,7 @@
                     <div class="form-group">
                         <label for="primeVendor-phone"> <strong>3.4 Prime Vendor Phone number</strong> </label>
                         <p class=" ">
-                            <%= primeVendorPhone %>
+                            <%= record.primeVendorPhone %>
                         </p>
                     </div>
                 </div>
@@ -393,7 +391,7 @@
                     <div class="form-group">
                         <label for="primeVendor-email"> <strong>3.5 Prime Vendor Email</strong> </label>
                         <p class=" ">
-                            <%= primeVendorEmail %>
+                            <%= record.primeVendorEmail %>
                         </p>
                     </div>
                 </div>
@@ -427,7 +425,7 @@
                     <div class="form-group">
                         <label for="vendor-name"> <strong>4.1 Vendor Company</strong> </label>
                         <p class=" ">
-                            <%= vendorCompany %>
+                            <%= record.vendorCompany %>
                         </p>
                     </div>
                 </div>
@@ -436,8 +434,8 @@
                     <div class="form-group">
                         <label for="vendor-website"> <strong>4.2 Vendor Website</strong> </label>
                         <p class=" ">
-                            <a href="<%= vendorWebsite %>" target="_blank">
-                                <%= vendorWebsite %>
+                            <a href="<%= record.vendorWebsite %>" target="_blank">
+                                <%= record.vendorWebsite %>
                             </a>
                         </p>
                     </div>
@@ -453,7 +451,7 @@
                     <div class="form-group">
                         <label for="vendor-person"> <strong>4.3 Vendor Person Name</strong> </label>
                         <p class=" ">
-                            <%= vendorPersonName %>
+                            <%= record.vendorPersonName %>
                         </p>
                     </div>
                 </div>
@@ -462,7 +460,7 @@
                     <div class="form-group">
                         <label for="vendor-phone"> <strong>4.4 Vendor Phone number</strong></label>
                         <p class=" ">
-                            <%= vendorPhone %>
+                            <%= record.vendorPhone %>
                         </p>
                     </div>
                 </div>
@@ -471,7 +469,7 @@
                     <div class="form-group">
                         <label for="vendor-email"> <strong>4.5 Vendor Email</strong> </label>
                         <p class=" ">
-                            <%= vendorEmail %>
+                            <%= record.vendorEmail %>
                         </p>
                     </div>
                 </div>
@@ -503,7 +501,7 @@
                     <div class="form-group">
                         <label for="requirement-date"> <strong>5.1 Requirement Entered Date</strong> </label>
                         <p class=" ">
-                            <%= reqEnteredDate %>
+                            <%= record.reqEnteredDate %>
                         </p>
                     </div>
                 </div>
@@ -512,7 +510,7 @@
                     <div class="form-group">
                         <label for="requirement-date"> <strong>5.2 Got Requirement from</strong> </label>
                         <p class=" ">
-                            <%= gotReqFrom %>
+                            <%= record.gotReqFrom %>
                         </p>
                     </div>
                 </div>
@@ -521,7 +519,7 @@
                     <div class="form-group">
                         <label for="got-from"> <strong>5.3 Primary Tech Stack</strong> </label>
                         <p class=" ">
-                            <%= primaryTechStack %>
+                            <%= record.primaryTechStack %>
                         </p>
                     </div>
                 </div>
@@ -536,7 +534,7 @@
                     <div class="form-group">
                         <label for="job-title"> <strong>5.4 Job Title</strong> </label>
                         <p class=" ">
-                            <%= jobTitle %>
+                            <%= record.jobTitle %>
                         </p>
                     </div>
                 </div>
@@ -545,7 +543,7 @@
                     <div class="form-group">
                         <label for="employement-type"> <strong>5.5 Employement Type (If Mentioned)</strong> </label>
                         <p class=" ">
-                            <%= employementType %>
+                            <%= record.employementType %>
                         </p>
                     </div>
                 </div>
@@ -554,8 +552,8 @@
                     <div class="form-group">
                         <label for="portal-link"> <strong>5.6 Job Portal Link</strong> </label>
                         <p class=" ">
-                            <a href="<%= jobPortalLink %>" target="_blank">
-                                <%= jobPortalLink %>
+                            <a href="<%= record.jobPortalLink %>" target="_blank">
+                                <%= record.jobPortalLink %>
                             </a>
                         </p>
                     </div>
@@ -571,7 +569,7 @@
                     <div class="form-group">
                         <label for="support-person"> <strong>5.7 Requirement Entered By</strong> </label>
                         <p class=" ">
-                            <%= reqEnteredBy %>
+                            <%= record.reqEnteredBy %>
                         </p>
                     </div>
                 </div>
@@ -581,7 +579,7 @@
                         <label for="keywords"> <strong>5.9 Enter the Requirement keyword (sorted out from Job
                                 Description)</strong> </label>
                         <p class=" ">
-                            <%= reqKeywords %>
+                            <%= record.reqKeywords %>
                         </p>
                     </div>
                 </div>
@@ -597,7 +595,7 @@
                     <div class="form-group">
                         <label for="job-description"> <strong>5.9 Complete Job Description</strong> </label>
                         <p class="text-area-view">
-                            <%= jobDescription %>
+                            <%= record.jobDescription %>
                         </p>
                     </div>
                 </div>
@@ -610,22 +608,22 @@
         <div class="container">
             <div class=" float-start">
                 <p> Created by <strong>
-                        <%= recordOwner %>
+                        <%= record.recordOwner %>
                     </strong> on date <strong>
-                        <%= createdAt.toLocaleDateString()%>
+                        <%= record.createdAt.toLocaleDateString()%>
                     </strong> Time @ <strong>
-                        <%= createdAt.toLocaleTimeString()%>
+                        <%= record.createdAt.toLocaleTimeString()%>
                     </strong></p>
             </div>
 
             <div class=" float-end">
                 <em>
                     <p> Updated by <strong>
-                            <%= updatedBy %>
+                            <%= record.updatedBy %>
                         </strong> on date <strong>
-                            <%= updatedAt.toLocaleDateString()%>
+                            <%= record.updatedAt.toLocaleDateString()%>
                         </strong> Time @ <strong>
-                            <%= updatedAt.toLocaleTimeString()%>
+                            <%= record.updatedAt.toLocaleTimeString()%>
                         </strong></p>
                 </em>
             </div>
@@ -637,5 +635,4 @@
 <!-- </form> -->
 
     <!-- Form Ends here -->
-
-    <%- include('../partials/footer1.ejs')%>
+<%}%>
