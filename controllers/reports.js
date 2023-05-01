@@ -187,6 +187,7 @@ const sortMarketingRecords = (allPositions)=>{
 
 const sortInterviewsRecords = (allInterviews)=>{
     let sortedInterviews = []
+    let completedInterviews = 0;
     for(let req of allInterviews){
         if(sortedInterviews.length){
             const i = sortedInterviews.findIndex(e => e.name === req.marketingPerson);
@@ -202,6 +203,7 @@ const sortInterviewsRecords = (allInterviews)=>{
                 sortedInterviews[i].tentative = sortedInterviews[i].tentative + 1 || 1;
               } else if(req.interviewStatus === "Interview Completed"){
                 sortedInterviews[i].completed = sortedInterviews[i].completed + 1 || 1;
+                completedInterviews++;
               } 
             }
              else {
@@ -214,6 +216,7 @@ const sortInterviewsRecords = (allInterviews)=>{
                     info.tentative = info.tentative + 1 || 1;
                 } else if(req.interviewStatus === "Interview Completed"){
                     info.completed = info.completed + 1 || 1;
+                    completedInterviews++;
                 }else if(req.interviewStatus === "Interview Cancelled"){
                     info.cancelled = info.cancelled + 1 || 1;
                 }
@@ -230,6 +233,7 @@ const sortInterviewsRecords = (allInterviews)=>{
                 info.tentative = info.tentative + 1 || 1;
             } else if(req.interviewStatus === "Interview Completed"){
                 info.completed = info.completed + 1 || 1;
+                completedInterviews++;
             }else if(req.interviewStatus === "Interview Cancelled"){
                 info.cancelled = info.cancelled + 1 || 1;
             }
@@ -237,7 +241,7 @@ const sortInterviewsRecords = (allInterviews)=>{
         }
     }
 
-    return sortedInterviews;
+    return [sortedInterviews, completedInterviews];
 }
 
 const getInterviewsByQuery = (query) =>{
@@ -347,7 +351,7 @@ exports.getInterviewStatus = async(req,res) => {
         }
     ]);
 
-  const sortedInterviews = sortInterviewsRecords(allInterviews);
+  const [sortedInterviews, completedInterviews] = sortInterviewsRecords(allInterviews);
   
 
   return res.render("reports/interview-report", {
@@ -360,7 +364,8 @@ exports.getInterviewStatus = async(req,res) => {
     dateTo:dateToday,
     dateToday,
     sortedInterviews,
-    totalInterviews: allInterviews.length
+    totalInterviews: allInterviews.length,
+    completedInterviews
   });
 }
 
@@ -446,7 +451,7 @@ exports.getInterviewHistoricReport = async(req,res) => {
         }
     ]);
 
-    const sortedInterviews = sortInterviewsRecords(allInterviews);
+    const [sortedInterviews, completedInterviews] = sortInterviewsRecords(allInterviews);
   
     return res.render("reports/interview-report", {
         path: "/reports/interview-report",
@@ -458,7 +463,8 @@ exports.getInterviewHistoricReport = async(req,res) => {
         dateTo:req.body.toDate,
         dateToday,
         sortedInterviews,
-        totalInterviews: allInterviews.length
+        totalInterviews: allInterviews.length,
+        completedInterviews
     });
 }
 

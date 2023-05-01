@@ -20,7 +20,15 @@
             <div class="row">
               <div class="col-md-6 col-sm-12 float-start">
                 <h4 class="card-title card-title-dash">Interview Reports: <span class="text-primary"> From </span> <%=dateFrom%> <span class="text-primary"> To </span> <%=dateTo%> </h4>
-                <p class="card-subtitle card-subtitle-dash ">Total Interviews :<span class="text-danger"> <%=totalInterviews%></span></p>
+
+                <div class="d-flex flex-row">
+                  <div class="col-md-6">
+                    <p class="card-subtitle card-subtitle-dash ">Total Interviews :<span class="text-danger"> <%=totalInterviews%></span></p>
+                  </div>
+                  <div class="col-md-6">
+                    <p class="card-subtitle card-subtitle-dash ">Total Completed :<span class="text-primary"> <%=completedInterviews%></span></p>
+                  </div>
+                </div>
               </div>
 
               <div class="col-md-6 col-sm-12 float-end">
