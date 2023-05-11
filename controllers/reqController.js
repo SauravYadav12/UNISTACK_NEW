@@ -595,7 +595,7 @@ exports.getUpdateReqPage = async(req, res) => {
 exports.postUpdateRecordPage = async(req, res) => {
   const reqID = req.body.reqID;
   const whoUpdateIt = req.user.username;
-
+  console.log(req.body);
   if (req.body.mComment !== "") {
     Unibase.findOneAndUpdate(
       { reqID: reqID },
@@ -722,6 +722,7 @@ exports.postUpdateRecordPage = async(req, res) => {
       jobPortalLink: req.body.jobPortalLink,
       reqEnteredBy: req.body.reqEnteredBy,
       reqKeywords: req.body.reqKeywords,
+      primaryTech:req.body.primaryTech,
       secondaryTech:req.body.secondaryTech,
       jobDescription: req.body.jobDescription,
       jobDescription: req.body.jobDescription,
