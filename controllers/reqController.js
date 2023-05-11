@@ -313,7 +313,7 @@ exports.postCreatePage = async(req, res) => {
 
   let newDate = new Date();
   let today = formatDate(newDate);
-  console.log("Duplicate-",req.body.isDuplicate);
+  console.log("Duplicate-",req.body);
 
   if(req.body.isDuplicate === 'false'){
     console.log("notDuplicate");

@@ -468,7 +468,7 @@
                             </div>
                         </div>
 
-                        <%if(reqKeywords){%>
+                        <%if(reqKeywords || reqKeywords == ""){%>
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="keywords">5.9 Enter the Requirement keyword (sorted out from Job Description) </label>
@@ -477,19 +477,19 @@
                             </div>
                         <%}%>
 
-                        <%if(primaryTech){%>
+                        <%if(primaryTech || primaryTech == ""){%>
                             <div class="col-md-8">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="keywords">5.9.1 Primary Tech Stack</label>
+                                            <label for="primaryTech">5.9.1 Primary Tech Stack</label>
                                             <input type="text" name="primaryTech" class="form-control" placeholder="Enter the technical Keywords " value="<%=primaryTech%>">
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="keywords" >5.9.2 Secondary Tech Stack </label>
+                                            <label for="secondaryTech" >5.9.2 Secondary Tech Stack </label>
                                             <input type="text" name="secondaryTech" class="form-control" placeholder="Enter the technical Keywords " value="<%=secondaryTech%>">
                                         </div>
                                     </div>
