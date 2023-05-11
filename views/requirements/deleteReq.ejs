@@ -456,16 +456,16 @@
                                 </p>
                             </div>
                         </div>
-
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="keywords"> <strong>5.9 Enter the Requirement keyword (sorted out from Job Description)</strong>  </label>
-                                <p class="form-control view-p">
-                                    <%= reqKeywords %> 
-                                </p>
+                        <%if(reqKeywords){%>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="keywords"> <strong>5.9 Enter the Requirement keyword (sorted out from Job Description)</strong>  </label>
+                                    <p class="form-control view-p">
+                                        <%= reqKeywords %> 
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-
+                        <%}%>
                     </div>
                     <!-- Row-3 Ends Here - Technical Keywords -->
 

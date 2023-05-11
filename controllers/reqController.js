@@ -248,7 +248,7 @@ exports.getCreateReqPage = async(req, res) => {
   if(req.body.isDuplicate === 'true'){
     const record = await Unibase.findById(req.body.recordID);
     const {reqID,remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,
-      jobTitle,jobPortalLink,jobDescription, reqKeywords, employementType, primaryTechStack,gotReqFrom} = record
+      jobTitle,jobPortalLink,jobDescription, reqKeywords,primaryTech,secondaryTech, employementType, primaryTechStack,gotReqFrom} = record
   
     const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
     const newReqId = parseInt(lastRec[0].reqID) + 1
@@ -271,7 +271,7 @@ exports.getCreateReqPage = async(req, res) => {
       mComment:'',
       duplicateWith: reqID,
       remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,
-      jobTitle,jobPortalLink,jobDescription,reqKeywords,employementType,primaryTechStack,gotReqFrom
+      jobTitle,jobPortalLink,jobDescription,reqKeywords,employementType,primaryTechStack,gotReqFrom,primaryTech,secondaryTech
     });
 
   } else {
@@ -415,6 +415,8 @@ exports.postCreatePage = async(req, res) => {
         jobPortalLink: req.body.jobPortalLink,
         reqEnteredBy: req.user.username,
         reqKeywords: req.body.reqKeywords,
+        primaryTech:req.body.primaryTech,
+        secondaryTech:req.body.secondaryTech,
         jobDescription: req.body.jobDescription,
         recordOwner: author,
         primaryTechStack:req.body.primaryTechStack,
@@ -434,7 +436,7 @@ exports.postCreatePage = async(req, res) => {
             req.flash('error_msg', error_create_record);
             const {reqStatus,nextStep,appliedFor,assignedTo,resume,mComment,rate,taxType,
                   remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,reqEnteredDate,
-                  jobTitle,jobPortalLink,jobDescription, reqKeywords, employementType, primaryTechStack} = req.body;
+                  jobTitle,jobPortalLink,jobDescription, reqKeywords, employementType, primaryTechStack,primaryTech,secondaryTech} = req.body;
 
             const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
             const newReqId = parseInt(lastRec[0].reqID) + 1
@@ -450,7 +452,7 @@ exports.postCreatePage = async(req, res) => {
               role: req.user.role,
               reqStatus,nextStep,appliedFor,assignedTo,resume,mComment,rate,taxType,
               remote,duration,clientCompany,primeVendorCompany,vendorCompany,vendorEmail,vendorPersonName,vendorPhone,reqEnteredDate,
-              jobTitle,jobPortalLink,jobDescription,reqKeywords,employementType,primaryTechStack
+              jobTitle,jobPortalLink,jobDescription,reqKeywords,employementType,primaryTechStack,primaryTech,secondaryTech
           });
             
         }
@@ -504,6 +506,8 @@ exports.getViewRecordPage = (req, res) => {
         jobPortalLink: foundRecord.jobPortalLink,
         reqEnteredBy: foundRecord.reqEnteredBy,
         reqKeywords: foundRecord.reqKeywords,
+        primaryTech:foundRecord.primaryTech,
+        secondaryTech:foundRecord.secondaryTech,
         jobDescription: foundRecord.jobDescription,
         createdAt: foundRecord.createdAt,
         updatedAt: foundRecord.updatedAt,
@@ -572,6 +576,9 @@ exports.getUpdateReqPage = async(req, res) => {
         jobPortalLink: foundRecord.jobPortalLink,
         reqEnteredBy: foundRecord.reqEnteredBy,
         reqKeywords: foundRecord.reqKeywords,
+        primaryTech:foundRecord.primaryTech,
+        secondaryTech:foundRecord.secondaryTech,
+        jobDescription: foundRecord.jobDescription,
         jobDescription: foundRecord.jobDescription,
         createdAt: foundRecord.createdAt,
         updatedAt: foundRecord.updatedAt,
@@ -715,6 +722,8 @@ exports.postUpdateRecordPage = async(req, res) => {
       jobPortalLink: req.body.jobPortalLink,
       reqEnteredBy: req.body.reqEnteredBy,
       reqKeywords: req.body.reqKeywords,
+      secondaryTech:req.body.secondaryTech,
+      jobDescription: req.body.jobDescription,
       jobDescription: req.body.jobDescription,
       updatedBy: whoUpdateIt,
       role: req.user.role,

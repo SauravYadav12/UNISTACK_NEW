@@ -468,9 +468,20 @@
                         </div>
 
                         <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="keywords">5.9 Enter the Requirement keyword (sorted out from Job Description) </label>
-                                <input type="text" name="reqKeywords" class="form-control" placeholder="Enter the technical Keywords " value="<%= typeof reqKeywords != 'undefined' ? reqKeywords :'' %>">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="keywords">5.9.1 Primary Tech Stack</label>
+                                        <input type="text" name="primaryTech" class="form-control" placeholder="Enter the technical Keywords " value="<%= typeof primaryTech != 'undefined' ? primaryTech :'' %>">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="keywords" >5.9.2 Secondary Tech Stack </label>
+                                        <input type="text" name="secondaryTech" class="form-control" placeholder="Enter the technical Keywords " value="<%= typeof secondaryTech != 'undefined' ? secondaryTech :'' %>">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

@@ -576,15 +576,37 @@
                     </div>
                 </div>
 
-                <div class="col-md-8">
-                    <div class="form-group">
-                        <label for="keywords"> <strong>5.9 Enter the Requirement keyword (sorted out from Job
-                                Description)</strong> </label>
-                        <p class=" ">
-                            <%= reqKeywords %>
-                        </p>
+                <%if(reqKeywords){%>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="keywords"> <strong>5.9 Enter the Requirement keyword (sorted out from Job
+                                    Description)</strong> </label>
+                            <p class=" ">
+                                <%= reqKeywords %>
+                            </p>
+                        </div>
                     </div>
-                </div>
+                <%}%>
+
+                <%if(primaryTech){%>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="keywords">5.9.1 Primary Tech Stack</label>
+                                    <p><%=primaryTech%></p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="keywords" >5.9.2 Secondary Tech Stack </label>
+                                    <p><%=secondaryTech%></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <%}%>
 
             </div>
             <!-- Row-3 Ends Here - Technical Keywords -->

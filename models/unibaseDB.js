@@ -49,6 +49,8 @@ const unibaseSchema = new mongoose.Schema({
   reqKeywords: String,
   jobDescription: String,
   recordOwner: String,
+  primaryTech: String,
+  secondaryTech: String,
   updatedBy:String,
   interviews:[],
   primaryTechStack:String,
