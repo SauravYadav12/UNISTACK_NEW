@@ -1,5 +1,6 @@
 .text-area-view{
     height: 400px;
+    white-space: pre-line;
     overflow: auto;
     background-color: #F0F0F0;
     padding: 0 20px;
