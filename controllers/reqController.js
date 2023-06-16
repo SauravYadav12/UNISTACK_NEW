@@ -42,7 +42,6 @@ exports.exportData = async (req,res) => {
   let page = req.params.page || 1
   let userp = req.user.username
   const date = Date.now();
-  console.log("landing date--", page);
 
   const records = await Unibase.find({}).sort({"_id":-1}).skip((perPage * page) - perPage).limit(perPage).exec();
   const workbook = new excelJS.Workbook();  // Create a new workbook
@@ -313,10 +312,8 @@ exports.postCreatePage = async(req, res) => {
 
   let newDate = new Date();
   let today = formatDate(newDate);
-  console.log("Duplicate-",req.body);
 
   if(req.body.isDuplicate === 'false'){
-    console.log("notDuplicate");
     const TodaysRecord = await Unibase.aggregate([{
       $match:{
         reqEnteredDate:{
@@ -337,7 +334,6 @@ exports.postCreatePage = async(req, res) => {
       }
 
       if((companyMatch && personMatch && stackMatch) || (companyMatch && personMatch)){
-        console.log("Match Found", record.reqID);
         duplicateRecords.push(record.reqID);
       }
     });
@@ -347,7 +343,6 @@ exports.postCreatePage = async(req, res) => {
     req.flash('error', `Duplicate Record Exists With ID - ${duplicateRecords[0]}.`);
     res.redirect('/requirements/createReq');
   } else {
-    console.log("creating fresh record")
     const lastRec = await Unibase.find().sort({ createdAt: -1 }).limit(1);
     const newReqId = parseInt(lastRec[0].reqID) + 1
 
@@ -428,7 +423,6 @@ exports.postCreatePage = async(req, res) => {
       
       if (!err) {
             req.flash('success_msg', "Record Created Successfully")
-            console.log("Record Created Successfully");
             res.redirect('/requirements/reqlist/1');
         } else {
 
@@ -595,7 +589,6 @@ exports.getUpdateReqPage = async(req, res) => {
 exports.postUpdateRecordPage = async(req, res) => {
   const reqID = req.body.reqID;
   const whoUpdateIt = req.user.username;
-  console.log(req.body);
   if (req.body.mComment !== "") {
     Unibase.findOneAndUpdate(
       { reqID: reqID },
@@ -611,7 +604,6 @@ exports.postUpdateRecordPage = async(req, res) => {
       (err, record) => {
         if (!err) {
           record.save();
-          console.log("Comment saved Successfully");
         }
       },
     );
@@ -628,7 +620,6 @@ exports.postUpdateRecordPage = async(req, res) => {
       (err, record) => {
         if (!err) {
           record.save();
-          console.log("Rate saved Successfully");
         }
       },
     );
@@ -645,7 +636,6 @@ exports.postUpdateRecordPage = async(req, res) => {
       (err, record) => {
         if (!err) {
           record.save();
-          console.log("TaxType saved Successfully");
         }
       },
     );
@@ -662,7 +652,6 @@ exports.postUpdateRecordPage = async(req, res) => {
       (err, record) => {
         if (!err) {
           record.save();
-          console.log("Remote saved Successfully");
         }
       },
     );
@@ -679,7 +668,6 @@ exports.postUpdateRecordPage = async(req, res) => {
       (err, record) => {
         if (!err) {
           record.save();
-          console.log("Duration saved Successfully");
         }
       },
     );
@@ -734,7 +722,6 @@ exports.postUpdateRecordPage = async(req, res) => {
       if (!err) {
         req.flash('success_msg', "Record Updated Successfully");
         record.save();
-        console.log("Record Updated Successfully");
       }
       res.redirect("/requirements/viewReq/" + reqID);
     },
@@ -804,7 +791,6 @@ exports.postDeletePage = (req, res) => {
   Unibase.findOneAndRemove({ reqID: reqID }, (err) => {
     if (!err) {
       req.flash('success_msg', "Record Deleted Successfully")
-      console.log("Record Deleted Successfully!");
       res.redirect("/requirements/reqList/1");
 
     }
@@ -856,9 +842,6 @@ exports.getWeeklydataForchart = async(req,res)=>{
   lastWeek.sort(function(a,b){
     return new Date(a.date) - new Date(b.date);
   });
-  
-
-  console.log(lastWeek);
 
   return lastWeek;
   

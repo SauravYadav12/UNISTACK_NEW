@@ -3,6 +3,7 @@ const Unibase = require('../models/unibaseDB');
 const User = require('../models/userDB');
 const Interview = require('../models/interviewDB');
 const Consultant = require('../models/consultant');
+const psuedo = require('../config/psuedoName');
 
 function formatDate(date) {
   var d = new Date(date),
@@ -22,7 +23,7 @@ function formatDate(date) {
 exports.getConsultantDetails = async(req,res)=>{
 
   try {
-    const consultants = await Consultant.find()
+    const consultants = await Consultant.find();
     const username = req.user.username;
     res.render('consultant/consultant-list',{
         path:'/consultant',
@@ -40,8 +41,7 @@ exports.getConsultantDetails = async(req,res)=>{
 exports.getCreateConsultant = (req,res)=>{
 
   const visaStatus = ['US Citizen','Green Card','GC EAD','H1B'];
-  const timeZone = ['EST','CST','MST','PST'];
-    
+  const timeZone = ['EST','CST','MST','PST'];  
   res.render('consultant/create-consultant',{
       path: "/consultant",
       docTitle: "UniStack || Reports",

@@ -28,11 +28,15 @@
 
     <!-- Requirement ID Section -->
     <section class="heading mt-4 mb-4">
-
         <div class="container mx-auto" style="width: 500px; text-align: center">
-            <h3>Requirement ID # <em style="font-size: 25px;">
+        
+            <div class="d-flex justify-content-evenly align-items-center">
+                 <a href="/home"><span class="mdi mdi-home-account" style="font-size:50px; color:#007BFF ;" ></span> </a>
+                <h3>Requirement ID # <em style="font-size: 25px;">
                     <%= reqID %>
                 </em> </h3>
+            </div>
+            
             <% if(isDuplicate === "true"){%>
             <h6>Duplicate ID #
                 <a href="/requirements/viewReq/<%= duplicateWith %>"><%= duplicateWith %></a> 
