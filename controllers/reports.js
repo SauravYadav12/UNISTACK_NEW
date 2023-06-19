@@ -766,7 +766,7 @@ exports.getProjectDetailsByQuery = async(req,res) => {
     const reportFor = "interview-report";
     const d = new Date();
     const dateToday = formatDate(d);
-    const records  = await Interview.find({result: req.query.type});
+    const records  = await Interview.find({result: req.query.type}).sort({"_id":-1});
 
     return res.render('reports/report-list', {
         path: "/reports/report-list",
