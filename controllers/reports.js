@@ -761,3 +761,26 @@ exports.getDashboardPositionsByQuery = async(req,res) =>{
         reportFor
     })
 }
+
+exports.getProjectDetailsByQuery = async(req,res) => {
+    const reportFor = "interview-report";
+    const d = new Date();
+    const dateToday = formatDate(d);
+    const records  = await Interview.find({result: req.query.type});
+
+    return res.render('reports/report-list', {
+        path: "/reports/report-list",
+        docTitle: "UniStack || Reports",
+        username: req.user.username,
+        email: req.user.email,
+        role: req.user.role,
+        name: req.query.name,
+        type:req.query.type,
+        dateToday,
+        dateFrom: dateToday,
+        dateTo: dateToday,
+        totalRecords:records.length,
+        records,
+        reportFor
+    })
+}

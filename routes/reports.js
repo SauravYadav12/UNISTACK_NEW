@@ -12,6 +12,7 @@ router.get('/mquery',ensureAuthenticated,reports.getMarketingDetailsByQuery);
 router.get('/iquery',ensureAuthenticated,reports.getInterviewDetailsByQuery);
 router.get('/dquery',ensureAuthenticated,reports.getDashboardDetailsByQuery);
 router.get('/dpquery',ensureAuthenticated,reports.getDashboardPositionsByQuery);
+router.get('/projects',ensureAuthenticated,reports.getProjectDetailsByQuery);
 
 
 

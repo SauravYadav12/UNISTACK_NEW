@@ -48,7 +48,11 @@
                         </div>
                         <div class="d-none d-md-block">
                           <p class="statistics-title">Total Projects</p>
-                          <h3 class="rate-percentage"><%= totalProjects %></h3>
+                          <h3 class="rate-percentage">
+                            <a href="/reports/projects/?type=Offer" style="text-decoration: none; color: black; cursor: pointer;">
+                              <%= totalProjects %>
+                            </a>
+                          </h3>
                           <p class="text-success d-flex">
                             <i class="mdi mdi-menu-down"></i><span>+0.8%</span>
                           </p>
