@@ -61,14 +61,14 @@
               data: currentWeekPositions,  
               backgroundColor: saleGradientBg2,
               borderColor: [
-                  '#52CDFF',
+                  '#FF007F',
               ],
               borderWidth: 1.5,
               fill: true, // 3: no fill
               pointBorderWidth: 1,
               pointRadius: [0, 0, 0, 4, 0],
               pointHoverRadius: [0, 0, 0, 2, 0],
-              pointBackgroundColor: ['#52CDFF)', '#52CDFF', '#52CDFF', '#52CDFF','#52CDFF)', '#52CDFF', '#52CDFF', '#52CDFF','#52CDFF)', '#52CDFF', '#52CDFF', '#52CDFF','#52CDFF)'],
+              pointBackgroundColor: ['#FF007F', '#FF007F', '#FF007F', '#FF007F','#FF007F)', '#FF007F', '#FF007F', '#FF007F','#FF007F)', '#FF007F', '#FF007F', '#FF007F','#FF007F)'],
               pointBorderColor: ['#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff',],
         }]
       };
