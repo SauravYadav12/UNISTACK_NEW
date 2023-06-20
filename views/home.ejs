@@ -57,20 +57,22 @@
                             <i class="mdi mdi-menu-down"></i><span>+0.8%</span>
                           </p>
                         </div>
-                        <div class="d-none d-md-block">
-                          <p class="statistics-title">Active Projects</p>
-                          <h3 class="rate-percentage">0</h3>
-                          <p class="text-danger d-flex">
-                            <i class="mdi mdi-menu-down"></i><span>68.8</span>
-                          </p>
-                        </div>
-                        <div class="d-none d-md-block">
-                          <p class="statistics-title">Inactive projects</p>
-                          <h3 class="rate-percentage">0</h3>
-                          <p class="text-success d-flex">
-                            <i class="mdi mdi-menu-down"></i><span>+0.8%</span>
-                          </p>
-                        </div>
+                        <% if(role === "Admin" || role === "SuperAdmin"){%>
+                          <div class="d-none d-md-block">
+                            <p class="statistics-title">Active Projects</p>
+                            <h3 class="rate-percentage"><%=activeProjects%></h3>
+                            <p class="text-danger d-flex">
+                              <i class="mdi mdi-menu-down"></i><span>68.8</span>
+                            </p>
+                          </div>
+                          <div class="d-none d-md-block">
+                            <p class="statistics-title">Inactive projects</p>
+                            <h3 class="rate-percentage"><%=inactiveProjects%></h3>
+                            <p class="text-success d-flex">
+                              <i class="mdi mdi-menu-down"></i><span>+0.8%</span>
+                            </p>
+                          </div>
+                        <% } %>
                       </div>
                     </div>
                   </div>

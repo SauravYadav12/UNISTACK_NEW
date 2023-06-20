@@ -125,7 +125,7 @@ exports.getDashboard1 = async(req,res)=>{
   let date = formatDate(d.toLocaleString('en-US',{timeZone: 'America/New_York'}));
   const dateToday = formatDate(d);
   const dateYesterday = formatDate(d.setDate(d.getDate() - 1));
-
+  
   let positionsToday = 0;
   let positionsYesterday = 0;
   let newWorkingToday = 0;
@@ -133,11 +133,25 @@ exports.getDashboard1 = async(req,res)=>{
   let submittedToday = 0;
   let submittedYesterday = 0;
 
-  const recordCount = await Unibase.countDocuments().exec();
-  const completedIntCount = await Interview.find({interviewStatus:"Interview Completed"}).countDocuments().exec();
-  const totalProjects = await Interview.find({result: "Offer"}).countDocuments().exec();
-  const totalInterviews = await Interview.countDocuments().exec();
-  const todaysInterview = await Interview.aggregate([{$match:{interviewDate:{$eq:dateToday}}},{$sort:{"interviewTime": 1}}]);
+  // const recordCount = await Unibase.countDocuments().exec();
+  // const completedIntCount = await Interview.find({interviewStatus:"Interview Completed"}).countDocuments().exec();
+  // const totalProjects = await Interview.find({result: "Offer"}).countDocuments().exec();
+  // const totalInterviews = await Interview.countDocuments().exec();
+  // const todaysInterview = await Interview.aggregate([{$match:{interviewDate:{$eq:dateToday}}},{$sort:{"interviewTime": 1}}]);
+  // const activeProjects = await Unibase.find({reqStatus:"Project Active"}).countDocuments().exec();
+  // const inactiveProjects = await Unibase.find({reqStatus:"Project Inactive"}).countDocuments().exec();
+  
+  const [recordCount,completedIntCount,totalProjects,totalInterviews,todaysInterview,activeProjects,inactiveProjects] = await Promise.all([
+          Unibase.countDocuments().exec(),
+          Interview.find({interviewStatus:"Interview Completed"}).countDocuments().exec(),
+          Interview.find({result: "Offer"}).countDocuments().exec(),
+          Interview.countDocuments().exec(),
+          Interview.aggregate([{$match:{interviewDate:{$eq:dateToday}}},{$sort:{"interviewTime": 1}}]),
+          Unibase.find({reqStatus:"Project Active"}).countDocuments().exec(),
+          Unibase.find({reqStatus:"Project Inactive"}).countDocuments().exec()
+        ])
+  // console.log("active", activeProjects);
+  // console.log("Inactive", inactiveProjects)
 
   const allRecords = await Unibase.aggregate([{
     $match:{
@@ -176,6 +190,7 @@ exports.getDashboard1 = async(req,res)=>{
     docTitle: "UniStack || Home",
     username: userp,
     email: req.user.email,
+    role: req.user.role,
     totalInterviews,
     totalRecords: recordCount,
     completedInterviews: completedIntCount,
@@ -190,7 +205,9 @@ exports.getDashboard1 = async(req,res)=>{
     newWorkingYesterday,
     submittedYesterday,
     dateToday,
-    dateYesterday
+    dateYesterday,
+    activeProjects,
+    inactiveProjects
   });
 
 }
