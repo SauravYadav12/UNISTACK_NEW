@@ -24,7 +24,7 @@ const { ensureAuthenticated } = require('../config/auth');
   router.post('/copy-record',ensureAuthenticated,requirementController.getCreateReqPage);
 
   router.get("/reports-dashboard",ensureAuthenticated,requirementController.getDashboard1)
-  router.get('/weeklydata',ensureAuthenticated,requirementController.getWeeklydataForchart);
+  // router.get('/weeklydata',ensureAuthenticated,requirementController.getWeeklydataForchart);
 
 
 module.exports = router;

@@ -132,7 +132,8 @@ exports.getDashboard1 = async(req,res)=>{
   let newWorkingYesterday = 0;
   let submittedToday = 0;
   let submittedYesterday = 0;
-
+  let lastWeekData = await getLastWeekData();
+  let thisWeekData = await getThisWeekData();
   // const recordCount = await Unibase.countDocuments().exec();
   // const completedIntCount = await Interview.find({interviewStatus:"Interview Completed"}).countDocuments().exec();
   // const totalProjects = await Interview.find({result: "Offer"}).countDocuments().exec();
@@ -207,7 +208,9 @@ exports.getDashboard1 = async(req,res)=>{
     dateToday,
     dateYesterday,
     activeProjects,
-    inactiveProjects
+    inactiveProjects,
+    lastWeekData,
+    thisWeekData
   });
 
 }
@@ -815,7 +818,7 @@ exports.postDeletePage = (req, res) => {
 
 };
 
-exports.getWeeklydataForchart = async(req,res)=>{
+const getLastWeekData = async()=>{
 
   const lastWeek = [];
   function getLastWeek() {
@@ -833,6 +836,9 @@ exports.getWeeklydataForchart = async(req,res)=>{
       reqEnteredDate:{
         $gte: formatDate(monday),
         $lte: formatDate(friday)
+      },
+      isDuplicate:{
+        $eq:"false"
       }
     }
   }])
@@ -861,5 +867,50 @@ exports.getWeeklydataForchart = async(req,res)=>{
   });
 
   return lastWeek;
+
+}
+
+const getThisWeekData = async()=>{
+  let prevMonday = new Date();
+  let thisWeek = []
+  prevMonday.setDate(prevMonday.getDate() - (prevMonday.getDay() + 6) % 7);
+  let thisMonday = new Date(prevMonday.getFullYear(), prevMonday.getMonth(), prevMonday.getDate()); //monday from last week
+  let thisFriday = new Date(prevMonday.getFullYear(), prevMonday.getMonth(), prevMonday.getDate()+4); //friday from ast week
   
+  const thisWeekRecords = await Unibase.aggregate([{
+    $match:{
+      reqEnteredDate:{
+        $gte: formatDate(thisMonday),
+        $lte: formatDate(thisFriday)
+      },
+      isDuplicate:{
+        $eq: "false"
+      }
+    }
+  }]);
+
+  for(let record of thisWeekRecords){
+    if(thisWeek.length){
+      const i = thisWeek.findIndex( e => e.date === record.reqEnteredDate);
+      if(i > -1){
+        thisWeek[i].positions = thisWeek[i].positions + 1 || 1
+      } else {
+        const data = {};
+        data.date = record.reqEnteredDate
+        data.positions = data.positions + 1 || 1
+        thisWeek.push(data);
+      }
+    } else {
+      const data = {};
+      data.date = record.reqEnteredDate
+      data.positions = data.positions + 1 || 1
+      thisWeek.push(data);
+    }
+  }
+
+  thisWeek.sort(function(a,b){
+    return new Date(a.date) - new Date(b.date);
+  });
+  
+  return thisWeek;
 }

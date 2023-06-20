@@ -77,6 +77,28 @@
                     </div>
                   </div>
 
+                  <div class="row" hidden>
+                    <ul>
+                      <% lastWeekData.forEach(day => { %>
+                        <li class="lastWeekData">
+                          <span class="lastWeekDay"><%= day.date%></span>
+                          <span class="lastWeekPositions"><%= day.positions%></span>
+                        </li>
+                      <% }) %>
+                    </ul>
+                  </div>
+
+                  <div class="row" hidden>
+                    <ul>
+                      <% thisWeekData.forEach(day => { %>
+                        <li class="thisWeekData">
+                          <span class="thisWeekDay"><%= day.date%></span>
+                          <span class="thisWeekPosition"><%= day.positions%></span>
+                        </li>
+                      <% }) %>
+                    </ul>
+                  </div>
+
                   <div class="row">
                     <div class="col-lg-8 d-flex flex-column">
                       <div class="row flex-grow">

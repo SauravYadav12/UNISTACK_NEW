@@ -12,17 +12,39 @@
       var saleGradientBg2 = graphGradient2.createLinearGradient(100, 0, 50, 150);
       saleGradientBg2.addColorStop(0, 'rgba(0, 208, 255, 0.19)');
       saleGradientBg2.addColorStop(1, 'rgba(0, 208, 255, 0.03)');
-     
-      const getData = async ()=>{
-        return await fetch('/weeklydata',{mode: 'no-cors'});
-      }
-      console.log(new Promise((resolve,reject) =>{ resolve(getData())}));
 
+      var lastPositions = document.querySelectorAll('.lastWeekPositions');
+      var lastWeek = document.querySelectorAll('.lastWeekDay');
+
+      var currentPositions = document.querySelectorAll('.thisWeekPosition');
+      var currentWeek = document.querySelectorAll('.thisWeekDay');
+
+      var lastWeekPositions = [];
+      var currentWeekPositions = [];
+      var lastWeekday = [];
+      var currentWeekDay = [];
+
+      lastWeek.forEach(val =>{
+        lastWeekday.push(val.textContent)
+      });
+
+      lastPositions.forEach(val=>{
+        lastWeekPositions.push(val.textContent);
+      });
+
+      currentWeek.forEach(val =>{
+        currentWeekDay.push(val.textContent)
+      });
+
+      currentPositions.forEach(val=>{
+        currentWeekPositions.push(val.textContent);
+      });
+  
       var salesTopData = {
-          labels: ["SUN","sun", "MON", "mon", "TUE","tue", "WED", "wed", "THU", "thu", "FRI", "fri", "SAT"],
+          labels: lastWeekday,
           datasets: [{
-              label: 'This week',
-              data: [50, 110, 60, 290, 200, 115, 130, 170, 90, 210, 240, 280, 200],
+              label: 'last week',
+              data: lastWeekPositions,
               backgroundColor: saleGradientBg,
               borderColor: [
                   '#1F3BB3',
@@ -35,8 +57,8 @@
               pointBackgroundColor: ['#1F3BB3)', '#1F3BB3', '#1F3BB3', '#1F3BB3','#1F3BB3)', '#1F3BB3', '#1F3BB3', '#1F3BB3','#1F3BB3)', '#1F3BB3', '#1F3BB3', '#1F3BB3','#1F3BB3)'],
               pointBorderColor: ['#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff',],
           },{
-              label: 'Last week',
-              data: [30, 150, 190, 250, 120, 150, 130, 20, 30, 15, 40, 95, 180],  
+              label: 'this week',
+              data: currentWeekPositions,  
               backgroundColor: saleGradientBg2,
               borderColor: [
                   '#52CDFF',
