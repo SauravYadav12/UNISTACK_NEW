@@ -147,7 +147,7 @@ exports.getDashboard1 = async(req,res)=>{
           Interview.find({interviewStatus:"Interview Completed"}).countDocuments().exec(),
           Interview.find({result: "Offer"}).countDocuments().exec(),
           Interview.countDocuments().exec(),
-          Interview.aggregate([{$match:{interviewDate:{$eq:dateToday}}},{$sort:{"interviewTime": 1}}]),
+          Interview.aggregate([{$match:{interviewDate:{$eq:dateToday},interviewStatus:{$eq: "Interview Confirm"}}},{$sort:{"interviewTime": 1}}]),
           Unibase.find({reqStatus:"Project Active"}).countDocuments().exec(),
           Unibase.find({reqStatus:"Project Inactive"}).countDocuments().exec()
         ])
