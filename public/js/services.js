@@ -1,4 +1,5 @@
 $(document).ready(function(){
+ 
 
     $('.req-modal').click(function(){
         $('.viewReq').toggle();
