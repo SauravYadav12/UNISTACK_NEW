@@ -1,12 +1,15 @@
 $(document).ready(function(){
     //ctrl+s
-    $(window).keypress(function(event) {
-        if (!(event.which == 115 && event.ctrlKey) && !(event.which == 19)) return true;
+    $(document).unbind('keypress');
+    $(document).keydown(function(event) {
         event.preventDefault();
-
-        $("form").submit();
-        console.log("Form submitted")
-        return false;
+        console.log(event);
+        if ((event.which == 115 || event.which == 83) && (event.ctrlKey||event.metaKey)|| (event.which == 19)) {
+            $("form").submit();
+            console.log("Form submitted")
+            return false;
+        }
+        return true;
     });
 
 })
