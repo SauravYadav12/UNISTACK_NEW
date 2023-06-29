@@ -60,14 +60,22 @@
                         <% if(role === "Admin" || role === "SuperAdmin"){%>
                           <div class="d-none d-md-block">
                             <p class="statistics-title">Active Projects</p>
-                            <h3 class="rate-percentage"><%=activeProjects%></h3>
+                            <h3 class="rate-percentage">
+                              <a href="/reports/projects/?type=Project Active" style="text-decoration: none; color: black; cursor: pointer;">
+                              <%=activeProjects%>
+                              </a>
+                            </h3>
                             <p class="text-danger d-flex">
                               <i class="mdi mdi-menu-down"></i><span>68.8</span>
                             </p>
                           </div>
                           <div class="d-none d-md-block">
                             <p class="statistics-title">Inactive projects</p>
-                            <h3 class="rate-percentage"><%=inactiveProjects%></h3>
+                            <h3 class="rate-percentage">
+                              <a href="/reports/projects/?type=Project Inactive" style="text-decoration: none; color: black; cursor: pointer;">
+                                <%=inactiveProjects%>
+                                </a>
+                            </h3>
                             <p class="text-success d-flex">
                               <i class="mdi mdi-menu-down"></i><span>+0.8%</span>
                             </p>

@@ -228,6 +228,16 @@
                           <%= record.reqStatus %>
                         </label>
                       <%}%>
+                      <%if(record.reqStatus === "Project Active"){%>
+                        <label class="badge badge-success">
+                          <%= record.reqStatus %>
+                        </label>
+                      <%}%>
+                      <%if(record.reqStatus === "Project Inactive"){%>
+                        <label class="badge badge-danger">
+                          <%= record.reqStatus %>
+                        </label>
+                      <%}%>
                   </td>
                   <td>
                     <%= record.nextStep.slice(0,15) %>
