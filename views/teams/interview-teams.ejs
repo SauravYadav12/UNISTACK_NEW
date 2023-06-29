@@ -1,0 +1,63 @@
+<%- include('../partials/header1.ejs') %>
+
+<div class="container-scroller">
+    
+<%- include('../partials/nav.ejs') %>
+  
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+
+    
+  <%- include('../partials/sidebar1.ejs') %>
+    
+    <!-- <div class="viewReq" style="display: none;">
+      <div class="hideReq">Close</div>
+    </div> -->
+
+    <!-- partial -->
+    <%- include('../partials/main-panel-start.ejs') %>
+
+    <%- include ('../partials/messages.ejs') %>
+
+        <div class="card-body">
+          <div class="d-sm-flex justify-content-between align-items-start">
+            <div>
+              <h4 class="card-title card-title-dash">Teams</h4>
+            </div>
+            <div>
+              <a href="/requirements/createReq" class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new</a>
+            </div>
+          </div>
+          <div class="table-responsive  mt-1">
+            <table id="order-listing" class="table dataTable no-footer table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>View</th>
+                  <th>Team ID</th>
+                  <th>Team Name</th>
+                  <th>Contact Person</th>
+                  <th>Phone</th>
+                  <th>Created by</th>
+                  <th>Created At</th>
+                </tr>
+              </thead>
+              <tbody class="table-body">
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+    <%- include('../partials/main-panel-end.ejs') %>
+                        
+
+      </div>
+   
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+
+
+<%- include('../partials/footer1.ejs')%>

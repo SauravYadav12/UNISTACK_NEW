@@ -1,37 +1,146 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-    
   <ul class="nav">
-    
-      <li class="nav-item nav-category">Home</li>
- 
-      <li class="nav-item">
-        <a class="nav-link" href="/home">
-          <i class="mdi mdi-grid-large menu-icon"></i>
-          <span class="menu-title">Dashboard</span>
-        </a>
-      </li>
-      
-      <li class="nav-item nav-category">Req & Interviews</li>
-      
+    <li class="nav-item nav-category">Home</li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="/requirements/reqlist/1">
-          <i class="menu-icon mdi mdi-card-text-outline"></i>
-          <span class="menu-title">Requirements</span>
-        </a>
-      </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/home">
+        <i class="mdi mdi-grid-large menu-icon"></i>
+        <span class="menu-title">Dashboard</span>
+      </a>
+    </li>
 
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" aria-expanded="false" aria-controls="interviews" data-bs-target="#interviews" type="button">
-          <i class="menu-icon mdi mdi-chart-line"></i>
-            <span class="menu-title">Interviews</span>
-          <i class="menu-arrow"></i>
-        </a>
-        <div class="collapse" id="interviews">
-          <ul class="nav flex-column sub-menu">
-            <li  class="nav-item"> <a class="nav-link" href="/interviews/confirmed-interviews/1">Confirmed</a></li>
-          </ul>
-          <ul class="nav flex-column sub-menu">
+    <li class="nav-item nav-category">Req & Interviews</li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/requirements/reqlist/1">
+        <i class="menu-icon mdi mdi-card-text-outline"></i>
+        <span class="menu-title">Requirements</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        data-bs-toggle="collapse"
+        aria-expanded="false"
+        aria-controls="interviews"
+        data-bs-target="#interviews"
+        type="button"
+      >
+        <i class="menu-icon mdi mdi-chart-line"></i>
+        <span class="menu-title">Interviews</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="interviews">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="/interviews/confirmed-interviews/1"
+              >Confirmed</a
+            >
+          </li>
+        </ul>
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="/interviews/tentative-interviews/1"
+              >Tentative</a
+            >
+          </li>
+        </ul>
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="/interviews/completed-interviews/1"
+              >Completed</a
+            >
+          </li>
+        </ul>
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="/interviews/cancelled-interviews/1"
+              >Cancelled</a
+            >
+          </li>
+        </ul>
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="/interviews/all-interviews"
+              >All Interviews</a
+            >
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/tests/test-dashboard/1">
+        <i class="menu-icon mdi mdi-calendar-check"></i>
+        <span class="menu-title">Tests</span>
+      </a>
+    </li>
+
+    <% if(role === "Admin" || role === "SuperAdmin"){%>
+    <li class="nav-item">
+      <a class="nav-link" href="/consultant-list">
+        <i class="menu-icon mdi mdi-account-supervisor"></i>
+        <span class="menu-title">Consultants</span>
+      </a>
+    </li>
+    <%}%>
+
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        data-bs-toggle="collapse"
+        aria-expanded="false"
+        aria-controls="interviews"
+        data-bs-target="#reports"
+        type="button"
+      >
+        <i class="menu-icon mdi mdi-receipt"></i>
+        <span class="menu-title">Reports</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="reports">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="/reports/support">Support</a>
+          </li>
+        </ul>
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="/reports/marketing">Marketing</a>
+          </li>
+        </ul>
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="/reports/interview-report"
+              >Interview Report</a
+            >
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <% if(role === "SuperAdmin"){%>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        data-bs-toggle="collapse"
+        aria-expanded="false"
+        aria-controls="others"
+        data-bs-target="#others"
+        type="button"
+      >
+        <i class="menu-icon mdi mdi-chart-line"></i>
+        <span class="menu-title">Others</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="others">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="/interview-teams">Interview Teams</a>
+          </li>
+        </ul>
+        <!-- <ul class="nav flex-column sub-menu">
             <li class="nav-item"> <a class="nav-link" href="/interviews/tentative-interviews/1">Tentative</a></li>
           </ul>
           <ul class="nav flex-column sub-menu">
@@ -42,45 +151,11 @@
           </ul>
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"> <a class="nav-link" href="/interviews/all-interviews">All Interviews</a></li>
-          </ul>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="/tests/test-dashboard/1">
-          <i class="menu-icon mdi mdi-calendar-check"></i>
-          <span class="menu-title">Tests</span>
-        </a>
-      </li>
-
-      <% if(role === "Admin" || role === "SuperAdmin"){%>
-      <li class="nav-item">
-        <a class="nav-link" href="/consultant-list">
-          <i class="menu-icon mdi mdi-account-supervisor"></i>
-          <span class="menu-title">Consultants</span>
-        </a>
-      </li>
-      <%}%>
-
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" aria-expanded="false" aria-controls="interviews" data-bs-target="#reports" type="button">
-          <i class="menu-icon mdi mdi-receipt"></i>
-            <span class="menu-title">Reports</span>
-          <i class="menu-arrow"></i>
-        </a>
-        <div class="collapse" id="reports">
-          <ul class="nav flex-column sub-menu">
-            <li  class="nav-item"> <a class="nav-link" href="/reports/support">Support</a></li>
-          </ul>
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="/reports/marketing">Marketing</a></li>
-          </ul>
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="/reports/interview-report">Interview Report</a></li>
-          </ul>
-        </div>
-      </li>
-      <!-- <li class="nav-item">
+          </ul> -->
+      </div>
+    </li>
+    <%}%>
+    <!-- <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
           <i class="menu-icon mdi mdi-table"></i>
           <span class="menu-title">Tables</span>
@@ -104,13 +179,12 @@
           </ul>
         </div>
       </li> -->
-      <li class="nav-item nav-category">Authentication</li>
-      <li class="nav-item">
-        <a class="nav-link" href="/logout">
-          <i class="menu-icon mdi mdi-account-circle-outline"></i>
-          <span class="menu-title">Logout</span>
-        </a>
-      </li>
-     
-    </ul>
-  </nav>
+    <li class="nav-item nav-category">Authentication</li>
+    <li class="nav-item">
+      <a class="nav-link" href="/logout">
+        <i class="menu-icon mdi mdi-account-circle-outline"></i>
+        <span class="menu-title">Logout</span>
+      </a>
+    </li>
+  </ul>
+</nav>
