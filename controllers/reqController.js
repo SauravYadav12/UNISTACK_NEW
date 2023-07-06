@@ -1049,6 +1049,6 @@ const getThisWeekData = async () => {
   thisWeek.sort(function (a, b) {
     return new Date(a.date) - new Date(b.date);
   });
-
+  console.log(thisWeek);
   return thisWeek;
 };
