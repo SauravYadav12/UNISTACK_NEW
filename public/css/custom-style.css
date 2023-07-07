@@ -2,7 +2,7 @@
   height: 400px;
   white-space: pre-line;
   overflow: auto;
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
   padding: 0 20px;
   border-radius: 1%;
 }
@@ -19,14 +19,14 @@
 .text-area-commentview {
   height: auto;
   overflow: auto;
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
   padding: 10px 20px;
   border-radius: 1%;
 }
 
 .script-sidebar {
   /* height: 100vh; */
-  background-color: #E8E8E8;
+  background-color: #e8e8e8;
 }
 
 .script-container {
@@ -82,28 +82,28 @@
 }
 
 .badge-secondary {
-  color: #AF0BA5 !important;
-  border: 1px solid #AF0BA5 !important;
+  color: #af0ba5 !important;
+  border: 1px solid #af0ba5 !important;
 }
 
 .badge-project {
-  color: #004D40 !important;
-  border: 1px solid #004D40 !important;
+  color: #004d40 !important;
+  border: 1px solid #004d40 !important;
 }
 
 .badge-sbc {
-  color: #D500F9 !important;
-  border: 1px solid #D500F9 !important
+  color: #d500f9 !important;
+  border: 1px solid #d500f9 !important;
 }
 
 .dStatus-text {
   text-decoration: none;
-  color: #F0F0F0;
+  color: #f0f0f0;
 }
 
 .dStatus-text:hover {
   cursor: pointer;
-  color: #E8E8E8;
+  color: #e8e8e8;
 }
 
 @keyframes fadeIn {
@@ -115,7 +115,6 @@
     opacity: 1;
   }
 }
-
 
 @media print {
   body * {
@@ -135,15 +134,12 @@
     display: none;
   }
 
-  @page {
+  /* @page {
     size: auto;
     margin: 55px;
-  }
+  } */
 
   ::-webkit-scrollbar {
     display: none;
   }
-
-
-
 }
