@@ -608,7 +608,7 @@ exports.generateScript = async (req, res) => {
         const interview = await Interview.findById(req.body.interviewId);
         const record = await Unibase.findById(req.body.recordId);
         const consultant = await Consultant.findOne({ consultantName: req.body.consultant });
-        // console.log("Entered",consultant);
+        // console.log("Entered", record);
 
         for (i = 0; i < consultant.projectName.length; i++) {
 

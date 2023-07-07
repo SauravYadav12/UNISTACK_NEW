@@ -1,15 +1,20 @@
 <%- include('../partials/header1.ejs') %>
 
-  <div class="container script_container">
-    <div class="p-3 mb-2 bg-info text-white text-center">
-      <strong>INT_ID </strong>: <span><u>
-          <%=interview.intId%>
-        </u></span>
-      <span class="pr-5 pl-5 text-black">| | </span>
-      <strong class="pe-2">FULL LEGAL NAME:</strong>
-      <u class="color-black">
+  <div class="container script-container mt-2 mb-5 border border-dark">
+    <div class="p-3 mb-2 text-primary text-center mt-2 "
+      style="background-color: #d3d3d3; font-size: 20px; border-radius: 5px;">
+      <strong>INT_ID </strong>:
+      <span>
+        <strong class="pe-2">
+          <%= interview.intId%>
+        </strong>
+      </span>
+      <span class="pr-5 pl-5 text-white">| | </span>
+      <strong class="pe-2">FULL NAME: </strong>
+      <strong class="pe-2">
         <%= consultant.consultantName.toUpperCase()%>
-      </u>
+      </strong>
+
       <button class="btn btn-primary btn-sm float-end print-button" onclick="window.print()">
         Print PDF
       </button>
@@ -19,94 +24,61 @@
 
     <!-- {section 1} -->
     <div class="d-flex">
-      <ul class="list-group rounded-0 w-25">
-        <li class="list-group-item list-group-item-secondary border-right-0"><strong>Candidate First Name</strong></li>
-        <li class="list-group-item list-group-item-secondary border-right-0"><strong>Candidate Last Name</strong></li>
+      <ul class="list-group rounded-0" style="width: 40%;">
+        <li class="list-group-item list-group-item-secondary border-right-0"><strong>Candidate Name</strong></li>
         <li class="list-group-item list-group-item-secondary border-right-0"><strong>Candidate Location</strong></li>
         <li class="list-group-item list-group-item-secondary border-right-0"><strong>Candidate Number</strong></li>
         <li class="list-group-item list-group-item-secondary border-right-0"><strong>Candidate Email</strong></li>
         <li class="list-group-item list-group-item-secondary border-right-0"><strong>Candidate Skype Id</strong></li>
-        <li class="list-group-item list-group-item-secondary border-right-0"><strong>Current Visa Status /
-            Citizenship</strong></li>
+
         <li class="list-group-item list-group-item-secondary border-right-0"><strong>Education</strong></li>
         <li class="list-group-item list-group-item-secondary border-right-0"><strong>DOB DOB(MM-DD-YYYY):</strong>
         </li>
         <li class="list-group-item list-group-item-secondary border-right-0"> <strong class="pe-2">SSN (Last 4
             Digits):</strong>
-          <%= consultant.ssn%>
         </li>
+        <li class="list-group-item list-group-item-secondary border-right-0"><strong>Current Visa Status/
+            Citizenship</strong></li>
       </ul>
-      <ul class="list-group rounded-0 w-50">
+      <ul class="list-group rounded-0" style="width: 60%;">
         <li class="list-group-item border-left-0">
           <%= consultant.consultantName.toUpperCase()%>
         </li>
+        <li class="list-group-item border-left-0">
+          <%= consultant.currentAddress.toUpperCase()%>
+        </li>
+        <li class="list-group-item border-left-0">
+          <%= consultant.phone%>
+        </li>
+        <li class="list-group-item border-left-0">
+          <%= consultant.email%>
+        </li>
+        <li class="list-group-item border-left-0">
+          <%= consultant.skypeId%>
+        </li>
 
-        <% if(consultant.consultantName){ %>
-          <li class="list-group-item border-left-0">
-            <%= consultant.consultantName.toUpperCase()%>
-          </li>
-          <% } else{ %>
-            <li><span>-</span></li>
-            <% } %>
-              <li class="list-group-item border-left-0">
-                <%= consultant.currentAddress.toUpperCase()%>
-              </li>
-              <li class="list-group-item border-left-0">
-                <%= consultant.phone%>
-              </li>
-              <li class="list-group-item border-left-0">
-                <%= consultant.email%>
-              </li>
-              <li class="list-group-item border-left-0">
-                <%= consultant.skypeId%>
-              </li>
-              <li class="list-group-item border-left-0">
-                <%= consultant.visaStatus.toUpperCase()%>
-              </li>
-              <li class="list-group-item border-left-0">
-                <%= consultant.degree.toUpperCase()%>
-              </li>
-              <li class="list-group-item border-left-0">
-                <%= consultant.dob.toLocaleDateString('en-US', {timeZone: 'UTC' })%>
-              </li>
-              <li class="list-group-item border-left-0">
-                <%= consultant.ssn%>
-              </li>
+        <li class="list-group-item border-left-0">
+          <%= consultant.degree.toUpperCase()%>
+        </li>
+        <li class="list-group-item border-left-0">
+          <%= consultant.dob.toLocaleDateString('en-US', {timeZone: 'UTC' })%>
+        </li>
+        <li class="list-group-item border-left-0">
+          <%= consultant.ssn%>
+        </li>
+        <li class="list-group-item border-left-0">
+          <%= consultant.visaStatus.toUpperCase()%>
+        </li>
 
       </ul>
     </div>
 
 
-    <!-- {section 2} -->
-    <hr style="border: 1px solid black" />
-
-    <div class="d-flex mt-5 mb-5">
-      <ul class="list-group rounded-0 w-100">
-        <li class="list-group-item  border-right-0">
-          <strong>When did he came to US: </strong>
-          <%= consultant.cameToUsYear%>
-        </li>
-
-        <li class="list-group-item  border-right-0">
-          <strong>How did he came to US : </strong>
-          <%= consultant.getVisa%>
-        </li>
-
-        <li class="list-group-item  border-right-0">
-          <strong>When did he got USC: </strong>
-          <%= consultant.getVisa%>
-        </li>
-      </ul>
-    </div>
-
-
-    <!-- {section 3} -->
-    <hr style="border: 1px solid black" />
-
-    <div class="d-flex mt-5 mb-5">
-      <table class="table table-bordered">
+    <br />
+    <div class="d-flex mt-1 mb-5">
+      <table class="table table-bordered rounded rounded-3  overflow-hidden">
         <thead>
-          <tr style="background-color: #f8f9fa;">
+          <tr style="background-color: #d3d3d3  ;">
             <th scope="col">Sr No.</th>
             <th scope="col">Over All experience at a glance</th>
             <th scope="col">Location</th>
@@ -141,49 +113,40 @@
       </table>
     </div>
 
+    <!-- {section 2} -->
+    <br />
+    <hr style="border: 1px solid black" />
+
+    <div class="d-flex mt-1 mb-1">
+      <ul class="list-group rounded-0 w-100">
+        <li class="list-group-item  border-right-0">
+          <strong>When did he came to US: </strong>
+          <%= consultant.cameToUsYear%>
+        </li>
+
+        <li class="list-group-item  border-right-0">
+          <strong>How did he came to US : </strong>
+          <%= consultant.getVisa%>
+        </li>
+
+        <li class="list-group-item  border-right-0">
+          <strong>When did he got USC: </strong>
+          <%= consultant.getVisa%>
+        </li>
+      </ul>
+    </div>
+
 
     <!-- {section 4} -->
 
-    <h4 class="fw-bold">CONSULTANT'S EXPERIENCE</h4>
-    <hr style="border: 1px solid black" />
-
-    <div class="row p-3">
-      <% projects.forEach((project,i)=>{%>
-        <h5 class="fw-bold">PROJECT <%= i +1%>
-        </h5>
-        <hr style="border: 1px solid black; width: 300px" />
-        <ul>
-          <li class="pb-3">
-            <strong class="pe-2">CLIENT NAME:</strong>
-            <%= project.name%>
-          </li>
-          <li class="pb-3">
-            <strong class="pe-2">CITY:</strong>
-            <%= project.city%>
-          </li>
-          <li class="pb-3">
-            <strong class="pe-2">STATE:</strong>
-            <%= project.state%>
-          </li>
-          <li class="pb-3">
-            <strong class="pe-2">PROJECT START DATE:</strong>
-            <%= project.startDate%>
-          </li>
-          <li class="pb-3">
-            <strong class="pe-2">PROJECT END DATE:</strong>
-            <%= project.endDate%>
-          </li>
-          <li class="pb-3">
-            <strong class="pe-2">PROJECT DESCRIPTION:</strong>
-            <%= project.description%>
-          </li>
-        </ul>
-        <%})%>
-    </div>
 
     <!-- {section 5} -->
     <hr style="border: 1px solid black" />
-    <div class="row p-3">
+
+    <div style="background-color: #d3d3d3; border-radius: 5px;">
+      <h4 class="fw-bold pt-3 pb-3 ps-3">INTERVIEW DETAILS</h4>
+    </div>
+    <div class="row ps-3 ">
       <ul>
         <li class="pb-2">
           <strong class="pe-2">ABOUT INTERVIEW:</strong>
@@ -199,7 +162,7 @@
           <strong class="pe-2">INTERVIEW FOCUS:</strong>
           <%= interview.interviewFocus.toUpperCase()%>
         </li>
-        <li class="pb-3" style="white-space: pre">
+        <li class="pb-3">
           <strong class="pe-2">INTERVIEWER DETAILS:</strong>
           <%= interview.interviewMode%>
         </li>
@@ -218,21 +181,73 @@
       </ul>
     </div>
 
-    <!-- {section 6} -->
     <hr style="border: 1px solid black" />
     <div class="row p-3">
+      <div style="background-color: #d3d3d3; border-radius: 5px;">
+        <h4 class="fw-bold pt-3 pb-3 ps-3">JOB DESCRIPTION</h4>
+      </div>
+      <p style="white-space: pre-line;">
+        <%= record.jobDescription%>
+      </p>
       <ul>
-        <li class="pb-3" style="white-space: pre">
-          <strong class="pe-2">JOB ROLE:</strong>
-          <%= record.jobDescription%>
+        <li class="pb-1">
+          <strong class="pe-2">PRIMARY SKILLS:</strong>
+          <%= record.primaryTech %>
         </li>
-        <li class="pb-3">
-          <strong class="pe-2">TECHNICAL SKILLS REQUIRED:</strong>
-          <%= record.reqKeywords%>
+        <li class="pb-1">
+          <strong class="pe-2">SECONDARY SKILLS :</strong>
+          <%= record.secondaryTech %>
         </li>
       </ul>
     </div>
+
+    <hr style="border: 1px solid black" />
+    <div style="background-color: #d3d3d3; border-radius: 5px;">
+      <h4 class="fw-bold pt-3 pb-3 ps-3">CONSULTANT'S EXPERIENCE</h4>
+    </div>
+
+
+    <div class="row p-3">
+      <% projects.forEach((project,i)=>{%>
+        <h5 class="fw-bold">PROJECT <%= i +1%>
+        </h5>
+        <hr style="border: 1px solid black; width: 300px" />
+        <ul>
+          <li>
+            <span class="pe-2">
+              <strong class="pe-2">CLIENT NAME:</strong>
+              <%= project.name%>
+            </span>
+            <span class="pe-2">
+              <strong class="pe-2">CITY:</strong>
+              <%= project.city%>
+            </span>
+            <span class="pe-2">
+              <strong class="pe-2">STATE:</strong>
+              <%= project.state%>
+            </span>
+            <span class="pe-2">
+              <strong class="pe-2">PROJECT START DATE:</strong>
+              <%= project.startDate%>
+            </span>
+            <span class="pe-2">
+              <strong class="pe-2">PROJECT END DATE:</strong>
+              <%= project.endDate%>
+            </span>
+          </li>
+          <li class="pb-3">
+            <strong class="pe-2">PROJECT DESCRIPTION:</strong>
+            <%= project.description%>
+          </li>
+        </ul>
+        <%})%>
+    </div>
+
+
   </div>
+
+
+
 
 
   <%- include('../partials/footer1.ejs')%>
