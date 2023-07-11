@@ -2,17 +2,28 @@
 
 <div class="container script-container mt-2 mb-5 border border-dark">
   <div
-    class="p-3 mb-2 text-primary text-center mt-2"
+    class="p-3 mb-2 text-center mt-2"
     style="background-color: #d3d3d3; font-size: 20px; border-radius: 5px"
   >
-    <strong>INT_ID </strong>:
+    <strong class="text-primary">INT_ID </strong>:
     <span>
       <strong class="pe-2"> <%= interview.intId %> </strong>
     </span>
     <span class="pr-5 pl-5 text-white">| | </span>
-    <strong class="pe-2">FULL NAME: </strong>
+    <strong class="pe-2 text-primary">FULL NAME: </strong>
     <strong class="pe-2">
       <%= consultant.consultantName.toUpperCase()%>
+    </strong>
+
+    <span class="pr-5 pl-5 text-white">| | </span>
+    <strong class="pe-2 text-primary">INT DATE: </strong>
+    <strong class="pe-2"> <%= interview.interviewDate%> </strong>
+
+    <span class="pr-5 pl-5 text-white">| | </span>
+    <strong class="pe-2 text-primary">TIME: </strong>
+    <strong class="pe-2">
+      <%= interview.interviewTime%> <%= interview.timeShift%>
+      <%=interview.timeZone%>
     </strong>
 
     <button
