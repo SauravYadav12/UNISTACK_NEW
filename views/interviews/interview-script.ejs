@@ -121,17 +121,22 @@
     <ul class="list-group rounded-0 w-100">
       <li class="list-group-item border-right-0">
         <strong>When did he came to US: </strong>
+        <%= consultant.getVisa%>
+      </li>
+
+      <li class="list-group-item border-right-0">
+        <strong> How did you get the VISA(GC or Ctizenship): </strong>
         <%= consultant.cameToUsYear%>
       </li>
 
       <li class="list-group-item border-right-0">
-        <strong>How did he came to US : </strong>
-        <%= consultant.getVisa%>
+        <strong>Why are you looking for the change: </strong>
+        <%= consultant.lookingToChange%>
       </li>
 
       <li class="list-group-item border-right-0">
-        <strong>When did he got USC: </strong>
-        <%= consultant.getVisa%>
+        <strong>Basically from which country: </strong>
+        <%= consultant.originCountry%>
       </li>
     </ul>
   </div>
